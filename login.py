@@ -5,6 +5,7 @@ from maininterface import create_main_window
 # Setting Up the app
 window = Tk()
 window.title("EstateInsight")
+window.title("EstateInsight")
 
 # Setting up the position of the app
 window_width = 500
