@@ -1,87 +1,50 @@
 from tkinter import *
-import tkinter as tk
-from maininterface import create_main_window
-
-# Setting Up the app
-window = Tk()
-window.title("EstateInsight")
-
-# Setting up the position of the app
-window_width = 500
-window_height = 500
-
-screen_width = window.winfo_screenwidth()
-screen_height = window.winfo_screenheight()
-
-x_position = int((screen_width - window_width) / 2)
-y_position = int((screen_height - window_height) / 2)
-
-window.geometry(f"{window_width}x{window_height}+{x_position}+{y_position}")
-
-# Setting up the appearance
-window.configure(background="#219ebc")
-
-# Setting up the icon for the window
-icon = PhotoImage(file='estate.png')
-window.iconphoto(True, icon)
-
-# Setting up the font
-font_moodlift = ('Arial', 30, 'bold')
-font_welcome = ("Arial", 15, "bold")
-font_info = ("Arial", 15, "bold")
-font_button = ("Arial", 10, "bold")
-
-# Setting up the intro for the image label
-photo = PhotoImage(file='estate.png')
-language_language_label = Label(window,
-                                text="EstateInsight",
-                                font=font_moodlift,
-                                fg='#FFFFFF',
-                                bg='#219ebc',
-                                image=photo,  # replaces the text with image label
-                                compound='top')
-language_language_label.pack(padx=10, pady=20)
-
-# Setting up the label for the welcome text
-welcome_label = Label(window,
-                      text="Welcome To",
-                      font=font_welcome,
-                      fg='#FFFFFF',
-                      bg='#219ebc')
-
-welcome_label.pack(padx=5, pady=5)
-
-# Setting up the Label For information
-infoLabel = tk.Label(window,
-                     text="The Real Estate Discovery Platform",
-                     fg='#FFFFFF',
-                     bg='#219ebc',
-                     font=font_info)
-infoLabel.pack()
+from tkinter import messagebox
+from subprocess import call
+root = Tk()
+root.geometry("950x500")
 
 
-# Setting up the entry button
+def login():
+    db = con.connect(host='localhost', user='root', password='123456', database='student')
+    c = db.cursor()
+    un = User_Value.get()
+    pw = Password_Value.get()
 
-def new_window():
-    window.withdraw()  # Hide the main window
-    main_window = create_main_window(window)
-    main_window.protocol("WM_DELETE_WINDOW", lambda: close_windows(window, main_window))
+    c.execute("SELECT * FROM register WHERE Username='" + un + "' AND Password = '" + pw + "'")
+    result = c.fetchone()
+    if result:
+        messagebox.showinfo("Success", "Login Successful")
+        call(['python', "getstarted.py"])
+    else:
+        messagebox.showerror("Error", "Invalid Login")
 
 
-def close_windows(main_window, popup_window):
-    popup_window.destroy()
-    main_window.destroy()
 
+login_label = Label(root, text="Login", font="times 30 bold", foreground="Purple")
+login_label.place(x=650, y=0)
 
-Entry = Button(window,
-               text="Get Started",
-               foreground='#E4DEBE',
-               background='#86A7FC',
-               activeforeground='#D24545',
-               activebackground='#3468C0',
-               command=new_window,
-               font=font_button
-               )
-Entry.pack(padx=10, pady=20)
+User_label=Label(root,text="UserName",font="times 20 bold", foreground="Purple")
+User_label.place(x=500,y=100)
 
-window.mainloop()
+Password_label=Label(root,text="Password",font="times 20 bold", foreground="Purple")
+Password_label.place(x=500,y=200)
+
+User_Value=StringVar()
+Password_Value=StringVar()
+
+User_Entry=Entry(root,textvariable=User_Value,font="times 20 bold", foreground="Purple")
+User_Entry.place(x=630,y=100)
+
+Password_Entry=Entry(root,textvariable=Password_Value,font="times 20 bold", foreground="Purple",show="*")
+Password_Entry.place(x=630,y=200)
+
+loginbtn=Button(root,text="Login",foreground="white",background="purple",font="times 20 bold",command=login)
+loginbtn.place(x=700,y=300)
+# Make sure the path to the image file is correct
+image = PhotoImage(file="estate.png")
+# Create a label and set the image
+image_label = Label(root, image=image)
+image_label.place(x=0, y=0)
+
+root.mainloop()
