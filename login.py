@@ -1,50 +1,60 @@
 from tkinter import *
 from tkinter import messagebox
-from subprocess import call
-root = Tk()
-root.geometry("950x500")
 
+root=Tk()
+root.title('Login')
+root.geometry('925x500+300+200')
+root.configure(bg="#fff")
+root.resizable(False, False)
 
-def login():
-    db = con.connect(host='localhost', user='root', password='123456', database='student')
-    c = db.cursor()
-    un = User_Value.get()
-    pw = Password_Value.get()
+img = PhotoImage(file='estate.png')
+Label(root,image=img,bg="white").place(x=50,y=50)
 
-    c.execute("SELECT * FROM register WHERE Username='" + un + "' AND Password = '" + pw + "'")
-    result = c.fetchone()
-    if result:
-        messagebox.showinfo("Success", "Login Successful")
-        call(['python', "getstarted.py"])
-    else:
-        messagebox.showerror("Error", "Invalid Login")
+frame=Frame(root,width=350,height=350,bg="white")
+frame.place(x=480,y=70)
 
+heading=Label(frame, text='LOGIN', fg='#57a1f8', bg='white', font=('Microsoft YaHei UI Light', 23, 'bold'))
+heading.place(x=100,y=5)
 
+#Username column code
+def on_enter(e):
+    user.delete(0,'end')
+def on_leave(e):
+    name=user.get()
+    if name=='':
+       user.insert(0,'Username')
 
-login_label = Label(root, text="Login", font="times 30 bold", foreground="Purple")
-login_label.place(x=650, y=0)
+user= Entry(frame, width=25,fg='black', border=0,bg="white", font=('Microsoft YaHei UI Light',11))
+user.place(x=30,y=80)
+user.insert(0,"Username")
+user.bind('<FocusIn>', on_enter)
+user.bind('<FocusOut>', on_leave)
 
-User_label=Label(root,text="UserName",font="times 20 bold", foreground="Purple")
-User_label.place(x=500,y=100)
+Frame(frame,width=295,height=2,bg='black').place(x=25,y=107)
 
-Password_label=Label(root,text="Password",font="times 20 bold", foreground="Purple")
-Password_label.place(x=500,y=200)
+#Password column code
+def on_enter(e):
+    password.delete(0,'end')
+def on_leave(e):
+    name=password.get()
+    if name=='':
+       password.insert(0,'Password')
 
-User_Value=StringVar()
-Password_Value=StringVar()
+password=Entry(frame,width=25,fg='black',border=0,bg='white',font=('Microsoft Yahei UI Light',11))
+password.place(x=30,y=150)
+password.insert(0,'Password')
+password.bind('<FocusIn>', on_enter)
+password.bind('<FocusOut>', on_leave)
 
-User_Entry=Entry(root,textvariable=User_Value,font="times 20 bold", foreground="Purple")
-User_Entry.place(x=630,y=100)
+Frame(frame,width=295,height=2,bg='black').place(x=25,y=177)
 
-Password_Entry=Entry(root,textvariable=Password_Value,font="times 20 bold", foreground="Purple",show="*")
-Password_Entry.place(x=630,y=200)
+#Button Code
+Button(frame,width=39,pady=7,text='LOGIN',bg='#57a1f8',fg='White',border=0).place(x=35,y=204)
+label2=Label(frame,text="Dont have an account?",fg='black',bg='white',font=('Microsoft Yahei UI Light',9))
+label2.place(x=75,y=270)
 
-loginbtn=Button(root,text="Login",foreground="white",background="purple",font="times 20 bold",command=login)
-loginbtn.place(x=700,y=300)
-# Make sure the path to the image file is correct
-image = PhotoImage(file="estate.png")
-# Create a label and set the image
-image_label = Label(root, image=image)
-image_label.place(x=0, y=0)
+signup=Button(frame,width=6,text="Sign in",border=0,bg='White',cursor='hand2',fg='#57a1f8')
+signup.place(x=215,y=270)
+
 
 root.mainloop()
