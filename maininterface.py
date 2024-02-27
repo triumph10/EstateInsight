@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import ttk
 import tkinter as tk
 
 
@@ -12,13 +13,21 @@ def create_main_window(parent):
 
     one = Label(main_window,
                 text="EstateInsight",
-                bg="#219ebc",
-                fg="mintcream",
-                font=font_info)
+                bg="#DFA878",
+                fg="black",
+                font=font_info,
+                anchor=W,
+                relief=SUNKEN,
+                bd=1,
+                pady=3)
     one.pack(fill=X, side=TOP)
+    insertButt = Button(one, text="Login", bg="#DFA878", border=0, activebackground='#B67352')
+    insertButt.pack(side=RIGHT, padx=3, pady=2)
+    insertButt = Button(one, text="Sign Up", bg="#DFA878", border=0, activebackground='#B67352')
+    insertButt.pack(side=RIGHT, padx=3, pady=2)
 
     # app color
-    main_window.configure(bg='#219ebc')
+    main_window.configure(bg='mintcream')
 
 
 
@@ -37,6 +46,60 @@ def create_main_window(parent):
     # setting up icon for window title
     icon = PhotoImage(file='estate.png')
     main_window.iconphoto(True, icon)
+
+    #setting up the toolbar for the app
+    toolbar = Frame(main_window, bg="#DFA878", relief=SUNKEN, bd=1, pady=2)
+
+    insertButt = Button(toolbar, text="Buy", bg="#DFA878", border=0, activebackground='#B67352')
+    insertButt.pack(side=LEFT, padx=20, pady=2)
+    printButt = Button(toolbar, text="Sell", bg="#DFA878", border=0, activebackground='#B67352')
+    printButt.pack(side=LEFT, padx=20, pady=2)
+    printButt = Button(toolbar, text="Rent", bg="#DFA878", border=0, activebackground='#B67352')
+    printButt.pack(side=LEFT, padx=20, pady=2)
+    printButt = Button(toolbar, text="Wishlist", bg="#DFA878", border=0,activebackground='#B67352')
+    printButt.pack(side=LEFT, padx=20, pady=2)
+    printButt = Button(toolbar, text="Help", bg="#DFA878", border=0, activebackground='#B67352')
+    printButt.pack(side=LEFT, padx=20, pady=2)
+
+    toolbar.pack(side=TOP, fill=X)
+
+    #Creating a scroll bar for the app
+    main_frame = Frame(main_window)
+    main_frame.pack(fill=BOTH, expand=1)
+
+    my_canvas = Canvas(main_frame)
+    my_canvas.pack(side=LEFT, fill=BOTH, expand=1)
+
+    my_scrollbar = ttk.Scrollbar(main_frame,
+                                 orient=VERTICAL,
+                                 command=my_canvas.yview)
+    my_scrollbar.pack(side=RIGHT, fill=Y)
+
+    my_canvas.configure(yscrollcommand=my_scrollbar.set)
+    my_canvas.bind('<Configure>',
+                   lambda e: my_canvas.configure(scrollregion = my_canvas.bbox("all")))
+
+    second_frame = Frame(my_canvas)
+
+    my_canvas.create_window((0,0), window=second_frame,
+                                   anchor='nw')
+
+    #setting up the search bar
+    def on_enter(e):
+        user.delete(0, 'end')
+
+    def on_leave(e):
+        name = user.get()
+        if name == '':
+            user.insert(0, 'Search')
+
+    user = Entry(main_window, width=25, fg='black', border=0, bg="white", font=('Microsoft YaHei UI Light', 11))
+    user.place(x=380, y=100)
+    user.insert(0, "Search")
+    user.bind('<FocusIn>', on_enter)
+    user.bind('<FocusOut>', on_leave)
+
+    Frame(main_window, width=203, height=2, bg='black').place(x=380, y=125)
 
 
 if __name__ == "__main__":
