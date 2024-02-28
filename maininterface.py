@@ -5,6 +5,7 @@ import tkinter as tk
 
 def create_main_window(parent):
     main_window = Toplevel(parent)
+
     # setting up the app
     main_window.title("EstateInsight")
     main_window.resizable(False, False)
@@ -100,6 +101,50 @@ def create_main_window(parent):
     user.bind('<FocusOut>', on_leave)
 
     Frame(main_window, width=203, height=2, bg='black').place(x=380, y=125)
+
+    #setting up view points of app
+    frame1 = Frame(second_frame,
+                   width=200,
+                   height=200,
+                   bg="#3652AD"
+                   )
+    frame1.pack(padx=100, pady=100)
+
+    left_image = PhotoImage(file='estate.png')
+    left_image_label = Label(frame1,
+                             image=left_image,
+                             bg="#3652AD")
+    left_image_label.image = left_image  # Keep a reference to the image
+    left_image_label.pack(padx=45, pady=45)
+
+    frame2 = Frame(second_frame,
+                   width=200,
+                   height=200,
+                   bg="#3652AD")
+    frame2.pack(padx=100, pady=100)
+
+    center_image = PhotoImage(file='estate.png')
+    center_image_label = Label(frame2,
+                               image=center_image,
+                               bg="#3652AD")
+    center_image_label.image = center_image
+    center_image_label.pack(padx=45, pady=45)
+
+    frame3 = Frame(second_frame,
+                   width=200,
+                   height=200,
+                   bg="#DFA878")
+    frame3.pack(padx=10, pady=10)
+
+    # Adding image to the frame
+    right_image = PhotoImage(file='estate.png')
+    right_image_label = Label(frame3,
+                              image=right_image,
+                              bg="#DFA878")
+    right_image_label.image = right_image  # Keep a reference to the image
+    right_image_label.pack(padx=45, pady=45)
+
+
 
 
 if __name__ == "__main__":
