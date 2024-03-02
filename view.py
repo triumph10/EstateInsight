@@ -1,9 +1,38 @@
 from tkinter import *
 from tkinter import ttk
-import tkinter as tk
+from PIL import Image
+from tkinter import Image as ImageTk
+import mysql.connector
+import io
 
 
-def create_main_window(parent, self=None, on_canvas_configure=None):
+def fetch_data():
+    # Connect to your MySQL database
+    connection = mysql.connector.connect(
+        host="local host",
+        user="root",
+        password="ARYA#305#varun",
+        database="databasemain"
+    )
+
+    # Create a cursor object to interact with the database
+    cursor = connection.cursor()
+
+    # Fetch image data
+    cursor.execute("SELECT productimg FROM display WHERE productid = 12")
+    productimg = cursor.fetchone()[0]
+
+    # Fetch description data
+    cursor.execute("SELECT description FROM display WHERE productid = 12")
+    description = cursor.fetchone()[0]
+
+    # Close the cursor and connection
+    cursor.close()
+    connection.close()
+
+    return productimg, description
+
+def create_main_window(parent):
     main_window = Toplevel(parent)
 
     # setting up the app
@@ -45,7 +74,7 @@ def create_main_window(parent, self=None, on_canvas_configure=None):
     main_window.geometry(f"{window_width}x{window_height}+{x_position}+{y_position}")
 
     # setting up icon for window title
-    icon = PhotoImage(file='estate.png')
+    icon = PhotoImage(file='maininterfacechitresh/estate.png')
     main_window.iconphoto(True, icon)
 
     #setting up the toolbar for the app
@@ -64,51 +93,28 @@ def create_main_window(parent, self=None, on_canvas_configure=None):
 
     toolbar.pack(side=TOP, fill=X)
 
-    main_frame = Frame(main_window)
-    main_frame.pack(fill=BOTH, expand=1)
+    # Add red boxes on the left and right for image and information
+    image_frame = Frame(main_window, bg='red', width=300, height=500)
+    image_frame.pack(side=LEFT, padx=10, pady=10)
 
-    # my_canvas = Canvas(main_frame)
-    # my_canvas.pack(side=LEFT, fill=BOTH, expand=True)
-    #
-    # my_scrollbar = Scrollbar(main_frame, orient=VERTICAL, command=my_canvas.yview)
-    # my_scrollbar.pack(side=RIGHT, fill=Y)
-    #
-    # my_canvas.configure(yscrollcommand=my_scrollbar.set)
-    # my_canvas.bind('<Configure>', lambda e: my_canvas.configure(scrollregion=my_canvas.bbox("all")))
-    #
-    # second_frame = Frame(my_canvas)
-    #
-    # my_canvas.create_window((0, 0), window=second_frame, anchor='center')
-    canvas = tk.Canvas(main_window, bg='mintcream', scrollregion=(0, 0, 2000, 5000))
-    canvas.pack(expand=True, fill='both')
+    info_frame = Frame(main_window, bg='red', width=500, height=500)
+    info_frame.place(relx=0.33, rely=0.5, anchor=CENTER)
 
-    scrollbar = ttk.Scrollbar(main_window, orient='vertical', command=canvas.yview)
-    canvas.configure(yscrollcommand=scrollbar.set)
+    # Fetch data from the database
+    image_data, description = fetch_data()
 
-    scrollbar.place(relx=1, rely=0.1, relheight=1, anchor='ne')
-    canvas.bind('<Configure>', on_canvas_configure)
+    # Convert the binary image data to a PhotoImage
+    image = Image.open(io.BytesIO(image_data))
+    image = ImageTk.PhotoImage(image)
 
+    # Create a label to display the image in the left frame
+    image_label = Label(image_frame, image=image, bg='red')
+    image_label.image = image  # To prevent image from being garbage collected
+    image_label.pack()
 
-    # Creating and packing frames inside the container
-    for i in range(1, 11):
-        frame = Frame(canvas, width=800, height=200, bg="RED")
-        frame.pack(padx=10, pady=20, fill='x',expand=True)
-
-        left_image = PhotoImage(file='estate.png')
-        left_image_label = Label(frame, image=left_image, bg="RED")
-        left_image_label.image = left_image  # Keep a reference to the image
-        left_image_label.pack(side=LEFT, padx=30)
-
-        info_label = Label(frame, text=f"Some information goes here {i}", font=("Arial", 12))
-        info_label.pack(side=LEFT, padx=10)
-
-        view_button = Button(frame, text="View")
-        view_button.pack(side=RIGHT, padx=10)
-
-        
-
-
-    main_window.mainloop()
+    # Create a label to display the description in the right frame
+    description_label = Label(info_frame, text=description, bg='red', fg='white', font=('Arial', 12))
+    description_label.pack()
 
 
 if __name__ == "__main__":
