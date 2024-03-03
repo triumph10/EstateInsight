@@ -48,7 +48,7 @@ def create_main_window(parent):
     signupbutton.grid(row=0, column=0, columnspan=3, padx=(10, 100), pady=12, sticky='ne')
 
     # setting up the toolbar for the app
-    toolbar = Frame(main_window, bg="#DFA878", relief=SUNKEN, bd=1, pady=2, height=4)
+    toolbar = Frame(main_window, bg="#DFA878", relief=SUNKEN, bd=1, pady=2)
 
     insertButt = Button(toolbar, text="Buy", bg="#DFA878", border=0, activebackground='#B67352')
     insertButt.grid(row=1, column=0, columnspan=3, padx=(10, 100), pady=10, sticky='w')
@@ -67,51 +67,34 @@ def create_main_window(parent):
 
     toolbar.grid(row=1, column=0, columnspan=3, padx=10, pady=10, sticky='ew')
 
-    # # Creating a scroll bar for the app
-    #  main_frame = Frame(main_window)
-    #  main_frame.grid(row=2, column=0, columnspan=3, padx=10, pady=10, sticky='nswe')
-    #
-    #  my_canvas = Canvas(main_frame)
-    #  my_canvas.pack(side=LEFT, fill=BOTH, expand=1)
-    #
-    #  my_scrollbar = ttk.Scrollbar(main_frame,
-    #                               orient=VERTICAL,
-    #                               command=my_canvas.yview)
-    #  my_scrollbar.pack(side=RIGHT, fill=Y)
-    #
-    #  my_canvas.configure(yscrollcommand=my_scrollbar.set)
-    #  my_canvas.bind('<Configure>',
-    #                 lambda e: my_canvas.configure(scrollregion=my_canvas.bbox("all")))
-    #
-    #  second_frame = Frame(my_canvas)
-    #
-    #  my_canvas.create_window((0, 0), window=second_frame,
-    #                          anchor='nw')
+   #Creating a scroll bar for the app
+    main_frame = Frame(main_window)
+    main_frame.grid(row=2, column=0, columnspan=3, padx=10, pady=10, sticky='nsew')
 
-    # setting up the search bar
-    def on_enter(e):
-        user.delete(0, 'end')
+    my_canvas = Canvas(main_frame)
+    my_canvas.pack(side=LEFT, fill=BOTH, expand=1)
 
-    def on_leave(e):
-        name = user.get()
-        if name == '':
-            user.insert(0, 'Search')
+    my_scrollbar = ttk.Scrollbar(main_frame,
+                                 orient=VERTICAL,
+                                 command=my_canvas.yview)
+    my_scrollbar.pack(side=RIGHT, fill=Y)
 
-    user = Entry(main_window, width=25, fg='black', border=0, bg="white", font=('Microsoft YaHei UI Light', 11))
-    user.place(x=380, y=120)
-    user.insert(0, "Search")
-    user.bind('<FocusIn>', on_enter)
-    user.bind('<FocusOut>', on_leave)
+    my_canvas.configure(yscrollcommand=my_scrollbar.set)
+    my_canvas.bind('<Configure>',
+                   lambda e: my_canvas.configure(scrollregion=my_canvas.bbox("all")))
 
-    Frame(main_window, width=203, height=2, bg='black').place(x=380, y=145)
+    # second_frame = Frame(my_canvas)
+    #
+    # my_canvas.create_window((0, 0), window=second_frame, anchor='nw')
+
 
     # setting up view points of app
-    frame1 = Frame(main_window,
+    frame1 = Frame(my_canvas,
                    width=200,
                    height=200,
                    bg="#3652AD"
                    )
-    frame1.grid(row=2, column=0, padx=10, pady=50)
+    frame1.grid(row=2, column=0, padx=10, pady=10)
 
     left_image = PhotoImage(file='estate.png')
     left_image_label = Label(frame1,
@@ -120,11 +103,11 @@ def create_main_window(parent):
     left_image_label.image = left_image  # Keep a reference to the image
     left_image_label.grid(padx=45, pady=45)
 
-    frame2 = Frame(main_window,
+    frame2 = Frame(my_canvas,
                    width=200,
                    height=200,
                    bg="#3652AD")
-    frame2.grid(row=2, column=1, padx=10, pady=50)
+    frame2.grid(row=2, column=1, padx=10, pady=10)
 
     center_image = PhotoImage(file='estate.png')
     center_image_label = Label(frame2,
@@ -133,11 +116,11 @@ def create_main_window(parent):
     center_image_label.image = center_image
     center_image_label.grid(padx=45, pady=45)
 
-    frame3 = Frame(main_window,
+    frame3 = Frame(my_canvas,
                    width=200,
                    height=200,
                    bg="#3652AD")
-    frame3.grid(row=2, column=2, padx=10, pady=50)
+    frame3.grid(row=2, column=2, padx=10, pady=10)
 
     # Adding image to the frame
     right_image = PhotoImage(file='estate.png')
@@ -147,42 +130,82 @@ def create_main_window(parent):
     right_image_label.image = right_image  # Keep a reference to the image
     right_image_label.grid(padx=45, pady=45)
 
-    frame1 = Frame(main_window,
+    frame4 = Frame(my_canvas,
                    width=200,
                    height=200,
                    bg="#3652AD"
                    )
-    frame1.grid(row=3, column=0, padx=10, pady=50)
+    frame4.grid(row=3, column=0, padx=10, pady=10)
 
     left_image = PhotoImage(file='estate.png')
-    left_image_label = Label(frame1,
+    left_image_label = Label(frame4,
                              image=left_image,
                              bg="#3652AD")
     left_image_label.image = left_image  # Keep a reference to the image
     left_image_label.grid(padx=45, pady=45)
 
-    frame2 = Frame(main_window,
+    frame5 = Frame(my_canvas,
                    width=200,
                    height=200,
                    bg="#3652AD")
-    frame2.grid(row=3, column=1, padx=10, pady=50)
+    frame5.grid(row=3, column=1, padx=10, pady=10)
 
     center_image = PhotoImage(file='estate.png')
-    center_image_label = Label(frame2,
+    center_image_label = Label(frame5,
                                image=center_image,
                                bg="#3652AD")
     center_image_label.image = center_image
     center_image_label.grid(padx=45, pady=45)
 
-    frame3 = Frame(main_window,
+    frame6 = Frame(my_canvas,
                    width=200,
                    height=200,
                    bg="#3652AD")
-    frame3.grid(row=3, column=2, padx=10, pady=50)
+    frame6.grid(row=3, column=2, padx=10, pady=10)
+
+    right_image = PhotoImage(file='estate.png')
+    right_image_label = Label(frame6,
+                              image=right_image,
+                              bg="#3652AD")
+    right_image_label.image = right_image  # Keep a reference to the image
+    right_image_label.pack(padx=45, pady=45)
+
+    frame7 = Frame(my_canvas,
+                   width=200,
+                   height=200,
+                   bg="#3652AD"
+                   )
+    frame7.grid(row=4, column=0, padx=10, pady=10)
+
+    left_image = PhotoImage(file='estate.png')
+    left_image_label = Label(frame7,
+                             image=left_image,
+                             bg="#3652AD")
+    left_image_label.image = left_image  # Keep a reference to the image
+    left_image_label.pack(padx=45, pady=45)
+
+    frame8 = Frame(my_canvas,
+                   width=200,
+                   height=200,
+                   bg="#3652AD")
+    frame8.grid(row=4, column=1, padx=10, pady=10)
+
+    center_image = PhotoImage(file='estate.png')
+    center_image_label = Label(frame8,
+                               image=center_image,
+                               bg="#3652AD")
+    center_image_label.image = center_image
+    center_image_label.pack(padx=45, pady=45)
+
+    frame9 = Frame(my_canvas,
+                   width=200,
+                   height=200,
+                   bg="#3652AD")
+    frame9.grid(row=4, column=2, padx=10, pady=10)
 
     # Adding image to the frame
     right_image = PhotoImage(file='estate.png')
-    right_image_label = Label(frame3,
+    right_image_label = Label(frame9,
                               image=right_image,
                               bg="#3652AD")
     right_image_label.image = right_image  # Keep a reference to the image

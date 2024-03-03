@@ -14,8 +14,8 @@ def create_main_window(parent):
 
     one = Label(main_window,
                 text="EstateInsight",
-                bg="#B31312",
-                fg="white",
+                bg="#DFA878",
+                fg="black",
                 font=font_info,
                 anchor=W,
                 relief=GROOVE,
@@ -24,15 +24,13 @@ def create_main_window(parent):
     one.pack(fill=X, side=TOP)
     insertButt = Button(one,
                         text="Login",
-                        bg="#B31312",
-                        fg="white",
+                        bg="#DFA878",
                         border=0,
                         activebackground='#B67352')
     insertButt.pack(side=RIGHT, padx=3, pady=2)
     insertButt = Button(one,
                         text="Sign Up",
-                        bg="#B31312",
-                        fg="white",
+                        bg="#DFA878",
                         border=0,
                         activebackground='#B67352')
     insertButt.pack(side=RIGHT, padx=3, pady=2)
@@ -59,35 +57,35 @@ def create_main_window(parent):
     main_window.iconphoto(True, icon)
 
     #setting up the toolbar for the app
-    toolbar = Frame(main_window, bg="white", relief=GROOVE, bd=1, pady=2)
+    toolbar = Frame(main_window, bg="#DFA878", relief=GROOVE, bd=1, pady=2)
 
     insertButt = Button(toolbar,
                         text="Buy",
-                        bg="white",
+                        bg="#DFA878",
                         border=0,
                         activebackground='#B67352')
     insertButt.pack(side=LEFT, padx=20, pady=2)
     printButt = Button(toolbar,
                        text="Sell",
-                       bg="white",
+                       bg="#DFA878",
                        border=0,
                        activebackground='#B67352')
     printButt.pack(side=LEFT, padx=20, pady=2)
     printButt = Button(toolbar,
                        text="Rent",
-                       bg="white",
+                       bg="#DFA878",
                        border=0,
                        activebackground='#B67352')
     printButt.pack(side=LEFT, padx=20, pady=2)
     printButt = Button(toolbar,
                        text="Wishlist",
-                       bg="white",
+                       bg="#DFA878",
                        border=0,
                        activebackground='#B67352')
     printButt.pack(side=LEFT, padx=20, pady=2)
     printButt = Button(toolbar,
                        text="Help",
-                       bg="white",
+                       bg="#DFA878",
                        border=0,
                        activebackground='#B67352')
     printButt.pack(side=LEFT, padx=20, pady=2)
@@ -125,8 +123,9 @@ def create_main_window(parent):
     user = Entry(main_window,
                  width=25,
                  fg='black',
+                 border=0,
                  bg="white",
-                 relief=GROOVE,
+                 relief=RAISED,
                  font=('Microsoft YaHei UI Light', 11))
     user.place(x=400, y=100)
     user.insert(0, "Search")
@@ -139,118 +138,105 @@ def create_main_window(parent):
     frame1 = Frame(main_window,
                    width=200,
                    height=200,
-                   bg="white",
-                   relief=GROOVE,
-                   bd=1
+                   bg="#3652AD"
                    )
     frame1.place(relx=0.1, rely=0.25)
 
     left_image = PhotoImage(file='estate.png')
     left_image_label = Label(frame1,
                              image=left_image,
-                             bg="white")
+                             bg="#3652AD")
     left_image_label.image = left_image  # Keep a reference to the image
     left_image_label.pack(padx=45, pady=45)
 
-    view_butt = Button(main_window, bg='white', bd=1, text='View')
+    view_butt = Button(main_window, bg='#DFA878', text='View')
     view_butt.place(relx=0.175, rely=0.55)
 
     frame2 = Frame(main_window,
                    width=200,
                    height=200,
-                   bg="white",
-                   bd=1,
-                   relief=GROOVE)
+                   bg="#3652AD")
     frame2.place(relx=0.4, rely=0.25)
 
     center_image = PhotoImage(file='estate.png')
     center_image_label = Label(frame2,
                                image=center_image,
-                               bg="white")
+                               bg="#3652AD")
     center_image_label.image = center_image
     center_image_label.pack(padx=45, pady=45)
 
-    view_butt = Button(main_window, bg='white', bd=1, text='View')
+    view_butt = Button(main_window, bg='#DFA878', text='View')
     view_butt.place(relx=0.475, rely=0.55)
 
     frame3 = Frame(main_window,
                    width=200,
                    height=200,
-                   bg="white",
-                   bd=1,
-                   relief=GROOVE)
+                   bg="#DFA878")
     frame3.place(relx=0.7, rely=0.25)
 
     # Adding image to the frame
     right_image = PhotoImage(file='estate.png')
     right_image_label = Label(frame3,
                               image=right_image,
-                              bg="white")
+                              bg="#DFA878")
     right_image_label.image = right_image  # Keep a reference to the image
     right_image_label.pack(padx=45, pady=45)
 
-    view_butt = Button(main_window, bg='white', bd=1, text='View')
+    view_butt = Button(main_window, bg='#DFA878', text='View')
     view_butt.place(relx=0.775, rely=0.55)
 
     frame4 = Frame(main_window,
                    width=200,
                    height=200,
-                   bg="white",
-                   bd=1,
-                   relief=GROOVE
+                   bg="#3652AD"
                    )
     frame4.place(relx=0.1, rely=0.63)
 
     left_image = PhotoImage(file='estate.png')
     left_image_label = Label(frame4,
                              image=left_image,
-                             bg="white")
+                             bg="#3652AD")
     left_image_label.image = left_image  # Keep a reference to the image
     left_image_label.pack(padx=45, pady=45)
 
-    view_butt = Button(main_window, bg='white', bd=1, text='View')
+    view_butt = Button(main_window, bg='#DFA878', text='View')
     view_butt.place(relx=0.175, rely=0.93)
 
     frame5 = Frame(main_window,
                    width=200,
                    height=200,
-                   bg="white",
-                   bd=1,
-                   relief=GROOVE)
+                   bg="#3652AD")
     frame5.place(relx=0.4, rely=0.63)
 
     center_image = PhotoImage(file='estate.png')
     center_image_label = Label(frame5,
                                image=center_image,
-                               bg="white")
+                               bg="#3652AD")
     center_image_label.image = center_image
     center_image_label.pack(padx=45, pady=45)
 
-    view_butt = Button(main_window, bg='white', bd=1, text='View')
+    view_butt = Button(main_window, bg='#DFA878',  text='View')
     view_butt.place(relx=0.475, rely=0.93)
 
     frame6 = Frame(main_window,
                    width=200,
                    height=200,
-                   bg="white",
-                   bd=1,
-                   relief=GROOVE)
+                   bg="#DFA878")
     frame6.place(relx=0.7, rely=0.63)
 
     right_image = PhotoImage(file='estate.png')
     right_image_label = Label(frame6,
                               image=right_image,
-                              bg="white")
+                              bg="#DFA878")
     right_image_label.image = right_image  # Keep a reference to the image
     right_image_label.pack(padx=45, pady=45)
 
-    view_butt = Button(main_window, bg='white', bd=1, text='View')
+    view_butt = Button(main_window, bg='#DFA878', text='View')
     view_butt.place(relx=0.775, rely=0.93)
-
 
     #setting up the next page button
 
-    next_button = Button(main_window, bg='white', text='Next>>')
+    next_button = Button(main_window, bg='#DFA878', text='Next>>')
     next_button.place(relx=0.93, rely=0.5)
 
 
