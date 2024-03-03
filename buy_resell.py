@@ -14,17 +14,17 @@ def create_main_window(parent, self=None, on_canvas_configure=None):
 
     one = Label(main_window,
                 text="EstateInsight",
-                bg="#DFA878",
-                fg="black",
+                bg="#B31312",
+                fg="white",
                 font=font_info,
                 anchor=W,
                 relief=SUNKEN,
                 bd=1,
                 pady=3)
     one.pack(fill=X, side=TOP)
-    insertButt = Button(one, text="Login", bg="#DFA878", border=0, activebackground='#B67352')
+    insertButt = Button(one, text="Login", bg="#B31312", fg='white', border=0, activebackground='#B67352')
     insertButt.pack(side=RIGHT, padx=3, pady=2)
-    insertButt = Button(one, text="Sign Up", bg="#DFA878", border=0, activebackground='#B67352')
+    insertButt = Button(one, text="Sign Up", bg="#B31312", fg='white', border=0, activebackground='#B67352')
     insertButt.pack(side=RIGHT, padx=3, pady=2)
 
     # app color
@@ -49,17 +49,17 @@ def create_main_window(parent, self=None, on_canvas_configure=None):
     main_window.iconphoto(True, icon)
 
     #setting up the toolbar for the app
-    toolbar = Frame(main_window, bg="#DFA878", relief=SUNKEN, bd=1, pady=2)
+    toolbar = Frame(main_window, bg="MINTCREAM", relief=SUNKEN, bd=1, pady=2)
 
-    insertButt = Button(toolbar, text="Buy", bg="#DFA878", border=0, activebackground='#B67352')
+    insertButt = Button(toolbar, text="Buy", bg="WHITE", border=0, activebackground='#B67352')
     insertButt.pack(side=LEFT, padx=20, pady=2)
-    printButt = Button(toolbar, text="Sell", bg="#DFA878", border=0, activebackground='#B67352')
+    printButt = Button(toolbar, text="Sell", bg="WHITE", border=0, activebackground='#B67352')
     printButt.pack(side=LEFT, padx=20, pady=2)
-    printButt = Button(toolbar, text="Rent", bg="#DFA878", border=0, activebackground='#B67352')
+    printButt = Button(toolbar, text="Rent", bg="WHITE", border=0, activebackground='#B67352')
     printButt.pack(side=LEFT, padx=20, pady=2)
-    printButt = Button(toolbar, text="Wishlist", bg="#DFA878", border=0,activebackground='#B67352')
+    printButt = Button(toolbar, text="Wishlist", bg="WHITE", border=0,activebackground='#B67352')
     printButt.pack(side=LEFT, padx=20, pady=2)
-    printButt = Button(toolbar, text="Help", bg="#DFA878", border=0, activebackground='#B67352')
+    printButt = Button(toolbar, text="Help", bg="WHITE", border=0, activebackground='#B67352')
     printButt.pack(side=LEFT, padx=20, pady=2)
 
     toolbar.pack(side=TOP, fill=X)
@@ -91,11 +91,11 @@ def create_main_window(parent, self=None, on_canvas_configure=None):
 
     # Creating and packing frames inside the container
     for i in range(1, 11):
-        frame = Frame(canvas, width=800, height=200, bg="RED")
+        frame = Frame(canvas, width=800, height=200, bg="white", bd=1, relief=GROOVE)
         frame.pack(padx=10, pady=20, fill='x',expand=True)
 
         left_image = PhotoImage(file='estate.png')
-        left_image_label = Label(frame, image=left_image, bg="RED")
+        left_image_label = Label(frame, image=left_image, bg="white")
         left_image_label.image = left_image  # Keep a reference to the image
         left_image_label.pack(side=LEFT, padx=30)
 

@@ -247,11 +247,10 @@ def create_main_window(parent):
     view_butt = Button(main_window, bg='white', bd=1, text='View')
     view_butt.place(relx=0.775, rely=0.93)
 
-
     #setting up the next page button
 
-    next_button = Button(main_window, bg='white', text='Next>>')
-    next_button.place(relx=0.93, rely=0.5)
+    prev_button = Button(main_window, bg='white',  text='<<Prev')
+    prev_button.place(relx=0.02, rely=0.5)
 
 
 
