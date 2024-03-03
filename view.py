@@ -1,38 +1,11 @@
 from tkinter import *
 from tkinter import ttk
-from PIL import Image
-from tkinter import Image as ImageTk
-import mysql.connector
+import tkinter as tk
+from PIL import Image,ImageTk
 import io
 
 
-def fetch_data():
-    # Connect to your MySQL database
-    connection = mysql.connector.connect(
-        host="local host",
-        user="root",
-        password="ARYA#305#varun",
-        database="databasemain"
-    )
-
-    # Create a cursor object to interact with the database
-    cursor = connection.cursor()
-
-    # Fetch image data
-    cursor.execute("SELECT productimg FROM display WHERE productid = 12")
-    productimg = cursor.fetchone()[0]
-
-    # Fetch description data
-    cursor.execute("SELECT description FROM display WHERE productid = 12")
-    description = cursor.fetchone()[0]
-
-    # Close the cursor and connection
-    cursor.close()
-    connection.close()
-
-    return productimg, description
-
-def create_main_window(parent):
+def create_main_window(parent, on_canvas_configure=None):
     main_window = Toplevel(parent)
 
     # setting up the app
@@ -43,17 +16,17 @@ def create_main_window(parent):
 
     one = Label(main_window,
                 text="EstateInsight",
-                bg="#DFA878",
-                fg="black",
+                bg="RED",
+                fg="White",
                 font=font_info,
                 anchor=W,
                 relief=SUNKEN,
                 bd=1,
                 pady=3)
     one.pack(fill=X, side=TOP)
-    insertButt = Button(one, text="Login", bg="#DFA878", border=0, activebackground='#B67352')
+    insertButt = Button(one, text="Login", bg="RED", border=0, activebackground='White')
     insertButt.pack(side=RIGHT, padx=3, pady=2)
-    insertButt = Button(one, text="Sign Up", bg="#DFA878", border=0, activebackground='#B67352')
+    insertButt = Button(one, text="Sign Up", bg="RED", border=0, activebackground='White')
     insertButt.pack(side=RIGHT, padx=3, pady=2)
 
     # app color
@@ -78,43 +51,96 @@ def create_main_window(parent):
     main_window.iconphoto(True, icon)
 
     #setting up the toolbar for the app
-    toolbar = Frame(main_window, bg="#DFA878", relief=SUNKEN, bd=1, pady=2)
+    toolbar = Frame(main_window, bg="WHite", relief=SUNKEN, bd=1, pady=2)
 
-    insertButt = Button(toolbar, text="Buy", bg="#DFA878", border=0, activebackground='#B67352')
+    insertButt = Button(toolbar, text="Buy", bg="White", border=0, activebackground='#B67352')
     insertButt.pack(side=LEFT, padx=20, pady=2)
-    printButt = Button(toolbar, text="Sell", bg="#DFA878", border=0, activebackground='#B67352')
+    printButt = Button(toolbar, text="Sell", bg="White", border=0, activebackground='#B67352')
     printButt.pack(side=LEFT, padx=20, pady=2)
-    printButt = Button(toolbar, text="Rent", bg="#DFA878", border=0, activebackground='#B67352')
+    printButt = Button(toolbar, text="Rent", bg="White", border=0, activebackground='#B67352')
     printButt.pack(side=LEFT, padx=20, pady=2)
-    printButt = Button(toolbar, text="Wishlist", bg="#DFA878", border=0,activebackground='#B67352')
+    printButt = Button(toolbar, text="Wishlist", bg="White", border=0,activebackground='#B67352')
     printButt.pack(side=LEFT, padx=20, pady=2)
-    printButt = Button(toolbar, text="Help", bg="#DFA878", border=0, activebackground='#B67352')
+    printButt = Button(toolbar, text="Help", bg="White", border=0, activebackground='#B67352')
     printButt.pack(side=LEFT, padx=20, pady=2)
 
     toolbar.pack(side=TOP, fill=X)
 
-    # Add red boxes on the left and right for image and information
-    image_frame = Frame(main_window, bg='red', width=300, height=500)
-    image_frame.pack(side=LEFT, padx=10, pady=10)
+    #Frame 1 where image is to be viewed
+    frame1 = Frame(main_window, width=400, height=900, bg="White")
+    frame1.pack(side=LEFT, padx=40, pady=50)
 
-    info_frame = Frame(main_window, bg='red', width=500, height=500)
-    info_frame.place(relx=0.33, rely=0.5, anchor=CENTER)
+    img = ImageTk.PhotoImage(Image.open('maindoor.jpeg'))
+    Label2 = Label(frame1, image=img, width=300, height=300,padx='10',pady='10')
+    Label2.pack(side=TOP)
 
-    # Fetch data from the database
-    image_data, description = fetch_data()
+    def imagechange():
+        image1 = ImageTk.PhotoImage(Image.open('Livingroom.jpeg'),Image.open('Bedroom.jpeg'))
+        Label2.configure(image=image1)
+        Label2.image = image1
 
-    # Convert the binary image data to a PhotoImage
-    image = Image.open(io.BytesIO(image_data))
-    image = ImageTk.PhotoImage(image)
+    top_label = Label(frame1, text="MazzGhar", font=("Arial", 12, "bold"), bg='White')
+    top_label.place(relx=0.5, rely=0.00, anchor='n')
 
-    # Create a label to display the image in the left frame
-    image_label = Label(image_frame, image=image, bg='red')
-    image_label.image = image  # To prevent image from being garbage collected
-    image_label.pack()
+    button = Button(frame1, text=">>",padx='10',pady='10',command=imagechange)
+    button.pack(side=TOP,pady='10')
 
-    # Create a label to display the description in the right frame
-    description_label = Label(info_frame, text=description, bg='red', fg='white', font=('Arial', 12))
-    description_label.pack()
+    #Frame 2 where information is to be displayed
+    frame2 = Frame(main_window, width =600,height=700,bg='White')
+    frame2.pack(side=RIGHT,padx=10,pady=10)
+
+    text = "Carpet Area\n1104 sqft\n₹31,703/sqft"
+    label1 = Label(frame2, text=text, anchor=NW, justify=LEFT)
+    label1.place(x=10, y=10)
+
+    text2 = "Floor\n2 (Out of 13 Floors)"
+    label2 = Label(frame2, text=text2, anchor=NW, justify=LEFT)
+    label2.place(x=150, y=10)
+
+    text3 = "Trasaction type\nResale"
+    label3 = Label(frame2, text=text3, anchor=NW, justify=LEFT)
+    label3.place(x=320, y=10)
+
+    text4 = "Status\n Ready To Move"
+    label4 = Label(frame2, text=text4, anchor=NW, justify=LEFT)
+    label4.place(x=450, y=10)
+
+    labels_to_bold = [label1, label2 , label3, label4]
+
+    for label in labels_to_bold:
+        label.config(font=("Arial", 8, "bold"), pady=10)
+
+    vertical_spacing = 80
+
+    y_coordinate_label5 = label1.winfo_y() + label1.winfo_height() + vertical_spacing
+
+    text5 = ("More Details\n\nPrice Breakup : ₹3.5 Cr | ₹17,50,000 Approx. Registration Charges | ₹8,500 Monthly\n\n"
+             "Booking Amount : ₹100000\n\n"
+             "Address : Jai Arati plot no 2930 Swastik Park Near Kali Bari Temple Chembur East Mumbai \nMaharashtra 400071,"
+             " Chembur, Mumbai - Harbour Line, Maharashtra\n\nLandmarks : kali bari Temple\n\nFurnishing : Unfurnished\n\n"
+             "Flooring : Vitrified\n\nType of Ownership : Co-operative Society\n\n"
+             "Overlooking : Garden/Park, Main Road\n\n"
+             "Age of Construction : 5 to 10 years\n\n"
+             "Water Availability : 24 Hours Available\n\n"
+             "Status of Electricity : No/Rare Powercut")
+    label5 = Label(frame2, text=text5, font=("Arial", 10), anchor=NW, justify=LEFT)
+    label5.place(x=10, y=y_coordinate_label5)
+
+
+    button = Button(frame2, text="Contact Owner", padx='10', pady='10', bg='RED', fg='White')
+    button.place(x=200, y=490)
+
+
+
+
+
+
+
+
+
+
+
+    main_window.mainloop()
 
 
 if __name__ == "__main__":

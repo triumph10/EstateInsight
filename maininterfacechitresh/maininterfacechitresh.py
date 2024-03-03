@@ -118,7 +118,7 @@ def create_main_window(parent):
                              image=left_image,
                              bg="#3652AD")
     left_image_label.image = left_image  # Keep a reference to the image
-    left_image_label.pack(padx=45, pady=45)
+    left_image_label.grid(padx=45, pady=45)
 
     frame2 = Frame(main_window,
                    width=200,
@@ -131,7 +131,7 @@ def create_main_window(parent):
                                image=center_image,
                                bg="#3652AD")
     center_image_label.image = center_image
-    center_image_label.pack(padx=45, pady=45)
+    center_image_label.grid(padx=45, pady=45)
 
     frame3 = Frame(main_window,
                    width=200,
@@ -145,7 +145,7 @@ def create_main_window(parent):
                               image=right_image,
                               bg="#3652AD")
     right_image_label.image = right_image  # Keep a reference to the image
-    right_image_label.pack(padx=45, pady=45)
+    right_image_label.grid(padx=45, pady=45)
 
     frame1 = Frame(main_window,
                    width=200,
@@ -159,7 +159,7 @@ def create_main_window(parent):
                              image=left_image,
                              bg="#3652AD")
     left_image_label.image = left_image  # Keep a reference to the image
-    left_image_label.pack(padx=45, pady=45)
+    left_image_label.grid(padx=45, pady=45)
 
     frame2 = Frame(main_window,
                    width=200,
@@ -172,7 +172,7 @@ def create_main_window(parent):
                                image=center_image,
                                bg="#3652AD")
     center_image_label.image = center_image
-    center_image_label.pack(padx=45, pady=45)
+    center_image_label.grid(padx=45, pady=45)
 
     frame3 = Frame(main_window,
                    width=200,
@@ -186,7 +186,7 @@ def create_main_window(parent):
                               image=right_image,
                               bg="#3652AD")
     right_image_label.image = right_image  # Keep a reference to the image
-    right_image_label.pack(padx=45, pady=45)
+    right_image_label.grid(padx=45, pady=45)
 
 
     # Configure column sizes
