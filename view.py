@@ -20,7 +20,7 @@ def create_main_window(parent, on_canvas_configure=None):
                 fg="White",
                 font=font_info,
                 anchor=W,
-                relief=SUNKEN,
+                relief=GROOVE,
                 bd=1,
                 pady=3)
     one.pack(fill=X, side=TOP)
@@ -67,7 +67,7 @@ def create_main_window(parent, on_canvas_configure=None):
     toolbar.pack(side=TOP, fill=X)
 
     #Frame 1 where image is to be viewed
-    frame1 = Frame(main_window, width=400, height=900, bg="White")
+    frame1 = Frame(main_window, width=400, height=900, bg="White", relief=GROOVE, bd=1)
     frame1.pack(side=LEFT, padx=40, pady=50)
 
     img = ImageTk.PhotoImage(Image.open('maindoor.jpeg'))
@@ -90,19 +90,19 @@ def create_main_window(parent, on_canvas_configure=None):
     frame2.pack(side=RIGHT,padx=10,pady=10)
 
     text = "Carpet Area\n1104 sqft\n₹31,703/sqft"
-    label1 = Label(frame2, text=text, anchor=NW, justify=LEFT)
+    label1 = Label(frame2, text=text, anchor=NW, justify=LEFT, bd=1, relief=GROOVE)
     label1.place(x=10, y=10)
 
     text2 = "Floor\n2 (Out of 13 Floors)"
-    label2 = Label(frame2, text=text2, anchor=NW, justify=LEFT)
+    label2 = Label(frame2, text=text2, anchor=NW, justify=LEFT, bd=1, relief=GROOVE)
     label2.place(x=150, y=10)
 
     text3 = "Trasaction type\nResale"
-    label3 = Label(frame2, text=text3, anchor=NW, justify=LEFT)
+    label3 = Label(frame2, text=text3, anchor=NW, justify=LEFT, bd=1, relief=GROOVE)
     label3.place(x=320, y=10)
 
     text4 = "Status\n Ready To Move"
-    label4 = Label(frame2, text=text4, anchor=NW, justify=LEFT)
+    label4 = Label(frame2, text=text4, anchor=NW, justify=LEFT, bd=1, relief=GROOVE)
     label4.place(x=450, y=10)
 
     labels_to_bold = [label1, label2 , label3, label4]
@@ -123,7 +123,7 @@ def create_main_window(parent, on_canvas_configure=None):
              "Age of Construction : 5 to 10 years\n\n"
              "Water Availability : 24 Hours Available\n\n"
              "Status of Electricity : No/Rare Powercut")
-    label5 = Label(frame2, text=text5, font=("Arial", 10), anchor=NW, justify=LEFT)
+    label5 = Label(frame2, text=text5, font=("Arial", 10), anchor=NW, justify=LEFT, bd=1, relief=GROOVE)
     label5.place(x=10, y=y_coordinate_label5)
 
 
