@@ -22,7 +22,7 @@ window.geometry(f"{window_width}x{window_height}+{x_position}+{y_position}")
 window.configure(background="#219ebc")
 
 # Setting up the icon for the window
-icon = PhotoImage(file='estate.png')
+icon = PhotoImage(file='Images/estate.png')
 window.iconphoto(True, icon)
 
 # Setting up the font
@@ -32,7 +32,7 @@ font_info = ("Arial", 15, "bold")
 font_button = ("Arial", 10, "bold")
 
 # Setting up the intro for the image label
-photo = PhotoImage(file='estate.png')
+photo = PhotoImage(file='Images/estate.png')
 language_language_label = Label(window,
                                 text="EstateInsight",
                                 font=font_moodlift,

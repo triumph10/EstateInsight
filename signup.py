@@ -1,6 +1,8 @@
 from tkinter import *
 from tkinter import messagebox
 import ast
+from maininterface import create_main_window
+
 
 window=Tk()
 window.title("SignUp")
@@ -18,7 +20,7 @@ y_position = int((screen_height - window_height) / 2)
 window.geometry(f"{window_width}x{window_height}+{x_position}+{y_position}")
 
 #img PhotoImage(file='login.png')
-img = PhotoImage(file='estate.png')
+img = PhotoImage(file='Images/estate.png')
 Label(window,image=img,bg="white").place(x=170,y=200)
 
 #image=img
@@ -90,7 +92,17 @@ user.bind("<FocusOut>", on_leave)
 Frame(frame, width=295, height=2, bg="black").place(x=25,y=327)
 
 #signup button
-Button(frame, width=39, pady=7,text='Sign Up', bg='#B31312',fg='white', border=0).place(x=35,y=390)
+
+def new_window():
+    window.withdraw()  # Hide the main window
+    main_window = create_main_window(window)
+    main_window.protocol("WM_DELETE_WINDOW", lambda: close_windows(window, main_window))
+
+
+def close_windows(main_window, popup_window):
+    popup_window.destroy()
+    main_window.destroy()
+Button(frame, width=39, pady=7,text='Sign Up', bg='#B31312',fg='white', border=0,command=new_window).place(x=35,y=390)
 
 #I have an acc
 label = Label(frame, text='I have an account', fg='black', bg='white', font=('Microsoft YaHei UI Light',9))
