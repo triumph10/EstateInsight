@@ -84,8 +84,8 @@ def create_main_window(parent, on_canvas_configure=None):
         mapwidget.pack()
 
         # Create a map widget for Mumbai
-        marker_1 = mapwidget.set_address("khadakpada,kalyan,thane,india", marker=True)
-        marker_1.set_text("khadakpada,kalyan,thane,india")
+        marker_1 = mapwidget.set_address("kasarvadavli,thane,india", marker=True)
+        marker_1.set_text("kasarvadavli,thane,india")
 
 
 
