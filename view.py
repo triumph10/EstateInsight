@@ -3,6 +3,7 @@ from tkinter import ttk
 import tkinter as tk
 from PIL import Image,ImageTk
 import io
+import tkintermapview
 
 
 def create_main_window(parent, on_canvas_configure=None):
@@ -74,6 +75,20 @@ def create_main_window(parent, on_canvas_configure=None):
     Label2 = Label(frame1, image=img, width=300, height=300,padx='10',pady='10')
     Label2.pack(side=TOP)
 
+    def open_mumbaimap_window():
+        # # Create a new window for Mumbai map
+        # mumbai_window = tk.Toplevel(window)
+        # mumbai_window.title("Mumbai Map")
+
+        mapwidget = tkintermapview.TkinterMapView(tk.Toplevel(window), width=420, height=400, corner_radius=0)
+        mapwidget.pack()
+
+        # Create a map widget for Mumbai
+        marker_1 = mapwidget.set_address("khadakpada,kalyan,thane,india", marker=True)
+        marker_1.set_text("khadakpada,kalyan,thane,india")
+
+
+
     def imagechange():
         image1 = ImageTk.PhotoImage(Image.open('Livingroom.jpeg'),Image.open('Bedroom.jpeg'))
         Label2.configure(image=image1)
@@ -130,7 +145,15 @@ def create_main_window(parent, on_canvas_configure=None):
     button = Button(frame2, text="Contact Owner", padx='10', pady='10', bg='RED', fg='White')
     button.place(x=200, y=490)
 
-
+    that_button = Button(frame2,
+                         text="View Location",
+                         foreground='#f7f7f7',
+                         background='RED',
+                         activeforeground='#E43A19',
+                         activebackground='RED',
+                         command=open_mumbaimap_window,
+                         font=('Microsoft',12))
+    that_button.place(relx=0.65, rely=0.85)
 
 
 
