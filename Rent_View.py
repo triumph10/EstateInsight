@@ -48,7 +48,7 @@ def create_main_window(parent, on_canvas_configure=None):
     main_window.geometry(f"{window_width}x{window_height}+{x_position}+{y_position}")
 
     # setting up icon for window title
-    icon = PhotoImage(file='estate.png')
+    icon = PhotoImage(file='Images/estate.png')
     main_window.iconphoto(True, icon)
 
     #setting up the toolbar for the app
@@ -71,7 +71,7 @@ def create_main_window(parent, on_canvas_configure=None):
     frame1 = Frame(main_window, width=400, height=900, bg="White", relief=GROOVE, bd=1)
     frame1.pack(side=LEFT, padx=40, pady=50)
 
-    img = ImageTk.PhotoImage(Image.open('maindoor.jpeg'))
+    img = ImageTk.PhotoImage(Image.open('Images/maindoor.jpeg'))
     Label2 = Label(frame1, image=img, width=300, height=300,padx='10',pady='10')
     Label2.pack(side=TOP)
 
@@ -88,7 +88,7 @@ def create_main_window(parent, on_canvas_configure=None):
         marker_1.set_text("AP Shah Institute of Technology,kasarvadavli,thane,india")
 
     def imagechange():
-        image1 = ImageTk.PhotoImage(Image.open('Livingroom.jpeg'),Image.open('Bedroom.jpeg'))
+        image1 = ImageTk.PhotoImage(Image.open('Images/Livingroom.jpeg'), Image.open('Images/Bedroom.jpeg'))
         Label2.configure(image=image1)
         Label2.image = image1
 

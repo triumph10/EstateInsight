@@ -21,7 +21,7 @@ class signup:
         self.root.geometry(f"{self.root_width}x{self.root_height}+{x_position}+{y_position}")
 
         # img PhotoImage(file='login.png')
-        self.img = PhotoImage(file='estate.png')
+        self.img = PhotoImage(file='Images/estate.png')
         Label(root, image=self.img, bg="white").place(x=170, y=200)
 
         # image=img

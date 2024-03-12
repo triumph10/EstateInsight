@@ -55,7 +55,7 @@ def create_main_window(parent):
     main_window.geometry(f"{window_width}x{window_height}+{x_position}+{y_position}")
 
     # setting up icon for window title
-    icon = PhotoImage(file='estate.png')
+    icon = PhotoImage(file='Images/estate.png')
     main_window.iconphoto(True, icon)
 
     #setting up the toolbar for the app
@@ -145,7 +145,7 @@ def create_main_window(parent):
                    )
     frame1.place(relx=0.1, rely=0.25)
 
-    left_image = PhotoImage(file='estate.png')
+    left_image = PhotoImage(file='Images/estate.png')
     left_image_label = Label(frame1,
                              image=left_image,
                              bg="white")
@@ -163,7 +163,7 @@ def create_main_window(parent):
                    relief=GROOVE)
     frame2.place(relx=0.4, rely=0.25)
 
-    center_image = PhotoImage(file='estate.png')
+    center_image = PhotoImage(file='Images/estate.png')
     center_image_label = Label(frame2,
                                image=center_image,
                                bg="white")
@@ -182,7 +182,7 @@ def create_main_window(parent):
     frame3.place(relx=0.7, rely=0.25)
 
     # Adding image to the frame
-    right_image = PhotoImage(file='estate.png')
+    right_image = PhotoImage(file='Images/estate.png')
     right_image_label = Label(frame3,
                               image=right_image,
                               bg="white")
@@ -201,7 +201,7 @@ def create_main_window(parent):
                    )
     frame4.place(relx=0.1, rely=0.63)
 
-    left_image = PhotoImage(file='estate.png')
+    left_image = PhotoImage(file='Images/estate.png')
     left_image_label = Label(frame4,
                              image=left_image,
                              bg="white")
@@ -219,7 +219,7 @@ def create_main_window(parent):
                    relief=GROOVE)
     frame5.place(relx=0.4, rely=0.63)
 
-    center_image = PhotoImage(file='estate.png')
+    center_image = PhotoImage(file='Images/estate.png')
     center_image_label = Label(frame5,
                                image=center_image,
                                bg="white")
@@ -237,7 +237,7 @@ def create_main_window(parent):
                    relief=GROOVE)
     frame6.place(relx=0.7, rely=0.63)
 
-    right_image = PhotoImage(file='estate.png')
+    right_image = PhotoImage(file='Images/estate.png')
     right_image_label = Label(frame6,
                               image=right_image,
                               bg="white")

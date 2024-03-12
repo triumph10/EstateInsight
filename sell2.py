@@ -7,7 +7,7 @@ import tkintermapview
 
 main_window = tk.Tk()
 
-add_user_pic = tk.PhotoImage(file='estate.png')
+add_user_pic = tk.PhotoImage(file='Images/estate.png')
 
 # def create_main_window(parent):
 #     main_window = Toplevel(parent)
@@ -45,7 +45,7 @@ y_position = int((screen_height - window_height) / 2)
 main_window.geometry(f"{window_width}x{window_height}+{x_position}+{y_position}")
 
 # setting up icon for window title
-icon = PhotoImage(file='estate.png')
+icon = PhotoImage(file='Images/estate.png')
 main_window.iconphoto(True, icon)
 
 #setting up the main parts

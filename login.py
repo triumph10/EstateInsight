@@ -1,5 +1,7 @@
 from tkinter import *
 from tkinter import messagebox
+from maininterface import create_main_window
+
 
 
 class Login:
@@ -10,7 +12,7 @@ class Login:
         self.root.configure(bg="white")
         self.root.resizable(False, False)
 
-        self.img = PhotoImage(file='estate.png')
+        self.img = PhotoImage(file='Images/estate.png')
         Label(root, image=self.img, bg="white").place(x=150, y=150)
 
         frame = Frame(root, width=350, height=350, bg="white")
@@ -69,3 +71,5 @@ class Login:
 root=Tk()
 obj = Login(root)
 root.mainloop()
+
+
