@@ -88,11 +88,11 @@ def create_main_window(parent, on_canvas_configure=None):
         marker_1.set_text("kasarvadavli,thane,india")
 
     def imagechange():
-        image1 = ImageTk.PhotoImage(Image.open('Images/Livingroom.jpeg'), Image.open('Images/Bedroom.jpeg'))
+        image1 = ImageTk.PhotoImage(Image.open('Images/Screenshot 2024-03-11 204626.png'), Image.open('Images/Screenshot 2024-03-11 204626.png'))
         Label2.configure(image=image1)
         Label2.image = image1
 
-    top_label = Label(frame1, text="MazzGhar", font=("Arial", 12, "bold"), bg='White')
+    top_label = Label(frame1, text="Heaven Homes", font=("Arial", 12, "bold"), bg='White')
     top_label.place(relx=0.5, rely=0.00, anchor='n')
 
     button = Button(frame1, text=">>",padx='10',pady='10',command=imagechange)
@@ -102,7 +102,7 @@ def create_main_window(parent, on_canvas_configure=None):
     frame2 = Frame(main_window, width =600,height=700,bg='White')
     frame2.pack(side=RIGHT,padx=10,pady=10)
 
-    text = "Carpet Area\n1104 sqft\n₹31,703/sqft"
+    text = "Carpet Area\n1166 sqft\n₹12,864/sqft"
     label1 = Label(frame2, text=text, anchor=NW, justify=LEFT, bd=1, relief=GROOVE)
     label1.place(x=10, y=10)
 
@@ -127,11 +127,11 @@ def create_main_window(parent, on_canvas_configure=None):
 
     y_coordinate_label5 = label1.winfo_y() + label1.winfo_height() + vertical_spacing
 
-    text5 = ("More Details\n\nPrice Breakup : ₹3.5 Cr | ₹17,50,000 Approx. Registration Charges | ₹8,500 Monthly\n\n"
+    text5 = ("More Details\n\nPrice Breakup : ₹1.5 Cr | ₹7,50,000 Approx. Registration Charges | ₹8,500 Monthly\n\n"
              "Booking Amount : ₹100000\n\n"
-             "Address : Jai Arati plot no 2930 Swastik Park Near Kali Bari Temple Chembur East Mumbai \nMaharashtra 400071,"
-             " Chembur, Mumbai - Harbour Line, Maharashtra\n\nLandmarks : kali bari Temple\n\nFurnishing : Unfurnished\n\n"
-             "Flooring : Vitrified\n\nType of Ownership : Co-operative Society\n\n"
+             "Address : Global city, Virar West, Virar West, Mumbai \nMaharashtra 400071,"
+             " Chembur, Mumbai - Harbour Line, Maharashtra\n\nLandmarks : Smarath internation school,global city virar west.\n\nFurnishing : Unfurnished\n\n"
+             "Flooring : Vitrified\n\nType of Ownership : Villa\n\n"
              "Overlooking : Garden/Park, Main Road\n\n"
              "Age of Construction : 5 to 10 years\n\n"
              "Water Availability : 24 Hours Available\n\n"
