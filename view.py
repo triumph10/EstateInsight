@@ -99,7 +99,6 @@ def create_main_window(parent, on_canvas_configure=None):
 
     button = Button(frame1, text=">>",padx='10',pady='10',command=imagechange)
     button.pack(side=TOP,pady='10')
-
     #Frame 2 where information is to be displayed
     frame2 = Frame(main_window, width =600,height=700,bg='White')
     frame2.pack(side=RIGHT,padx=10,pady=10)

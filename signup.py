@@ -1,6 +1,8 @@
 from tkinter import *
 from tkinter import messagebox
 import ast
+import mysql.connector as mysql
+
 
 window=Tk()
 window.title("SignUp")
@@ -97,6 +99,44 @@ label = Label(frame, text='I have an account', fg='black', bg='white', font=('Mi
 label.place(x=90,y=440)
 
 #Login button
-signin= Button(frame, width=6, text='Log in', border=0, bg='#B31312', cursor='hand2', fg='white')
+signin= Button(frame, width=6, text='Log in', border=0, bg='#B31312', cursor='hand2', fg='white',command = "")
 signin.place(x=200,y=440)
+
+# database connection code
+def Add():
+    username = code.get()
+    name = user.get()
+    password = confirm_pass.get()
+
+
+# Connect to the database
+db = mysql.connect(
+    host="localhost",
+    user="root",
+    password="ARYA#305#varun",
+    database="estateinsights"
+)
+mycursor = db.cursor()
+
+try:
+    # Define the SQL query
+    sql = "INSERT INTO signup (username, name, password) VALUES (%s, %s, %s)"
+
+    # Execute the query with the user input as parameters
+    mycursor.execute(sql, (username, name, password))
+    db.commit()
+
+    # Show a success message
+    messagebox.showinfo("Success", "User added successfully!")
+
+except mysql.Error as err:
+    # Handle any database errors
+    messagebox.showerror("Error", f"Database Error: {err}")
+
+finally:
+    # Close the database connection
+    mycursor.close()
+    db.close()
+
+
 window.mainloop()
