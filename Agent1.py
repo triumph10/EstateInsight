@@ -1,12 +1,13 @@
 from tkinter import *
 from tkinter import ttk
-import tkinter as tk
+
 
 main_window = Tk()
 
+img_butt_add = PhotoImage(file='Images/profile.png')
 
-# def create_main_window(parent, self=None, on_canvas_configure=None):
-#     main_window = Toplevel(parent)
+
+
 
     # setting up the app
 main_window.title("EstateInsight")
@@ -50,26 +51,117 @@ main_window.geometry(f"{window_width}x{window_height}+{x_position}+{y_position}"
 icon = PhotoImage(file='Images/estate.png')
 main_window.iconphoto(True, icon)
 
-#setting up the main widgets
+                                      #setting up the main widgets
 
-frame1 = Frame(main_window, width=800, height=200, bg="white", bd=1, relief=GROOVE)
-# frame1.pack(padx=10, pady=5, fill='x')
-frame1.place(relx=0.02,rely=0.05)
+#1st frame
+whole_fm1 = Frame(main_window, highlightthickness=2, width=450, height=200, bg='white', highlightbackground='black')
 
-left_image = PhotoImage(file='Images/estate.png')
-left_image_label = Label(frame1, image=left_image, bg="white")
-left_image_label.image = left_image  # Keep a reference to the image
-left_image_label.pack(side=LEFT, padx=30)
+frame1 = Frame(whole_fm1, background='white',highlightbackground='black',
+                         highlightthickness=2)
+img_butt = Button(frame1, image=img_butt_add, bd=1, width=120, height=120)
+img_butt.pack()
+frame1.place(relx=0.03, rely=0.06)
 
-info_label = Label(frame1, text=f"Insert Name", font=("Arial", 12))
-info_label.pack(side=LEFT, padx=10)
+chat_button = Button(whole_fm1, text="Chat", bg='#B31312', fg='white')
+chat_button.place(relx=0.12, rely=0.76)
 
-view_button = Button(frame1, text="Chat", bg="#B31312", fg='white')
-view_button.pack(side=RIGHT, padx=10)
+name_label = Label(whole_fm1, text='Insert Name', font=('Bold',17), bg='white')
+name_label.place(relx=0.35, rely=0.09)
+
+email_label = Label(whole_fm1, text='Email:', font=('Bold',15), bg='white')
+email_label.place(relx=0.35, rely=0.3)
+ename_label = Label(whole_fm1, text='Insert Email', font=(15), bg='white')
+ename_label.place(relx=0.49, rely=0.3)
+
+phone_label = Label(whole_fm1, text='Phone No:', font=('Bold',15), bg='white')
+phone_label.place(relx=0.35,rely=0.49)
+number_label = Label(whole_fm1, text='Insert No.', font=(15), bg='white')
+number_label.place(relx=0.58, rely=0.49)
+
+whole_fm1.place(relx=0.02, rely=0.1)
+
+#2nd frame
+whole_fm2 = Frame(main_window, highlightthickness=2, width=450, height=200, bg='white', highlightbackground='black')
+
+frame2 = Frame(whole_fm2, background='white',highlightbackground='black',
+                         highlightthickness=2)
+img_butt = Button(frame2, image=img_butt_add, bd=1, width=120, height=120)
+img_butt.pack()
+frame2.place(relx=0.03, rely=0.06)
+
+chat_button = Button(whole_fm2, text="Chat", bg='#B31312', fg='white')
+chat_button.place(relx=0.12, rely=0.76)
+
+name_label = Label(whole_fm2, text='Insert Name', font=('Bold',17), bg='white')
+name_label.place(relx=0.35, rely=0.09)
+
+email_label = Label(whole_fm2, text='Email:', font=('Bold',15), bg='white')
+email_label.place(relx=0.35, rely=0.3)
+ename_label = Label(whole_fm2, text='Insert Email', font=(15), bg='white')
+ename_label.place(relx=0.49, rely=0.3)
+
+phone_label = Label(whole_fm2, text='Phone No:', font=('Bold',15), bg='white')
+phone_label.place(relx=0.35,rely=0.49)
+number_label = Label(whole_fm2, text='Insert No.', font=(15), bg='white')
+number_label.place(relx=0.58, rely=0.49)
+
+whole_fm2.place(relx=0.5, rely=0.1)
+
+#3rd frame
+whole_fm3 = Frame(main_window, highlightthickness=2, width=450, height=200, bg='white', highlightbackground='black')
+
+frame3 = Frame(whole_fm3, background='white',highlightbackground='black',
+                         highlightthickness=2)
+img_butt = Button(frame3, image=img_butt_add, bd=1, width=120, height=120)
+img_butt.pack()
+frame3.place(relx=0.03, rely=0.06)
+
+chat_button = Button(whole_fm3, text="Chat", bg='#B31312', fg='white')
+chat_button.place(relx=0.12, rely=0.76)
+
+name_label = Label(whole_fm3, text='Insert Name', font=('Bold',17), bg='white')
+name_label.place(relx=0.35, rely=0.09)
+
+email_label = Label(whole_fm3, text='Email:', font=('Bold',15), bg='white')
+email_label.place(relx=0.35, rely=0.3)
+ename_label = Label(whole_fm3, text='Insert Email', font=(15), bg='white')
+ename_label.place(relx=0.49, rely=0.3)
+
+phone_label = Label(whole_fm3, text='Phone No:', font=('Bold',15), bg='white')
+phone_label.place(relx=0.35,rely=0.49)
+number_label = Label(whole_fm3, text='Insert No.', font=(15), bg='white')
+number_label.place(relx=0.58, rely=0.49)
+
+whole_fm3.place(relx=0.02, rely=0.5)
+
+#4th frame
+whole_fm4 = Frame(main_window, highlightthickness=2, width=450, height=200, bg='white', highlightbackground='black')
+
+frame4 = Frame(whole_fm4, background='white',highlightbackground='black',
+                         highlightthickness=2)
+img_butt = Button(frame4, image=img_butt_add, bd=1, width=120, height=120)
+img_butt.pack()
+frame4.place(relx=0.03, rely=0.06)
+
+chat_button = Button(whole_fm4, text="Chat", bg='#B31312', fg='white')
+chat_button.place(relx=0.12, rely=0.76)
+
+name_label = Label(whole_fm4, text='Insert Name', font=('Bold',17), bg='white')
+name_label.place(relx=0.35, rely=0.09)
+
+email_label = Label(whole_fm4, text='Email:', font=('Bold',15), bg='white')
+email_label.place(relx=0.35, rely=0.3)
+ename_label = Label(whole_fm4, text='Insert Email', font=(15), bg='white')
+ename_label.place(relx=0.49, rely=0.3)
+
+phone_label = Label(whole_fm4, text='Phone No:', font=('Bold',15), bg='white')
+phone_label.place(relx=0.35,rely=0.49)
+number_label = Label(whole_fm4, text='Insert No.', font=(15), bg='white')
+number_label.place(relx=0.58, rely=0.49)
+
+whole_fm4.place(relx=0.5, rely=0.5)
+
+
 
 main_window.mainloop()
 
-    # if __name__ == "__main__":
-    #     window = Tk()
-    #     create_main_window(window)
-    #     window.mainloop()
