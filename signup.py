@@ -1,8 +1,6 @@
 from tkinter import *
 from tkinter import messagebox
 import ast
-import mysql.connector as mysql
-
 
 class signup:
     def __init__(self, root):
@@ -89,15 +87,24 @@ class signup:
             if user.get() == '':
                 user.insert(0, 'Confirm Password')
 
+        user = Entry(frame, width=25, fg='black', border=0, bg='white', font=('Microsoft Yahel UI Light', 11))
+        user.place(x=30, y=300)
+        user.insert(0, 'Confirm Password')
+        user.bind("<FocusIn>", on_enter)
+        user.bind("<FocusOut>", on_leave)
 
-        #Login button
-        signin= Button(frame, width=6, text='Log in', border=0, bg='#B31312', cursor='hand2', fg='white',command = "login")
-        signin.place(x=200,y=440)
+        Frame(frame, width=295, height=2, bg="black").place(x=25, y=327)
 
+        # signup button
+        Button(frame, width=39, pady=7, text='Sign Up', bg='#B31312', fg='white', border=0).place(x=35, y=390)
 
+        # I have an acc
+        label = Label(frame, text='I have an account', fg='black', bg='white', font=('Microsoft YaHei UI Light', 9))
+        label.place(x=90, y=440)
 
-
-
+        # Login button
+        signin = Button(frame, width=6, text='Log in', border=0, bg='#B31312', cursor='hand2', fg='white',command=self.login_page)
+        signin.place(x=200, y=440)
 
     def login_page(self):
         self.root.destroy()
@@ -106,4 +113,3 @@ class signup:
 root=Tk()
 obj = signup(root)
 root.mainloop()
-

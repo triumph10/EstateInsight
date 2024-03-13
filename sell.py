@@ -331,10 +331,10 @@ class sell1:
         radio_frame = Frame(root, bg="mintcream")
         radio_frame.grid(row=5, column=0, columnspan=5, sticky="n")
 
-        ownerImage = PhotoImage(file='icons/ownership30.png')
-        agentImage = PhotoImage(file='icons/real-estate-agent30.png')
-        builderImage = PhotoImage(file='icons/builder30.png')
-        sellerImages = [ownerImage, agentImage, builderImage]
+        self.ownerImage = PhotoImage(file='icons/ownership30.png')
+        self.agentImage = PhotoImage(file='icons/real-estate-agent30.png')
+        self.builderImage = PhotoImage(file='icons/builder30.png')
+        sellerImages = [self.ownerImage, self.agentImage, self.builderImage]
 
         # Use grid to arrange radio buttons horizontally
         x = IntVar()
