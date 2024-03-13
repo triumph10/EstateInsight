@@ -1,6 +1,6 @@
 from tkinter import *
 import tkinter as tk
-from maininterface import create_main_window
+
 
 # Setting Up the app
 window = Tk()
