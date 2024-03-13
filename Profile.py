@@ -9,7 +9,7 @@ main_window = tk.Tk()
 add_user_pic = tk.PhotoImage(file='Images/estate.png')
 
 # def create_main_window(parent):
-#     main_window = Toplevel(parent)
+# main_window = Toplevel(parent)
 
 # setting up the app
 main_window.title("EstateInsight")

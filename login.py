@@ -1,9 +1,6 @@
 from tkinter import *
 from tkinter import messagebox
 
-
-
-
 class Login:
     def __init__(self, root):
         self.root = root
