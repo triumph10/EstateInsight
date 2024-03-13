@@ -59,11 +59,17 @@ class maininterface2:
         # setting up the toolbar for the app
         toolbar = Frame(root, bg="white", relief=GROOVE, bd=1, pady=2)
 
+        printButt = Button(toolbar,
+                           text="Home",
+                           bg="white",
+                           border=0,
+                           activebackground='#B67352', command=self.home)
+        printButt.pack(side=LEFT, padx=20, pady=2)
         insertButt = Button(toolbar,
                             text="Buy",
                             bg="white",
                             border=0,
-                            activebackground='#B67352')
+                            activebackground='#B67352',command = self.buy)
         insertButt.pack(side=LEFT, padx=20, pady=2)
         printButt = Button(toolbar,
                            text="Sell",
@@ -75,7 +81,7 @@ class maininterface2:
                            text="Rent",
                            bg="white",
                            border=0,
-                           activebackground='#B67352')
+                           activebackground='#B67352',command = self.rent)
         printButt.pack(side=LEFT, padx=20, pady=2)
         printButt = Button(toolbar,
                            text="Wishlist",
@@ -227,8 +233,21 @@ class maininterface2:
 
         # setting up the next page button
 
-        prev_button = Button(root, bg='white', text='<<Prev')
+        prev_button = Button(root, bg='white', text='<<Prev',command = self.back)
         prev_button.place(relx=0.02, rely=0.5)
+
+    def buy(self):
+        self.root.destroy()
+        import buy1
+    def back(self):
+        self.root.destroy()
+        import maininterface
+    def home(self):
+        self.root.destroy()
+        import maininterface
+    def rent(self):
+        self.root.destroy()
+        import Rent1
 
 
 

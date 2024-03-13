@@ -48,12 +48,17 @@ class rent1:
 
         # setting up the toolbar for the app
         toolbar = Frame(root, bg="MINTCREAM", relief=SUNKEN, bd=1, pady=2)
-
-        insertButt = Button(toolbar, text="Buy", bg="WHITE", border=0, activebackground='#B67352')
+        printButt = Button(toolbar,
+                           text="Home",
+                           bg="white",
+                           border=0,
+                           activebackground='#B67352', command=self.home)
+        printButt.pack(side=LEFT, padx=20, pady=2)
+        insertButt = Button(toolbar, text="Buy", bg="WHITE", border=0, activebackground='#B67352',command = self.buy)
         insertButt.pack(side=LEFT, padx=20, pady=2)
         printButt = Button(toolbar, text="Sell", bg="WHITE", border=0, activebackground='#B67352')
         printButt.pack(side=LEFT, padx=20, pady=2)
-        printButt = Button(toolbar, text="Rent", bg="#B31312", border=1, relief=RAISED, fg='white')
+        printButt = Button(toolbar, text="Rent", bg="#B31312", border=1, relief=RAISED, fg='white',command = self.rent)
         printButt.pack(side=LEFT, padx=20, pady=2)
         printButt = Button(toolbar, text="Wishlist", bg="WHITE", border=0, activebackground='#B67352')
         printButt.pack(side=LEFT, padx=20, pady=2)
@@ -82,6 +87,20 @@ class rent1:
 
             next_button = Button(root, bg='white', text='Next>>')
             next_button.place(relx=0.93, rely=0.93)
+
+    def buy(self):
+        self.root.destroy()
+        import buy1
+    def next(self):
+        self.root.destroy()
+        import maininterface2
+    def home(self):
+        self.root.destroy()
+        import maininterface
+    def rent(self):
+        self.root.destroy()
+        import Rent1
+
 
 root=Tk()
 obj = rent1(root)
