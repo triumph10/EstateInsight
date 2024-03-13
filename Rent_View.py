@@ -48,7 +48,7 @@ def create_main_window(parent, on_canvas_configure=None):
     main_window.geometry(f"{window_width}x{window_height}+{x_position}+{y_position}")
 
     # setting up icon for window title
-    icon = PhotoImage(file='maininterfacechitresh/estate.png')
+    icon = PhotoImage(file='Images/estate.png')
     main_window.iconphoto(True, icon)
 
     #setting up the toolbar for the app
@@ -84,8 +84,8 @@ def create_main_window(parent, on_canvas_configure=None):
         mapwidget.pack()
 
         # Create a map widget for Mumbai
-        marker_1 = mapwidget.set_address("kasarvadavli,thane,india", marker=True)
-        marker_1.set_text("kasarvadavli,thane,india")
+        marker_1 = mapwidget.set_address("AP Shah Institute of Technology,kasarvadavli,thane,india", marker=True)
+        marker_1.set_text("AP Shah Institute of Technology,kasarvadavli,thane,india")
 
     def imagechange():
         image1 = ImageTk.PhotoImage(Image.open('Images/Livingroom.jpeg'), Image.open('Images/Bedroom.jpeg'))
