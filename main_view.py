@@ -6,7 +6,7 @@ import io
 import tkintermapview
 
 
-class rentview:
+class mainview:
     def __init__(self,root):
         self.root = root
         # setting up the app
@@ -15,7 +15,7 @@ class rentview:
 
         font_info = ("Arial", 15, "bold")
 
-        one = Label(root,
+        one = Label(self.root,
                     text="EstateInsight",
                     bg="RED",
                     fg="White",
@@ -46,7 +46,7 @@ class rentview:
         self.root.geometry(f"{window_width}x{window_height}+{x_position}+{y_position}")
 
         # setting up icon for window title
-        self.icon = PhotoImage(file='Images/estate.png')
+        self.icon = PhotoImage(file='maininterfacechitresh/estate.png')
         self.root.iconphoto(True, self.icon)
 
         # setting up the toolbar for the app
@@ -69,8 +69,8 @@ class rentview:
         frame1 = Frame(root, width=400, height=900, bg="White", relief=GROOVE, bd=1)
         frame1.pack(side=LEFT, padx=40, pady=50)
 
-        img = ImageTk.PhotoImage(Image.open('Images/maindoor.jpeg'))
-        Label2 = Label(frame1, image=img, width=300, height=300, padx='10', pady='10')
+        self.img = ImageTk.PhotoImage(Image.open('Images/maindoor.jpeg'))
+        Label2 = Label(frame1, image=self.img, width=300, height=300, padx='10', pady='10')
         Label2.pack(side=TOP)
 
         def open_mumbaimap_window():
@@ -82,15 +82,16 @@ class rentview:
             mapwidget.pack()
 
             # Create a map widget for Mumbai
-            marker_1 = mapwidget.set_address("AP Shah Institute of Technology,kasarvadavli,thane,india", marker=True)
-            marker_1.set_text("AP Shah Institute of Technology,kasarvadavli,thane,india")
+            marker_1 = mapwidget.set_address("kasarvadavli,thane,india", marker=True)
+            marker_1.set_text("kasarvadavli,thane,india")
 
         def imagechange():
-            image1 = ImageTk.PhotoImage(Image.open('Images/Livingroom.jpeg'), Image.open('Images/Bedroom.jpeg'))
-            Label2.configure(image=image1)
-            Label2.image = image1
+            self.image1 = ImageTk.PhotoImage(Image.open('Images/Screenshot 2024-03-11 204626.png'),
+                                        Image.open('Images/Screenshot 2024-03-11 204626.png'))
+            Label2.configure(image=self.image1)
+            Label2.image = self.image1
 
-        top_label = Label(frame1, text="MazzGhar", font=("Arial", 12, "bold"), bg='White')
+        top_label = Label(frame1, text="Heaven Homes", font=("Arial", 12, "bold"), bg='White')
         top_label.place(relx=0.5, rely=0.00, anchor='n')
 
         button = Button(frame1, text=">>", padx='10', pady='10', command=imagechange)
@@ -100,7 +101,7 @@ class rentview:
         frame2 = Frame(root, width=600, height=700, bg='White')
         frame2.pack(side=RIGHT, padx=10, pady=10)
 
-        text = "Carpet Area\n1104 sqft\n₹31,703/sqft"
+        text = "Carpet Area\n1166 sqft\n₹12,864/sqft"
         label1 = Label(frame2, text=text, anchor=NW, justify=LEFT, bd=1, relief=GROOVE)
         label1.place(x=10, y=10)
 
@@ -125,16 +126,15 @@ class rentview:
 
         y_coordinate_label5 = label1.winfo_y() + label1.winfo_height() + vertical_spacing
 
-        text5 = (
-            "More Details\n\nPrice Breakup : ₹3.5 Cr | ₹17,50,000 Approx. Registration Charges | ₹8,500 Monthly\n\n"
-            "Booking Amount : ₹100000\n\n"
-            "Address : Jai Arati plot no 2930 Swastik Park Near Kali Bari Temple Chembur East Mumbai \nMaharashtra 400071,"
-            " Chembur, Mumbai - Harbour Line, Maharashtra\n\nLandmarks : kali bari Temple\n\nFurnishing : Unfurnished\n\n"
-            "Flooring : Vitrified\n\nType of Ownership : Co-operative Society\n\n"
-            "Overlooking : Garden/Park, Main Road\n\n"
-            "Age of Construction : 5 to 10 years\n\n"
-            "Water Availability : 24 Hours Available\n\n"
-            "Status of Electricity : No/Rare Powercut")
+        text5 = ("More Details\n\nPrice Breakup : ₹1.5 Cr | ₹7,50,000 Approx. Registration Charges | ₹8,500 Monthly\n\n"
+                 "Booking Amount : ₹100000\n\n"
+                 "Address : Global city, Virar West, Virar West, Mumbai \nMaharashtra 400071,"
+                 " Chembur, Mumbai - Harbour Line, Maharashtra\n\nLandmarks : Smarath internation school,global city virar west.\n\nFurnishing : Unfurnished\n\n"
+                 "Flooring : Vitrified\n\nType of Ownership : Villa\n\n"
+                 "Overlooking : Garden/Park, Main Road\n\n"
+                 "Age of Construction : 5 to 10 years\n\n"
+                 "Water Availability : 24 Hours Available\n\n"
+                 "Status of Electricity : No/Rare Powercut")
         label5 = Label(frame2, text=text5, font=("Arial", 10), anchor=NW, justify=LEFT, bd=1, relief=GROOVE)
         label5.place(x=10, y=y_coordinate_label5)
 
@@ -151,8 +151,18 @@ class rentview:
                              font=('Microsoft', 12))
         that_button.place(relx=0.65, rely=0.85)
 
-root = Tk()
-obj = rentview(root)
+
+
+
+
+
+
+
+
+
+
+
+
+root=Tk()
+obj = mainview(root)
 root.mainloop()
-
-

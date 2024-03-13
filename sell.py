@@ -27,7 +27,7 @@ def create_main_window(parent):
     main_window.geometry(f"{window_width}x{window_height}+{x_position}+{y_position}")
 
     # setting up icon for window title
-    icon = PhotoImage(file='estate.png')
+    icon = PhotoImage(file='Images/estate.png')
     main_window.iconphoto(True, icon)
 
     one = Label(main_window,

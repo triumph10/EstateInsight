@@ -4,139 +4,106 @@ import ast
 import mysql.connector as mysql
 
 
-window=Tk()
-window.title("SignUp")
-window.geometry('900x700+350+150')
-window.configure(bg='white')
-window.resizable(False, False)
-window_width = 1000
-window_height = 660
-screen_width = window.winfo_screenwidth()
-screen_height = window.winfo_screenheight()
+class signup:
+    def __init__(self, root):
+        self.root = root
 
-x_position = int((screen_width - window_width) / 2)
-y_position = int((screen_height - window_height) / 2)
+        self.root.title("SignUp")
+        self.root.geometry('900x700+350+150')
+        self.root.configure(bg='white')
+        self.root.resizable(False, False)
+        self.root_width = 1000
+        self.root_height = 660
+        screen_width = self.root.winfo_screenwidth()
+        screen_height = self.root.winfo_screenheight()
 
-window.geometry(f"{window_width}x{window_height}+{x_position}+{y_position}")
+        x_position = int((screen_width - self.root_width) / 2)
+        y_position = int((screen_height - self.root_height) / 2)
 
-#img PhotoImage(file='login.png')
-img = PhotoImage(file='estate.png')
-Label(window,image=img,bg="white").place(x=170,y=200)
+        self.root.geometry(f"{self.root_width}x{self.root_height}+{x_position}+{y_position}")
 
-#image=img
-frame=Frame(window,width=450,height=490,bg='white')
-frame.place(x=480,y=50)
+        # img PhotoImage(file='login.png')
+        self.img = PhotoImage(file='Images/estate.png')
+        Label(root, image=self.img, bg="white").place(x=170, y=200)
 
-heading=Label(frame, text='Sign Up', fg="BLACK",bg="white", font=('Microsoft Yahei UI Light', 23,'bold'))
-heading.place(x=100,y=2)
+        # image=img
+        frame = Frame(root, width=450, height=490, bg='white')
+        frame.place(x=480, y=50)
 
+        heading = Label(frame, text='Sign Up', fg="BLACK", bg="white", font=('Microsoft Yahei UI Light', 23, 'bold'))
+        heading.place(x=100, y=2)
 
-#create username
-def on_enter(e):
-    code.delete(0,'end')
-def on_leave(e):
-    if code.get()=='':
-        code.insert(0,'Create a new Username')
+        # create username
+        def on_enter(e):
+            code.delete(0, 'end')
 
-code = Entry(frame, width=25, fg='black', border=0, bg= 'white', font=('Microsoft Yahel UI Light',11))
-code.place(x=30,y=150)
-code.insert(0, 'Create a new Username')
-code.bind("<FocusIn>",on_enter)
-code.bind("<FocusOut>", on_leave)
+        def on_leave(e):
+            if code.get() == '':
+                code.insert(0, 'Create a new Username')
 
-Frame(frame, width=295, height=2, bg="BLACK").place(x=25,y=177)
+        code = Entry(frame, width=25, fg='black', border=0, bg='white', font=('Microsoft Yahel UI Light', 11))
+        code.place(x=30, y=150)
+        code.insert(0, 'Create a new Username')
+        code.bind("<FocusIn>", on_enter)
+        code.bind("<FocusOut>", on_leave)
 
-#Enter name
-def on_enter(e):
-    user.delete(0,'end')
-def on_leave(e):
-    if user.get()=='':
-        user.insert(0,'Enter your Name')
+        Frame(frame, width=295, height=2, bg="BLACK").place(x=25, y=177)
 
-user = Entry(frame, width=25, fg='black', border=0, bg= 'white', font=('Microsoft Yahel UI Light',11))
-user.place(x=30,y=80)
-user.insert(0, 'Enter your Name')
-user.bind("<FocusIn>",on_enter)
-user.bind("<FocusOut>", on_leave)
+        # Enter name
+        def on_enter(e):
+            user.delete(0, 'end')
 
-Frame(frame, width=295, height=2, bg="black").place(x=25,y=107)
+        def on_leave(e):
+            if user.get() == '':
+                user.insert(0, 'Enter your Name')
 
-#create password
-def on_enter(e):
-    confirm_pass.delete(0,'end')
-def on_leave(e):
-    if confirm_pass.get()=='':
-        confirm_pass.insert(0,'Create Password')
+        user = Entry(frame, width=25, fg='black', border=0, bg='white', font=('Microsoft Yahel UI Light', 11))
+        user.place(x=30, y=80)
+        user.insert(0, 'Enter your Name')
+        user.bind("<FocusIn>", on_enter)
+        user.bind("<FocusOut>", on_leave)
 
-confirm_pass = Entry(frame, width=25, fg='black', border=0, bg= 'white', font=('Microsoft Yahel UI Light',11))
-confirm_pass.place(x=30,y=220)
-confirm_pass.insert(0, 'Create Password')
-confirm_pass.bind("<FocusIn>",on_enter)
-confirm_pass.bind("<FocusOut>", on_leave)
+        Frame(frame, width=295, height=2, bg="black").place(x=25, y=107)
 
-Frame(frame, width=295, height=2, bg="black").place(x=25,y=247)
+        # create password
+        def on_enter(e):
+            confirm_pass.delete(0, 'end')
 
-#confirm password
-def on_enter(e):
-    user.delete(0,'end')
-def on_leave(e):
-    if user.get()=='':
-        user.insert(0,'Confirm Password')
+        def on_leave(e):
+            if confirm_pass.get() == '':
+                confirm_pass.insert(0, 'Create Password')
 
-user = Entry(frame, width=25, fg='black', border=0, bg= 'white', font=('Microsoft Yahel UI Light',11))
-user.place(x=30,y=300)
-user.insert(0, 'Confirm Password')
-user.bind("<FocusIn>",on_enter)
-user.bind("<FocusOut>", on_leave)
+        confirm_pass = Entry(frame, width=25, fg='black', border=0, bg='white', font=('Microsoft Yahel UI Light', 11))
+        confirm_pass.place(x=30, y=220)
+        confirm_pass.insert(0, 'Create Password')
+        confirm_pass.bind("<FocusIn>", on_enter)
+        confirm_pass.bind("<FocusOut>", on_leave)
 
-Frame(frame, width=295, height=2, bg="black").place(x=25,y=327)
+        Frame(frame, width=295, height=2, bg="black").place(x=25, y=247)
 
-#signup button
-Button(frame, width=39, pady=7,text='Sign Up', bg='#B31312',fg='white', border=0).place(x=35,y=390)
+        # confirm password
+        def on_enter(e):
+            user.delete(0, 'end')
 
-#I have an acc
-label = Label(frame, text='I have an account', fg='black', bg='white', font=('Microsoft YaHei UI Light',9))
-label.place(x=90,y=440)
-
-#Login button
-signin= Button(frame, width=6, text='Log in', border=0, bg='#B31312', cursor='hand2', fg='white',command = "")
-signin.place(x=200,y=440)
-
-# database connection code
-def Add():
-    username = code.get()
-    name = user.get()
-    password = confirm_pass.get()
+        def on_leave(e):
+            if user.get() == '':
+                user.insert(0, 'Confirm Password')
 
 
-# Connect to the database
-db = mysql.connect(
-    host="localhost",
-    user="root",
-    password="ARYA#305#varun",
-    database="estateinsights"
-)
-mycursor = db.cursor()
-
-try:
-    # Define the SQL query
-    sql = "INSERT INTO signup (username, name, password) VALUES (%s, %s, %s)"
-
-    # Execute the query with the user input as parameters
-    mycursor.execute(sql, (username, name, password))
-    db.commit()
-
-    # Show a success message
-    messagebox.showinfo("Success", "User added successfully!")
-
-except mysql.Error as err:
-    # Handle any database errors
-    messagebox.showerror("Error", f"Database Error: {err}")
-
-finally:
-    # Close the database connection
-    mycursor.close()
-    db.close()
+        #Login button
+        signin= Button(frame, width=6, text='Log in', border=0, bg='#B31312', cursor='hand2', fg='white',command = "login")
+        signin.place(x=200,y=440)
 
 
-window.mainloop()
+
+
+
+
+    def login_page(self):
+        self.root.destroy()
+        import login
+
+root=Tk()
+obj = signup(root)
+root.mainloop()
+
