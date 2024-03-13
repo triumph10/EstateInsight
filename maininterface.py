@@ -254,6 +254,7 @@ class maininterface:
     def buy(self):
         self.root.destroy()
         import buy1
+        import login
 
 
 root=Tk()
