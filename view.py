@@ -112,11 +112,19 @@ class view:
         label3 = Label(frame2, text=text3, anchor=NW, justify=LEFT, bd=1, relief=GROOVE)
         label3.place(x=320, y=10)
 
+
+        button = Button(frame1, text=">>",padx='10',pady='10',command=imagechange)
+        button.pack(side=TOP,pady='10')
+        #Frame 2 where information is to be displayed
+        frame2 = Frame(root, width =600,height=700,bg='White')
+        frame2.pack(side=RIGHT,padx=10,pady=10)
+
         text4 = "Status\n Ready To Move"
         label4 = Label(frame2, text=text4, anchor=NW, justify=LEFT, bd=1, relief=GROOVE)
         label4.place(x=450, y=10)
 
         labels_to_bold = [label1, label2, label3, label4]
+
 
         for label in labels_to_bold:
             label.config(font=("Arial", 8, "bold"), pady=10)

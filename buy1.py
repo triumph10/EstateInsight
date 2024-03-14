@@ -47,8 +47,13 @@ class buy1:
 
         # setting up the toolbar for the app
         toolbar = Frame(root, bg="MINTCREAM", relief=SUNKEN, bd=1, pady=2)
-
-        insertButt = Button(toolbar, text="Buy", bg="#B31312", border=1, relief=RAISED, fg='white')
+        printButt = Button(toolbar,
+                           text="Home",
+                           bg="white",
+                           border=0,
+                           activebackground='#B67352', command=self.home)
+        printButt.pack(side=LEFT, padx=20, pady=2)
+        insertButt = Button(toolbar, text="Buy", bg="#B31312", border=1, relief=RAISED, fg='white',command = self.buy )
         insertButt.pack(side=LEFT, padx=20, pady=2)
         printButt = Button(toolbar, text="Sell", bg="WHITE", border=0, activebackground='#B67352')
         printButt.pack(side=LEFT, padx=20, pady=2)
@@ -84,6 +89,12 @@ class buy1:
             next_button.place(relx=0.93, rely=0.93)
 
 
+    def home(self):
+        self.root.destroy()
+        import maininterface
+    def buy(self):
+        self.root.destroy()
+        import buy1
 
 root=Tk()
 obj = buy1(root)
