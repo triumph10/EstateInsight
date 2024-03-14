@@ -3,7 +3,7 @@ from tkinter import ttk
 import tkinter as tk
 
 
-class maininterface:
+class maininterface2:
     def __init__(self, root):
         self.root = root
         # setting up the app
@@ -20,22 +20,21 @@ class maininterface:
                     anchor=W,
                     relief=GROOVE,
                     bd=1,
-                    height=5)
+                    height=1)
         one.pack(fill=X, side=TOP)
-        insertButt = Button(one,
-                            text="Login",
-                            bg="#B31312",
-                            fg="white",
-                            border=0,
-                            activebackground='#B67352')
-        insertButt.pack(side=RIGHT, padx=3, pady=2)
-        insertButt = Button(one,
-                            text="Sign Up",
-                            bg="#B31312",
-                            fg="white",
-                            border=0,
-                            activebackground='#B67352')
-        insertButt.pack(side=RIGHT, padx=3, pady=2)
+        name_label = Label(one,
+                           text='Insert Name',
+                           bg='#B31312',
+                           fg='white',
+                           bd=0)
+        name_label.place(relx=0.85, rely=0.1)  # name
+        down_arrow = Menubutton(one, text='˅', bd=0, bg='#B31312', fg='white')
+        down_arrow.pack()
+        down_arrow.menu = Menu(down_arrow)
+        down_arrow["menu"] = down_arrow.menu
+        down_arrow.menu.add_checkbutton(label="Profile")
+        down_arrow.menu.add_checkbutton(label="Agents")
+        down_arrow.place(relx=0.92)  # drop down arrow
 
         # app color
         self.root.configure(bg='mintcream')
@@ -53,8 +52,8 @@ class maininterface:
         self.root.geometry(f"{window_width}x{window_height}+{x_position}+{y_position}")
 
         # setting up icon for window title
-        self.icon = PhotoImage(file='Images/estate.png')
-        self.root.iconphoto(True, self.icon)
+        icon = PhotoImage(file='Images/estate.png')
+        self.root.iconphoto(True, icon)
 
         # setting up the toolbar for the app
         toolbar = Frame(root, bg="white", relief=GROOVE, bd=1, pady=2)
@@ -63,51 +62,35 @@ class maininterface:
                             text="Buy",
                             bg="white",
                             border=0,
-                            command=self.buy)
+                            activebackground='#B67352')
         insertButt.pack(side=LEFT, padx=20, pady=2)
         printButt = Button(toolbar,
                            text="Sell",
                            bg="white",
-                           border=0)
+                           border=0,
+                           activebackground='#B67352')
         printButt.pack(side=LEFT, padx=20, pady=2)
         printButt = Button(toolbar,
                            text="Rent",
                            bg="white",
-                           border=0)
+                           border=0,
+                           activebackground='#B67352')
         printButt.pack(side=LEFT, padx=20, pady=2)
         printButt = Button(toolbar,
                            text="Wishlist",
                            bg="white",
-                           border=0)
+                           border=0,
+                           activebackground='#B67352')
         printButt.pack(side=LEFT, padx=20, pady=2)
         printButt = Button(toolbar,
                            text="Help",
                            bg="white",
-                           border=0)
+                           border=0,
+                           activebackground='#B67352')
         printButt.pack(side=LEFT, padx=20, pady=2)
 
         toolbar.pack(side=TOP, fill=X)
 
-        # Creating a scroll bar for the app
-
-        # my_canvas = Canvas(main_frame)
-        # my_canvas.pack(side=LEFT, fill=BOTH, expand=1)
-        #
-        # my_scrollbar = ttk.Scrollbar(main_frame,
-        #                              orient=VERTICAL,
-        #                              command=my_canvas.yview)
-        # my_scrollbar.pack(side=RIGHT, fill=Y)
-        #
-        # my_canvas.configure(yscrollcommand=my_scrollbar.set)
-        # my_canvas.bind('<Configure>',
-        #                lambda e: my_canvas.configure(scrollregion = my_canvas.bbox("all")))
-        #
-        # second_frame = Frame(my_canvas)
-        #
-        # my_canvas.create_window((0,0), window=second_frame,
-        #                                anchor='nw')
-
-        # setting up the search bar
         def on_enter(e):
             user.delete(0, 'end')
 
@@ -116,7 +99,7 @@ class maininterface:
             if name == '':
                 user.insert(0, 'Search')
 
-        user = Entry(root,
+        user = Entry(self.root,
                      width=25,
                      fg='black',
                      bg="white",
@@ -141,8 +124,8 @@ class maininterface:
 
         self.left_image = PhotoImage(file='Images/estate.png')
         self.left_image_label = Label(frame1,
-                                      image=self.left_image,
-                                      bg="white")
+                                 image=self.left_image,
+                                 bg="white")
         self.left_image_label.image = self.left_image  # Keep a reference to the image
         self.left_image_label.pack(padx=45, pady=45)
 
@@ -159,8 +142,8 @@ class maininterface:
 
         self.center_image = PhotoImage(file='Images/estate.png')
         self.center_image_label = Label(frame2,
-                                        image=self.center_image,
-                                        bg="white")
+                                   image=self.center_image,
+                                   bg="white")
         self.center_image_label.image = self.center_image
         self.center_image_label.pack(padx=45, pady=45)
 
@@ -176,12 +159,12 @@ class maininterface:
         frame3.place(relx=0.7, rely=0.25)
 
         # Adding image to the frame
-        right_image = PhotoImage(file='Images/estate.png')
-        right_image_label = Label(frame3,
-                                  image=right_image,
+        self.right_image = PhotoImage(file='Images/estate.png')
+        self.right_image_label = Label(frame3,
+                                  image=self.right_image,
                                   bg="white")
-        right_image_label.image = right_image  # Keep a reference to the image
-        right_image_label.pack(padx=45, pady=45)
+        self.right_image_label.image = self.right_image  # Keep a reference to the image
+        self.right_image_label.pack(padx=45, pady=45)
 
         view_butt = Button(root, bg='white', bd=1, text='View')
         view_butt.place(relx=0.775, rely=0.55)
@@ -195,11 +178,11 @@ class maininterface:
                        )
         frame4.place(relx=0.1, rely=0.63)
 
-        left_image = PhotoImage(file='Images/estate.png')
+        self.left_image = PhotoImage(file='Images/estate.png')
         left_image_label = Label(frame4,
-                                 image=left_image,
+                                 image=self.left_image,
                                  bg="white")
-        left_image_label.image = left_image  # Keep a reference to the image
+        left_image_label.image = self.left_image  # Keep a reference to the image
         left_image_label.pack(padx=45, pady=45)
 
         view_butt = Button(root, bg='white', bd=1, text='View')
@@ -213,11 +196,11 @@ class maininterface:
                        relief=GROOVE)
         frame5.place(relx=0.4, rely=0.63)
 
-        center_image = PhotoImage(file='Images/estate.png')
+        self.center_image = PhotoImage(file='Images/estate.png')
         center_image_label = Label(frame5,
-                                   image=center_image,
+                                   image=self.center_image,
                                    bg="white")
-        center_image_label.image = center_image
+        center_image_label.image = self.center_image
         center_image_label.pack(padx=45, pady=45)
 
         view_butt = Button(root, bg='white', bd=1, text='View')
@@ -231,11 +214,11 @@ class maininterface:
                        relief=GROOVE)
         frame6.place(relx=0.7, rely=0.63)
 
-        right_image = PhotoImage(file='Images/estate.png')
+        self.right_image = PhotoImage(file='Images/estate.png')
         right_image_label = Label(frame6,
-                                  image=right_image,
+                                  image=self.right_image,
                                   bg="white")
-        right_image_label.image = right_image  # Keep a reference to the image
+        right_image_label.image = self.right_image  # Keep a reference to the image
         right_image_label.pack(padx=45, pady=45)
 
         view_butt = Button(root, bg='white', bd=1, text='View')
@@ -243,14 +226,12 @@ class maininterface:
 
         # setting up the next page button
 
-        next_button = Button(root, bg='white', text='Next>>')
-        next_button.place(relx=0.93, rely=0.5)
+        prev_button = Button(root, bg='white', text='<<Prev')
+        prev_button.place(relx=0.02, rely=0.5)
 
-    def buy(self):
-        self.root.destroy()
-        import buy1
+
 
 
 root=Tk()
-obj = maininterface(root)
+obj = maininterface2(root)
 root.mainloop()
