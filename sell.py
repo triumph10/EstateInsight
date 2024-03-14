@@ -158,7 +158,7 @@ class sell1:
                 radiobutton.grid(row=3, column=index, padx=15, pady=30)
             submit_butt = Button(root, text="Save",
                                  font=('Bold', 15), bg='#B31312',
-                                 fg='white', bd=1)
+                                 fg='white', bd=1,command=self.sell2)
             submit_butt.place(relx=0.458, rely=0.9)
             frame1.place(relx=0.1, rely=0.25)
 
@@ -243,7 +243,7 @@ class sell1:
             submit_butt = Button(root, text="Save",
                                  font=('Bold', 15), bg='#B31312',
                                  fg='white', bd=1)
-            submit_butt.place(relx=0.458, rely=0.9)
+            submit_butt.place(relx=0.458, rely=0.9,command=self.sell2)
             frame1.place(relx=0.1, rely=0.25)
 
         def builder_function():
@@ -270,7 +270,7 @@ class sell1:
             Frame(root, width=295, height=2, bg="black").grid(row=10, column=0, padx=350, pady=80)
             submit_butt = Button(root, text="Save",
                                  font=('Bold', 15), bg='#B31312',
-                                 fg='white', bd=1)
+                                 fg='white', bd=1,command=self.sell2)
             submit_butt.place(relx=0.458, rely=0.9)
             label2 = Label(root, padx=100, text="Property Location", font=("Microsoft Sans", 14), bg="mintcream")
             label2.grid(row=18, column=0, columnspan=5, sticky="n")  # location LABEL
@@ -360,6 +360,10 @@ class sell1:
                 command=command
             )
             radiobutton.grid(row=3, column=index, padx=15)
+
+    def sell2(self):
+        self.root.destroy()
+        import sell2
 
 root = Tk()
 obj = sell1(root)

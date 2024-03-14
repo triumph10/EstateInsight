@@ -64,6 +64,9 @@ class Login:
     def signup_page(self):
         self.root.destroy()
         import signup
+    def home(self):
+        self.root.destroy()
+        
 
 root=Tk()
 obj = Login(root)

@@ -55,9 +55,9 @@ class buy1:
         printButt.pack(side=LEFT, padx=20, pady=2)
         insertButt = Button(toolbar, text="Buy", bg="#B31312", border=1, relief=RAISED, fg='white',command = self.buy )
         insertButt.pack(side=LEFT, padx=20, pady=2)
-        printButt = Button(toolbar, text="Sell", bg="WHITE", border=0, activebackground='#B67352')
+        printButt = Button(toolbar, text="Sell", bg="WHITE", border=0, activebackground='#B67352',command=self.sell)
         printButt.pack(side=LEFT, padx=20, pady=2)
-        printButt = Button(toolbar, text="Rent", bg="WHITE", border=0, activebackground='#B67352')
+        printButt = Button(toolbar, text="Rent", bg="WHITE", border=0, activebackground='#B67352',command=self.rent)
         printButt.pack(side=LEFT, padx=20, pady=2)
         printButt = Button(toolbar, text="Wishlist", bg="WHITE", border=0, activebackground='#B67352')
         printButt.pack(side=LEFT, padx=20, pady=2)
@@ -68,25 +68,43 @@ class buy1:
 
 
         # Creating and packing frames inside the container
-        for i in range(1, 11):
-            frame = Frame(root, width=800, height=200, bg="white", bd=1, relief=GROOVE)
-            frame.pack(padx=10, pady=20, fill='x', expand=True)
 
-            self.left_image = PhotoImage(file='Images/estate.png')
-            self.left_image_label = Label(frame, image=self.left_image, bg="white")
-            self.left_image_label.image = self.left_image  # Keep a reference to the image
-            self.left_image_label.pack(side=LEFT, padx=30)
+        frame = Frame(root, width=800, height=200, bg="white", bd=1, relief=GROOVE,highlightbackground='black',highlightthickness=2)
+        frame.pack(padx=10, pady=20, fill='x')
 
-            info_label = Label(frame, text=f"Some information goes here {i}", font=("Arial", 12))
-            info_label.pack(side=LEFT, padx=10)
+        self.left_image = PhotoImage(file='Images/estate.png')
+        self.left_image_label = Label(frame, image=self.left_image, bg="white")
+        self.left_image_label.image = self.left_image  # Keep a reference to the image
+        self.left_image_label.pack(side=LEFT, padx=5)
 
-            view_button = Button(frame, text="View")
-            view_button.pack(side=RIGHT, padx=10)
+        info_label = Label(frame, text=f"Sharvil Court ", font=("Arial", 12))
+        info_label.pack(side=LEFT, padx=10)
 
-            # setting up the next page button
+        view_button = Button(frame, text="View",command=self.buyview)
+        view_button.pack(side=RIGHT, padx=10)
 
-            next_button = Button(root, bg='white', text='Next>>')
-            next_button.place(relx=0.93, rely=0.93)
+        # setting up the next page button
+
+        next_button = Button(root, bg='white', text='Next>>')
+        next_button.place(relx=0.93, rely=0.93)
+
+        #frame2
+        frame = Frame(root, width=800, height=200, bg="white", bd=1, relief=GROOVE, highlightbackground='black',
+                      highlightthickness=2)
+        frame.pack(padx=10, pady=10, fill='x')
+
+        self.left_image = PhotoImage(file='Images/estate.png')
+        self.left_image_label = Label(frame, image=self.left_image, bg="white")
+        self.left_image_label.image = self.left_image  # Keep a reference to the image
+        self.left_image_label.pack(side=LEFT, padx=5)
+
+        info_label = Label(frame, text=f"Random Property ", font=("Arial", 12))
+        info_label.pack(side=LEFT, padx=10)
+
+        view_button = Button(frame, text="View")
+        view_button.pack(side=RIGHT, padx=10)
+
+
 
 
     def home(self):
@@ -95,6 +113,16 @@ class buy1:
     def buy(self):
         self.root.destroy()
         import buy1
+    def buyview(self):
+        self.root.destroy()
+        import Buy_view
+    def sell(self):
+        self.root.destroy()
+        import sell
+
+    def rent(self):
+        self.root.destroy()
+        import Rent1
 
 root=Tk()
 obj = buy1(root)

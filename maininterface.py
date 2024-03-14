@@ -27,14 +27,14 @@ class maininterface:
                             bg="#B31312",
                             fg="white",
                             border=0,
-                            activebackground='#B67352')
+                            activebackground='#B67352',command=self.login)
         insertButt.pack(side=RIGHT, padx=3, pady=2)
         insertButt = Button(one,
                             text="Sign Up",
                             bg="#B31312",
                             fg="white",
                             border=0,
-                            activebackground='#B67352')
+                            activebackground='#B67352',command=self.signup)
         insertButt.pack(side=RIGHT, padx=3, pady=2)
 
         # app color
@@ -76,7 +76,7 @@ class maininterface:
                            text="Sell",
                            bg="white",
                            border=0,
-                           activebackground='#B67352')
+                           activebackground='#B67352',command=self.sell)
         printButt.pack(side=LEFT, padx=20, pady=2)
         printButt = Button(toolbar,
                            text="Rent",
@@ -269,6 +269,15 @@ class maininterface:
     def rent(self):
         self.root.destroy()
         import Rent1
+    def sell(self):
+        self.root.destroy()
+        import sell
+    def login(self):
+        self.root.destroy()
+        import login
+    def signup(self):
+        self.root.destroy()
+        import signup
 
 
 

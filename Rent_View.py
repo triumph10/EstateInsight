@@ -90,7 +90,7 @@ class rentview:
             Label2.configure(image=image1)
             Label2.image = image1
 
-        top_label = Label(frame1, text="MazzGhar", font=("Arial", 12, "bold"), bg='White')
+        top_label = Label(frame1, text="Korus apt", font=("Arial", 12, "bold"), bg='White')
         top_label.place(relx=0.5, rely=0.00, anchor='n')
 
         button = Button(frame1, text=">>", padx='10', pady='10', command=imagechange)
