@@ -53,7 +53,7 @@ class Login:
         Frame(frame, width=295, height=2, bg='black').place(x=25, y=177)
 
         # Button Code
-        Button(frame, width=39, pady=7, text='LOGIN', bg='#B31312', fg='white', border=0).place(x=35, y=204)
+        Button(frame, width=39, pady=7, text='LOGIN', bg='#B31312', fg='white', border=0,command=self.home).place(x=35, y=204)
         label2 = Label(frame, text="Dont have an account?", fg='black', bg='white',
                        font=('Microsoft Yahei UI Light', 9))
         label2.place(x=75, y=270)
@@ -66,7 +66,7 @@ class Login:
         import signup
     def home(self):
         self.root.destroy()
-        
+        import Homepage1
 
 root=Tk()
 obj = Login(root)

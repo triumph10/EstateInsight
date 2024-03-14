@@ -20,25 +20,27 @@ class maininterface:
                     anchor=W,
                     relief=GROOVE,
                     bd=1,
-                    height=5)
+                    height=1)
         one.pack(fill=X, side=TOP)
-        insertButt = Button(one,
-                            text="Login",
-                            bg="#B31312",
-                            fg="white",
-                            border=0,
-                            activebackground='#B67352',command=self.login)
-        insertButt.pack(side=RIGHT, padx=3, pady=2)
-        insertButt = Button(one,
-                            text="Sign Up",
-                            bg="#B31312",
-                            fg="white",
-                            border=0,
-                            activebackground='#B67352',command=self.signup)
-        insertButt.pack(side=RIGHT, padx=3, pady=2)
+        name_label = Label(one,
+                           text='Insert Name',
+                           bg='#B31312',
+                           fg='white',
+                           bd=0)
+        name_label.place(relx=0.85,rely=0.1) #name
+        down_arrow = Menubutton(one, text='˅' ,bd=0, bg='#B31312', fg='white')
+        down_arrow.pack()
+        down_arrow.menu = Menu(down_arrow)
+        down_arrow["menu"] = down_arrow.menu
+        down_arrow.menu.add_checkbutton(label="Profile",command=self.profile)
+        down_arrow.menu.add_checkbutton(label="Agents",command=self.agent)
+        down_arrow.place(relx=0.92)#drop down arrow
+
+
+
 
         # app color
-        self.root.configure(bg='mintcream')
+        self.root.configure(bg='white')
 
         # setting up geometry for app
         window_width = 1000
@@ -57,14 +59,8 @@ class maininterface:
         self.root.iconphoto(True, self.icon)
 
         # setting up the toolbar for the app
-        toolbar = Frame(root, bg="white", relief=GROOVE, bd=1, pady=2)
+        toolbar = Frame(root, bg="white", relief=GROOVE, bd=2, pady=2)
 
-        printButt = Button(toolbar,
-                           text="Home",
-                           bg="white",
-                           border=0,
-                           activebackground='#B67352',command = self.home)
-        printButt.pack(side=LEFT, padx=20, pady=2)
         insertButt = Button(toolbar,
                             text="Buy",
                             bg="white",
@@ -74,19 +70,12 @@ class maininterface:
         printButt = Button(toolbar,
                            text="Sell",
                            bg="white",
-
-                           border=0,
-                           activebackground='#B67352',command=self.sell)
-
-
-
+                           border=0)
         printButt.pack(side=LEFT, padx=20, pady=2)
         printButt = Button(toolbar,
                            text="Rent",
                            bg="white",
-
-                           border=0,activebackground='#B67352',command = self.rent)
-
+                           border=0)
         printButt.pack(side=LEFT, padx=20, pady=2)
         printButt = Button(toolbar,
                            text="Wishlist",
@@ -256,32 +245,18 @@ class maininterface:
 
         # setting up the next page button
 
-        next_button = Button(root, bg='white', text='Next>>',command = self.next)
+        next_button = Button(root, bg='white', text='Next>>')
         next_button.place(relx=0.93, rely=0.5)
 
     def buy(self):
         self.root.destroy()
         import buy1
-    def next(self):
+    def agent(self):
         self.root.destroy()
-        import maininterface2
-    def home(self):
+        import Agent1
+    def profile(self):
         self.root.destroy()
-        import maininterface
-    def rent(self):
-        self.root.destroy()
-        import Rent1
-    def sell(self):
-        self.root.destroy()
-        import sell
-    def login(self):
-        self.root.destroy()
-        import login
-    def signup(self):
-        self.root.destroy()
-        import signup
-
-
+        import Profile
 
 
 root=Tk()
