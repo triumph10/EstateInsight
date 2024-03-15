@@ -65,8 +65,11 @@ class Login:
         self.root.destroy()
         import signup
     def home(self):
+        messagebox.showinfo("", 'Login Successful')
         self.root.destroy()
         import Homepage1
+
+
 
 root=Tk()
 obj = Login(root)

@@ -46,8 +46,8 @@ class view:
         self.root.geometry(f"{window_width}x{window_height}+{x_position}+{y_position}")
 
         # setting up icon for window title
-        icon = PhotoImage(file='maininterfacechitresh/estate.png')
-        self.root.iconphoto(True, icon)
+        self.icon = PhotoImage(file='Images/estate.png')
+        self.root.iconphoto(True, self.icon)
 
         # setting up the toolbar for the app
         toolbar = Frame(root, bg="WHite", relief=SUNKEN, bd=1, pady=2)
@@ -69,8 +69,8 @@ class view:
         frame1 = Frame(root, width=400, height=900, bg="White", relief=GROOVE, bd=1)
         frame1.pack(side=LEFT, padx=40, pady=50)
 
-        img = ImageTk.PhotoImage(Image.open('Images/maindoor.jpeg'))
-        Label2 = Label(frame1, image=img, width=300, height=300, padx='10', pady='10')
+        self.img = ImageTk.PhotoImage(Image.open('Images/maindoor.jpeg'))
+        Label2 = Label(frame1, image=self.img, width=300, height=300, padx='10', pady='10')
         Label2.pack(side=TOP)
 
         def open_mumbaimap_window():
@@ -86,9 +86,9 @@ class view:
             marker_1.set_text("kasarvadavli,thane,india")
 
         def imagechange():
-            image1 = ImageTk.PhotoImage(Image.open('Images/Livingroom.jpeg'), Image.open('Images/Bedroom.jpeg'))
-            Label2.configure(image=image1)
-            Label2.image = image1
+            self.image1 = ImageTk.PhotoImage(Image.open('Images/Livingroom.jpeg'), Image.open('Images/Bedroom.jpeg'))
+            Label2.configure(image=self.image1)
+            Label2.image = self.image1
 
         top_label = Label(frame1, text="MazzGhar", font=("Arial", 12, "bold"), bg='White')
         top_label.place(relx=0.5, rely=0.00, anchor='n')
@@ -133,7 +133,7 @@ class view:
 
         y_coordinate_label5 = label1.winfo_y() + label1.winfo_height() + vertical_spacing
 
-        text5 = (
+        self.text5 = (
             "More Details\n\nPrice Breakup : ₹3.5 Cr | ₹17,50,000 Approx. Registration Charges | ₹8,500 Monthly\n\n"
             "Booking Amount : ₹100000\n\n"
             "Address : Jai Arati plot no 2930 Swastik Park Near Kali Bari Temple Chembur East Mumbai \nMaharashtra 400071,"
@@ -143,7 +143,7 @@ class view:
             "Age of Construction : 5 to 10 years\n\n"
             "Water Availability : 24 Hours Available\n\n"
             "Status of Electricity : No/Rare Powercut")
-        label5 = Label(frame2, text=text5, font=("Arial", 10), anchor=NW, justify=LEFT, bd=1, relief=GROOVE)
+        label5 = Label(frame2, text=self.text5, font=("Arial", 10), anchor=NW, justify=LEFT, bd=1, relief=GROOVE)
         label5.place(x=10, y=y_coordinate_label5)
 
         button = Button(frame2, text="Contact Owner", padx='10', pady='10', bg='RED', fg='White')
