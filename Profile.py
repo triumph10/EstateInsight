@@ -146,14 +146,16 @@ class profile:
         # adding the submit button
         submit_butt = tk.Button(whole_page_frame, text="Save",
                                 font=('Bold', 15), bg='#B31312',
-                                fg='white', bd=1)
+                                fg='white', bd=1,command=self.home)
         submit_butt.place(relx=0.5, rely=0.95, anchor=CENTER)
 
         whole_page_frame.pack(pady=3)
         whole_page_frame.pack_propagate(False)
         whole_page_frame.configure(width=980, height=600)
 
-
+    def home(self):
+        self.root.destroy()
+        import Homepage1
 
 
 root=Tk()

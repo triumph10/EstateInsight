@@ -51,17 +51,22 @@ class buyview:
         self.root.iconphoto(True, icon)
 
         # setting up the toolbar for the app
-        toolbar = Frame(self.root, bg="WHite", relief=SUNKEN, bd=1, pady=2)
-
-        insertButt = Button(toolbar, text="Buy", bg="White", border=0, activebackground='#B67352')
+        toolbar = Frame(root, bg="MINTCREAM", relief=SUNKEN, bd=1, pady=2)
+        printButt = Button(toolbar,
+                           text="Home",
+                           bg="white",
+                           border=0,
+                           activebackground='#B67352', command=self.home)
+        printButt.pack(side=LEFT, padx=20, pady=2)
+        insertButt = Button(toolbar, text="Buy", bg="#B31312", border=1, relief=RAISED, fg='white', command=self.buy)
         insertButt.pack(side=LEFT, padx=20, pady=2)
-        printButt = Button(toolbar, text="Sell", bg="White", border=0, activebackground='#B67352')
+        printButt = Button(toolbar, text="Sell", bg="WHITE", border=0, activebackground='#B67352', command=self.sell)
         printButt.pack(side=LEFT, padx=20, pady=2)
-        printButt = Button(toolbar, text="Rent", bg="White", border=0, activebackground='#B67352')
+        printButt = Button(toolbar, text="Rent", bg="WHITE", border=0, activebackground='#B67352', command=self.rent)
         printButt.pack(side=LEFT, padx=20, pady=2)
-        printButt = Button(toolbar, text="Wishlist", bg="White", border=0, activebackground='#B67352')
+        printButt = Button(toolbar, text="Wishlist", bg="WHITE", border=0, activebackground='#B67352')
         printButt.pack(side=LEFT, padx=20, pady=2)
-        printButt = Button(toolbar, text="Help", bg="White", border=0, activebackground='#B67352')
+        printButt = Button(toolbar, text="Help", bg="WHITE", border=0, activebackground='#B67352')
         printButt.pack(side=LEFT, padx=20, pady=2)
 
         toolbar.pack(side=TOP, fill=X)
@@ -153,6 +158,24 @@ class buyview:
                              font=('Microsoft', 12))
         that_button.place(relx=0.65, rely=0.85)
 
+    def next(self):
+        self.root.destroy()
+        import maininterface2
+
+    def home(self):
+        self.root.destroy()
+        import maininterface
+
+    def rent(self):
+        self.root.destroy()
+        import Rent1
+
+    def sell(self):
+        self.root.destroy()
+        import sell
+    def buy(self):
+        self.root.destroy()
+        import buy1
 
 
 

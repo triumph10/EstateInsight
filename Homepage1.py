@@ -59,8 +59,14 @@ class maininterface:
         self.root.iconphoto(True, self.icon)
 
         # setting up the toolbar for the app
-        toolbar = Frame(root, bg="white", relief=GROOVE, bd=2, pady=2)
+        toolbar = Frame(root, bg="white", relief=GROOVE, bd=1, pady=2)
 
+        printButt = Button(toolbar,
+                           text="Home",
+                           bg="white",
+                           border=0,
+                           activebackground='#B67352', command=self.home)
+        printButt.pack(side=LEFT, padx=20, pady=2)
         insertButt = Button(toolbar,
                             text="Buy",
                             bg="white",
@@ -70,12 +76,17 @@ class maininterface:
         printButt = Button(toolbar,
                            text="Sell",
                            bg="white",
-                           border=0)
+
+                           border=0,
+                           activebackground='#B67352', command=self.sell)
+
         printButt.pack(side=LEFT, padx=20, pady=2)
         printButt = Button(toolbar,
                            text="Rent",
                            bg="white",
-                           border=0)
+
+                           border=0, activebackground='#B67352', command=self.rent)
+
         printButt.pack(side=LEFT, padx=20, pady=2)
         printButt = Button(toolbar,
                            text="Wishlist",
@@ -257,6 +268,22 @@ class maininterface:
     def profile(self):
         self.root.destroy()
         import Profile
+
+    def next(self):
+        self.root.destroy()
+        import maininterface2
+
+    def home(self):
+        self.root.destroy()
+        import maininterface
+
+    def rent(self):
+        self.root.destroy()
+        import Rent1
+
+    def sell(self):
+        self.root.destroy()
+        import sell
 
 
 root=Tk()

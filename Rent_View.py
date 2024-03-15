@@ -50,17 +50,44 @@ class rentview:
         self.root.iconphoto(True, self.icon)
 
         # setting up the toolbar for the app
-        toolbar = Frame(root, bg="WHite", relief=SUNKEN, bd=1, pady=2)
+        toolbar = Frame(root, bg="white", relief=GROOVE, bd=1, pady=2)
 
-        insertButt = Button(toolbar, text="Buy", bg="White", border=0, activebackground='#B67352')
+        printButt = Button(toolbar,
+                           text="Home",
+                           bg="white",
+                           border=0,
+                           activebackground='#B67352', command=self.home)
+        printButt.pack(side=LEFT, padx=20, pady=2)
+        insertButt = Button(toolbar,
+                            text="Buy",
+                            bg="white",
+                            border=0,
+                            command=self.buy)
         insertButt.pack(side=LEFT, padx=20, pady=2)
-        printButt = Button(toolbar, text="Sell", bg="White", border=0, activebackground='#B67352')
+        printButt = Button(toolbar,
+                           text="Sell",
+                           bg="white",
+
+                           border=0,
+                           activebackground='#B67352', command=self.sell)
+
         printButt.pack(side=LEFT, padx=20, pady=2)
-        printButt = Button(toolbar, text="Rent", bg="White", border=0, activebackground='#B67352')
+        printButt = Button(toolbar,
+                           text="Rent",
+                           bg="white",
+
+                           border=0, activebackground='#B67352', command=self.rent)
+
         printButt.pack(side=LEFT, padx=20, pady=2)
-        printButt = Button(toolbar, text="Wishlist", bg="White", border=0, activebackground='#B67352')
+        printButt = Button(toolbar,
+                           text="Wishlist",
+                           bg="white",
+                           border=0)
         printButt.pack(side=LEFT, padx=20, pady=2)
-        printButt = Button(toolbar, text="Help", bg="White", border=0, activebackground='#B67352')
+        printButt = Button(toolbar,
+                           text="Help",
+                           bg="white",
+                           border=0)
         printButt.pack(side=LEFT, padx=20, pady=2)
 
         toolbar.pack(side=TOP, fill=X)
@@ -150,6 +177,25 @@ class rentview:
                              command=open_mumbaimap_window,
                              font=('Microsoft', 12))
         that_button.place(relx=0.65, rely=0.85)
+
+    def next(self):
+        self.root.destroy()
+        import maininterface2
+
+    def home(self):
+        self.root.destroy()
+        import maininterface
+
+    def rent(self):
+        self.root.destroy()
+        import Rent1
+
+    def sell(self):
+        self.root.destroy()
+        import sell
+    def buy(self):
+        self.root.destroy()
+        import buy1
 
 root = Tk()
 obj = rentview(root)
