@@ -33,23 +33,32 @@ class sell1:
 
         one = Label(root,
                     text="EstateInsight",
-                    bg="RED",
-                    fg="WHITE",
+                    bg="#B31312",
+                    fg="white",
                     font=font_info,
                     anchor=W,
-                    relief=SUNKEN,
+                    relief=GROOVE,
                     bd=1,
-                    pady=3)
-        one.grid(row=0, column=0, columnspan=3, padx=10, pady=10, sticky='ew')
+                    height=1)
+        one.pack(fill=X, side=TOP)
+        name_label = Label(one,
+                           text='Insert Name',
+                           bg='#B31312',
+                           fg='white',
+                           bd=0)
+        name_label.place(relx=0.85, rely=0.1)  # name
+        down_arrow = Menubutton(one, text='˅', bd=0, bg='#B31312', fg='white')
+        down_arrow.pack()
+        down_arrow.menu = Menu(down_arrow)
+        down_arrow["menu"] = down_arrow.menu
+        down_arrow.menu.add_checkbutton(label="Profile")
+        down_arrow.menu.add_checkbutton(label="Agents")
+        down_arrow.place(relx=0.92)  # drop down arrow
 
         radio_label = Label(root, text="Select Role:", font=("Arial", 12), bg="mintcream")
         radio_label.grid(row=2, column=0, columnspan=3, pady=(20, 5))
 
-        loginbutton = Button(root, text="Login", bg="RED", border=0, activebackground='#B67352', fg='WHITE')
-        loginbutton.grid(row=0, column=0, columnspan=3, padx=(10, 200), pady=12, sticky='ne')
 
-        signupbutton = Button(root, text="Signup", bg="RED", border=0, activebackground='PINK', fg='WHITE')
-        signupbutton.grid(row=0, column=0, columnspan=3, padx=(10, 100), pady=12, sticky='ne')
 
         toolbar = Frame(root, bg="#38419D", relief=SUNKEN, bd=1, pady=2, height=4)
         toolbar.grid(row=1, column=0, columnspan=3, padx=500, pady=10, sticky='ew')

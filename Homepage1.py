@@ -59,7 +59,7 @@ class maininterface:
         self.root.iconphoto(True, self.icon)
 
         # setting up the toolbar for the app
-        toolbar = Frame(root, bg="white", relief=GROOVE, bd=1, pady=2)
+        toolbar = Frame(root, bg="white", relief=GROOVE, bd=2, pady=2)
 
         printButt = Button(toolbar,
                            text="Home",
