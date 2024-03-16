@@ -68,6 +68,7 @@ class Login:
         self.root.destroy()
         import signup
 
+
     def home(self, username):  # Accepting username parameter
         self.root.destroy()
         root = Tk()
@@ -98,7 +99,15 @@ class Login:
             print(f"Error: {e}")
             messagebox.showerror("Database Error", "Failed to connect to database")
 
-# Create the Tkinter window
-root = Tk()
+
+
+    def home(self):
+        messagebox.showinfo("", 'Login Successful')
+        self.root.destroy()
+        import Homepage1
+
+
+
+root=Tk()
 obj = Login(root)
 root.mainloop()

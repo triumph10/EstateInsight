@@ -96,8 +96,8 @@ class rentview:
         frame1 = Frame(root, width=400, height=900, bg="White", relief=GROOVE, bd=1)
         frame1.pack(side=LEFT, padx=40, pady=50)
 
-        img = ImageTk.PhotoImage(Image.open('Images/maindoor.jpeg'))
-        Label2 = Label(frame1, image=img, width=300, height=300, padx='10', pady='10')
+        self.img = ImageTk.PhotoImage(Image.open('Images/maindoor.jpeg'))
+        Label2 = Label(frame1, image=self.img, width=300, height=300, padx='10', pady='10')
         Label2.pack(side=TOP)
 
         def open_mumbaimap_window():
@@ -113,9 +113,9 @@ class rentview:
             marker_1.set_text("AP Shah Institute of Technology,kasarvadavli,thane,india")
 
         def imagechange():
-            image1 = ImageTk.PhotoImage(Image.open('Images/Livingroom.jpeg'), Image.open('Images/Bedroom.jpeg'))
-            Label2.configure(image=image1)
-            Label2.image = image1
+            self.image1 = ImageTk.PhotoImage(Image.open('Images/Livingroom.jpeg'), Image.open('Images/Bedroom.jpeg'))
+            Label2.configure(image=self.image1)
+            Label2.image = self.image1
 
         top_label = Label(frame1, text="Korus apt", font=("Arial", 12, "bold"), bg='White')
         top_label.place(relx=0.5, rely=0.00, anchor='n')

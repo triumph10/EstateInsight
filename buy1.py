@@ -124,6 +124,8 @@ class buy1:
         self.root.destroy()
         import Rent1
 
+
+
 root=Tk()
 obj = buy1(root)
 root.mainloop()

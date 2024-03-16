@@ -47,8 +47,13 @@ class buyview:
         self.root.geometry(f"{window_width}x{window_height}+{x_position}+{y_position}")
 
         # setting up icon for window title
+
         icon = PhotoImage(file='Images/estate.png')
         self.root.iconphoto(True, icon)
+
+        self.icon = PhotoImage(file='Images/estate.png')
+        self.root.iconphoto(True, self.icon)
+
 
         # setting up the toolbar for the app
         toolbar = Frame(root, bg="MINTCREAM", relief=SUNKEN, bd=1, pady=2)
@@ -75,8 +80,8 @@ class buyview:
         frame1 = Frame(root, width=400, height=900, bg="White", relief=GROOVE, bd=1)
         frame1.pack(side=LEFT, padx=40, pady=50)
 
-        img = ImageTk.PhotoImage(Image.open('Images/maindoor.jpeg'))
-        Label2 = Label(frame1, image=img, width=300, height=300, padx='10', pady='10')
+        self.img = ImageTk.PhotoImage(Image.open('Images/maindoor.jpeg'))
+        Label2 = Label(frame1, image=self.img, width=300, height=300, padx='10', pady='10')
         Label2.pack(side=TOP)
 
         def open_mumbaimap_window():

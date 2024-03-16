@@ -4,6 +4,7 @@ import tkinter as tk
 from tkinter.filedialog import askopenfilename
 from PIL import Image, ImageTk
 import tkintermapview
+from tkinter import messagebox
 
 class sell2:
     def __init__(self,root):
@@ -231,12 +232,18 @@ class sell2:
 
         submit_butt = tk.Button(self.whole_page_frame, text="Save",
                                 font=('Bold', 15), bg='#B31312',
-                                fg='white', bd=1)
+                                fg='white', bd=1,command=self.maininterface2 )
         submit_butt.place(relx=0.7, rely=0.85)
 
         self.whole_page_frame.pack(pady=3)
         self.whole_page_frame.pack_propagate(False)
         self.whole_page_frame.configure(width=980, height=600)
+
+    def maininterface2(self):
+        messagebox.showinfo("", 'Saved Successfully')
+        self.root.destroy()
+        import Homepage1
+
 
 root=Tk()
 obj = sell2(root)
