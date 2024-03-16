@@ -47,7 +47,7 @@ class buyview:
         self.root.geometry(f"{window_width}x{window_height}+{x_position}+{y_position}")
 
         # setting up icon for window title
-        icon = PhotoImage(file='maininterfacechitresh/estate.png')
+        icon = PhotoImage(file='Images/estate.png')
         self.root.iconphoto(True, icon)
 
         # setting up the toolbar for the app

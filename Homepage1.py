@@ -1,16 +1,35 @@
 from tkinter import *
 from tkinter import ttk
 import tkinter as tk
+import mysql.connector
 
 
 class maininterface:
-    def __init__(self, root):
+    def __init__(self, root,username):
         self.root = root
         # setting up the app
         self.root.title("EstateInsight")
         self.root.resizable(False, False)
 
         font_info = ("Arial", 15, "bold")
+
+        self.conn = mysql.connector.connect(
+            host='localhost',
+            user='root',
+            password='ARYA#305#varun',
+            database='estateinsights'
+        )
+
+        # Create a cursor to execute SQL queries
+        self.cursor = self.conn.cursor()
+
+        # Execute SELECT query to fetch name from the database table
+        self.cursor.execute('SELECT name FROM signin WHERE username = %s', (username,))
+        row = self.cursor.fetchone()
+        if row:
+            name = row[0]
+        else:
+            name = ""
 
         one = Label(root,
                     text="EstateInsight",
@@ -23,11 +42,11 @@ class maininterface:
                     height=1)
         one.pack(fill=X, side=TOP)
         name_label = Label(one,
-                           text='Insert Name',
+                           text=name,
                            bg='#B31312',
                            fg='white',
-                           bd=0)
-        name_label.place(relx=0.85,rely=0.1) #name
+                           bd=0,font=('Bold',17))
+        name_label.place(relx=0.78,rely=0.1,) #name
         down_arrow = Menubutton(one, text='˅' ,bd=0, bg='#B31312', fg='white')
         down_arrow.pack()
         down_arrow.menu = Menu(down_arrow)
