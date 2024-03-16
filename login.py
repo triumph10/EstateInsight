@@ -1,5 +1,8 @@
 from tkinter import *
 from tkinter import messagebox
+import mysql.connector
+from mysql.connector import Error
+from maininterface import maininterface  # Assuming maininterface is in a separate file called maininterface.py
 
 class Login:
     def __init__(self, root):
@@ -12,58 +15,92 @@ class Login:
         self.img = PhotoImage(file='Images/estate.png')
         Label(root, image=self.img, bg="white").place(x=150, y=150)
 
-        frame = Frame(root, width=350, height=350, bg="white")
-        frame.place(x=480, y=70)
+        self.frame = Frame(root, width=350, height=350, bg="white")
+        self.frame.place(x=480, y=70)
 
-        heading = Label(frame, text='LOGIN', fg='BLACK', bg='white', font=('Microsoft YaHei UI Light', 23, 'bold'))
+        heading = Label(self.frame, text='LOGIN', fg='BLACK', bg='white', font=('Microsoft YaHei UI Light', 23, 'bold'))
         heading.place(x=100, y=5)
 
         # Username column code
         def on_enter(e):
-            user.delete(0, 'end')
+            self.user.delete(0, 'end')
 
         def on_leave(e):
-            name = user.get()
+            name = self.user.get()
             if name == '':
-                user.insert(0, 'Username')
+                self.user.insert(0, 'Username')
 
-        user = Entry(frame, width=25, fg='black', border=0, bg="white", font=('Microsoft YaHei UI Light', 11))
-        user.place(x=30, y=80)
-        user.insert(0, "Username")
-        user.bind('<FocusIn>', on_enter)
-        user.bind('<FocusOut>', on_leave)
+        self.user = Entry(self.frame, width=25, fg='black', border=0, bg="white", font=('Microsoft YaHei UI Light', 11))
+        self.user.place(x=30, y=80)
+        self.user.insert(0, "Username")
+        self.user.bind('<FocusIn>', on_enter)
+        self.user.bind('<FocusOut>', on_leave)
 
-        Frame(frame, width=295, height=2, bg='black').place(x=25, y=107)
+        Frame(self.frame, width=295, height=2, bg='black').place(x=25, y=107)
 
         # Password column code
         def on_enter(e):
-            password.delete(0, 'end')
+            self.password.delete(0, 'end')
 
         def on_leave(e):
-            name = password.get()
+            name = self.password.get()
             if name == '':
-                password.insert(0, 'Password')
+                self.password.insert(0, 'Password')
 
-        password = Entry(frame, width=25, fg='black', border=0, bg='white', font=('Microsoft Yahei UI Light', 11))
-        password.place(x=30, y=150)
-        password.insert(0, 'Password')
-        password.bind('<FocusIn>', on_enter)
-        password.bind('<FocusOut>', on_leave)
+        self.password = Entry(self.frame, width=25, fg='black', border=0, bg='white', font=('Microsoft Yahei UI Light', 11))
+        self.password.place(x=30, y=150)
+        self.password.insert(0, 'Password')
+        self.password.bind('<FocusIn>', on_enter)
+        self.password.bind('<FocusOut>', on_leave)
 
-        Frame(frame, width=295, height=2, bg='black').place(x=25, y=177)
+        Frame(self.frame, width=295, height=2, bg='black').place(x=25, y=177)
 
         # Button Code
-        Button(frame, width=39, pady=7, text='LOGIN', bg='#B31312', fg='white', border=0,command=self.home).place(x=35, y=204)
-        label2 = Label(frame, text="Dont have an account?", fg='black', bg='white',
+        Button(self.frame, width=39, pady=7, text='LOGIN', bg='#B31312', fg='white', border=0, command=self.login).place(x=35, y=204)
+        label2 = Label(self.frame, text="Dont have an account?", fg='black', bg='white',
                        font=('Microsoft Yahei UI Light', 9))
         label2.place(x=75, y=270)
 
-        signup = Button(frame, width=6, text="Sign in", border=0, bg='#B31312', cursor='hand2', fg='white',command=self.signup_page)
+        signup = Button(self.frame, width=6, text="Sign in", border=0, bg='#B31312', cursor='hand2', fg='white', command=self.signup_page)
         signup.place(x=215, y=270)
 
     def signup_page(self):
         self.root.destroy()
         import signup
+
+
+    def home(self, username):  # Accepting username parameter
+        self.root.destroy()
+        root = Tk()
+        obj = maininterface(root, username)  # Passing username to maininterface
+        root.mainloop()
+
+    def login(self):
+        username = self.user.get()
+        password = self.password.get()
+
+        try:
+            conn = mysql.connector.connect(
+                host='localhost',
+                user='root',
+                password='ARYA#305#varun',
+                database='estateinsights'
+            )
+            cursor = conn.cursor()
+            cursor.execute('SELECT * FROM signin WHERE name = %s AND password = %s', (username, password))
+            row = cursor.fetchone()
+            if row:
+                messagebox.showinfo("Success", "Login Successful")
+                self.home(username)  # Passing username to home method
+            else:
+                messagebox.showerror("Error", "Invalid Username or Password")
+            conn.close()
+        except Error as e:
+            print(f"Error: {e}")
+            messagebox.showerror("Database Error", "Failed to connect to database")
+
+
+
     def home(self):
         messagebox.showinfo("", 'Login Successful')
         self.root.destroy()
@@ -74,5 +111,3 @@ class Login:
 root=Tk()
 obj = Login(root)
 root.mainloop()
-
-

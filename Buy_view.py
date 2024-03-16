@@ -56,8 +56,13 @@ class buyview:
         self.root.geometry(f"{window_width}x{window_height}+{x_position}+{y_position}")
 
         # setting up icon for window title
+
+        icon = PhotoImage(file='Images/estate.png')
+        self.root.iconphoto(True, icon)
+
         self.icon = PhotoImage(file='Images/estate.png')
         self.root.iconphoto(True, self.icon)
+
 
         # setting up the toolbar for the app
         toolbar = Frame(root, bg="white", relief=GROOVE , bd=2, pady=2)
