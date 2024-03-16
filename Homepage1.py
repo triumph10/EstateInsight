@@ -4,12 +4,15 @@ import tkinter as tk
 import mysql.connector
 
 
-class maininterface:
+
+class Homepage1:
     def __init__(self, root,username):
         self.root = root
+        self.username = username
         # setting up the app
         self.root.title("EstateInsight")
         self.root.resizable(False, False)
+        self.username = username # this is used to store the username
 
         font_info = ("Arial", 15, "bold")
 
@@ -24,12 +27,13 @@ class maininterface:
         self.cursor = self.conn.cursor()
 
         # Execute SELECT query to fetch name from the database table
-        self.cursor.execute('SELECT name FROM signin WHERE username = %s', (username,))
+        self.cursor.execute('SELECT username FROM signin WHERE username = %s', (self.username,))
         row = self.cursor.fetchone()
         if row:
             name = row[0]
         else:
             name = ""
+
 
         one = Label(root,
                     text="EstateInsight",
@@ -42,7 +46,7 @@ class maininterface:
                     height=1)
         one.pack(fill=X, side=TOP)
         name_label = Label(one,
-                           text=name,
+                           text=self.username,
                            bg='#B31312',
                            fg='white',
                            bd=0,font=('Bold',17))
@@ -278,6 +282,10 @@ class maininterface:
         next_button = Button(root, bg='white', text='Next>>')
         next_button.place(relx=0.93, rely=0.5)
 
+    def create_homepage(username):
+        root = Tk()
+        obj = Homepage1(root, username)
+        root.mainloop()
     def buy(self):
         self.root.destroy()
         import buy1
@@ -306,5 +314,7 @@ class maininterface:
 
 
 root=Tk()
-obj = maininterface(root)
+obj = Homepage1(root, "")
 root.mainloop()
+
+

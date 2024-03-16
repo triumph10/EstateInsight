@@ -1,8 +1,9 @@
 from tkinter import *
 from tkinter import messagebox
+from Homepage1 import Homepage1
 import mysql.connector
 from mysql.connector import Error
-from maininterface import maininterface  # Assuming maininterface is in a separate file called maininterface.py
+
 
 class Login:
     def __init__(self, root):
@@ -69,11 +70,7 @@ class Login:
         import signup
 
 
-    def home(self, username):  # Accepting username parameter
-        self.root.destroy()
-        root = Tk()
-        obj = maininterface(root, username)  # Passing username to maininterface
-        root.mainloop()
+
 
     def login(self):
         username = self.user.get()
@@ -87,25 +84,22 @@ class Login:
                 database='estateinsights'
             )
             cursor = conn.cursor()
-            cursor.execute('SELECT * FROM signin WHERE name = %s AND password = %s', (username, password))
+            cursor.execute('SELECT * FROM signin WHERE username = %s AND password = %s', (username, password))
             row = cursor.fetchone()
             if row:
                 messagebox.showinfo("Success", "Login Successful")
-                self.home(username)  # Passing username to home method
+                self.home(username)
             else:
                 messagebox.showerror("Error", "Invalid Username or Password")
             conn.close()
         except Error as e:
             print(f"Error: {e}")
             messagebox.showerror("Database Error", "Failed to connect to database")
-
-
-
-    def home(self):
-        messagebox.showinfo("", 'Login Successful')
+    def home(self, username):
         self.root.destroy()
-        import Homepage1
-
+        root = Tk()
+        obj = Homepage1(root, username)
+        root.mainloop()
 
 
 root=Tk()
