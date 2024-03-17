@@ -31,6 +31,19 @@ class sell2:
                     bd=1,
                     height=1)
         one.pack(fill=X, side=TOP)
+        name_label = Label(one,
+                           text='Insert Name',
+                           bg='#B31312',
+                           fg='white',
+                           bd=0)
+        name_label.place(relx=0.85, rely=0.1)  # name
+        down_arrow = Menubutton(one, text='˅', bd=0, bg='#B31312', fg='white')
+        down_arrow.pack()
+        down_arrow.menu = Menu(down_arrow)
+        down_arrow["menu"] = down_arrow.menu
+        down_arrow.menu.add_checkbutton(label="Profile")
+        down_arrow.menu.add_checkbutton(label="Agents")
+        down_arrow.place(relx=0.92)  # drop down arrow
 
         # app color
         self.root.configure(bg='mintcream')

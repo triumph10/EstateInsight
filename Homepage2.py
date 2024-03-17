@@ -37,7 +37,7 @@ class maininterface2:
         down_arrow.place(relx=0.92)  # drop down arrow
 
         # app color
-        self.root.configure(bg='mintcream')
+        self.root.configure(bg='white')
 
         # setting up geometry for app
         window_width = 1000
@@ -56,8 +56,15 @@ class maininterface2:
         self.root.iconphoto(True, icon)
 
         # setting up the toolbar for the app
-        toolbar = Frame(root, bg="white", relief=GROOVE, bd=1, pady=2)
+        toolbar = Frame(root, bg="white", relief=GROOVE, bd=2, pady=2)
 
+        printButt = Button(toolbar,
+                           text="Home",
+                           bg="#B31312",
+                           border=1,
+                           relief=RAISED,
+                           fg='white')
+        printButt.pack(side=LEFT, padx=20, pady=2)
         insertButt = Button(toolbar,
                             text="Buy",
                             bg="white",

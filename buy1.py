@@ -21,13 +21,21 @@ class buy1:
                     bd=1,
                     pady=3)
         one.pack(fill=X, side=TOP)
-        insertButt = Button(one, text="Login", bg="#B31312", fg='white', border=0, activebackground='#B67352')
-        insertButt.pack(side=RIGHT, padx=3, pady=2)
-        insertButt = Button(one, text="Sign Up", bg="#B31312", fg='white', border=0, activebackground='#B67352')
-        insertButt.pack(side=RIGHT, padx=3, pady=2)
-
+        name_label = Label(one,
+                           text='Insert Name',
+                           bg='#B31312',
+                           fg='white',
+                           bd=0)
+        name_label.place(relx=0.85, rely=0.1)  # name
+        down_arrow = Menubutton(one, text='˅', bd=0, bg='#B31312', fg='white')
+        down_arrow.pack()
+        down_arrow.menu = Menu(down_arrow)
+        down_arrow["menu"] = down_arrow.menu
+        down_arrow.menu.add_checkbutton(label="Profile")
+        down_arrow.menu.add_checkbutton(label="Agents")
+        down_arrow.place(relx=0.92)  # drop down arrow
         # app color
-        self.root.configure(bg='mintcream')
+        self.root.configure(bg='white')
 
         # setting up geometry for app
         window_width = 1000
@@ -46,7 +54,7 @@ class buy1:
         self.root.iconphoto(True, icon)
 
         # setting up the toolbar for the app
-        toolbar = Frame(root, bg="MINTCREAM", relief=SUNKEN, bd=1, pady=2)
+        toolbar = Frame(root, bg="white", relief=GROOVE, bd=2, pady=2)
         printButt = Button(toolbar,
                            text="Home",
                            bg="white",

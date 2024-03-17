@@ -17,7 +17,7 @@ class rentview:
 
         one = Label(root,
                     text="EstateInsight",
-                    bg="RED",
+                    bg="#B31312",
                     fg="White",
                     font=font_info,
                     anchor=W,
@@ -25,13 +25,22 @@ class rentview:
                     bd=1,
                     pady=3)
         one.pack(fill=X, side=TOP)
-        insertButt = Button(one, text="Login", bg="RED", border=0, activebackground='White')
-        insertButt.pack(side=RIGHT, padx=3, pady=2)
-        insertButt = Button(one, text="Sign Up", bg="RED", border=0, activebackground='White')
-        insertButt.pack(side=RIGHT, padx=3, pady=2)
+        name_label = Label(one,
+                           text='Insert Name',
+                           bg='#B31312',
+                           fg='white',
+                           bd=0)
+        name_label.place(relx=0.85, rely=0.1)  # name
+        down_arrow = Menubutton(one, text='˅', bd=0, bg='#B31312', fg='white')
+        down_arrow.pack()
+        down_arrow.menu = Menu(down_arrow)
+        down_arrow["menu"] = down_arrow.menu
+        down_arrow.menu.add_checkbutton(label="Profile")
+        down_arrow.menu.add_checkbutton(label="Agents")
+        down_arrow.place(relx=0.92)  # drop down arrow
 
         # app color
-        self.root.configure(bg='mintcream')
+        self.root.configure(bg='white')
 
         # setting up geometry for app
         window_width = 1000
@@ -50,7 +59,7 @@ class rentview:
         self.root.iconphoto(True, self.icon)
 
         # setting up the toolbar for the app
-        toolbar = Frame(root, bg="white", relief=GROOVE, bd=1, pady=2)
+        toolbar = Frame(root, bg="white", relief=GROOVE, bd=2, pady=2)
 
         printButt = Button(toolbar,
                            text="Home",
@@ -74,10 +83,11 @@ class rentview:
         printButt.pack(side=LEFT, padx=20, pady=2)
         printButt = Button(toolbar,
                            text="Rent",
-                           bg="white",
-
-                           border=0, activebackground='#B67352', command=self.rent)
-
+                           bg="#B31312",
+                           relief=RAISED,
+                           border=1,
+                           fg='white',
+                           command=self.rent)
         printButt.pack(side=LEFT, padx=20, pady=2)
         printButt = Button(toolbar,
                            text="Wishlist",
@@ -165,18 +175,23 @@ class rentview:
         label5 = Label(frame2, text=text5, font=("Arial", 10), anchor=NW, justify=LEFT, bd=1, relief=GROOVE)
         label5.place(x=10, y=y_coordinate_label5)
 
-        button = Button(frame2, text="Contact Owner", padx='10', pady='10', bg='RED', fg='White')
+        button = Button(frame2, text="Contact Owner", padx='10', pady='10', bg='#B31312', fg='White')
         button.place(x=200, y=490)
 
         that_button = Button(frame2,
                              text="View Location",
                              foreground='#f7f7f7',
-                             background='RED',
+                             background='#B31312',
                              activeforeground='#E43A19',
                              activebackground='RED',
                              command=open_mumbaimap_window,
                              font=('Microsoft', 12))
-        that_button.place(relx=0.65, rely=0.85)
+        that_button.place(relx=0.65, rely=0.86)
+
+        # setting up the back page button
+
+        back_button = Button(root, bg='#B31312', fg='white', text='<<Back')
+        back_button.place(relx=0.05, rely=0.15)
 
     def next(self):
         self.root.destroy()
@@ -196,6 +211,8 @@ class rentview:
     def buy(self):
         self.root.destroy()
         import buy1
+
+
 
 root = Tk()
 obj = rentview(root)

@@ -29,9 +29,22 @@ class profile:
                     bd=1,
                     height=1)
         one.pack(fill=X, side=TOP)
+        name_label = Label(one,
+                           text='Insert Name',
+                           bg='#B31312',
+                           fg='white',
+                           bd=0)
+        name_label.place(relx=0.85, rely=0.1)  # name
+        down_arrow = Menubutton(one, text='˅', bd=0, bg='#B31312', fg='white')
+        down_arrow.pack()
+        down_arrow.menu = Menu(down_arrow)
+        down_arrow["menu"] = down_arrow.menu
+        down_arrow.menu.add_checkbutton(label="Profile")
+        down_arrow.menu.add_checkbutton(label="Agents")
+        down_arrow.place(relx=0.92)  # drop down arrow
 
         # app color
-        self.root.configure(bg='mintcream')
+        self.root.configure(bg='white')
 
         # setting up geometry for app
         window_width = 1000
@@ -66,7 +79,7 @@ class profile:
                 add_pic_butt.config(image=self.img)
                 add_pic_butt.image = self.img
 
-        whole_page_frame = tk.Frame(root, bg='mintcream', highlightthickness=2)
+        whole_page_frame = tk.Frame(root, bg='white', highlightthickness=2)
 
         # adding top text
         top_text = tk.Label(whole_page_frame, text='Complete your profile',
@@ -152,6 +165,11 @@ class profile:
         whole_page_frame.pack(pady=3)
         whole_page_frame.pack_propagate(False)
         whole_page_frame.configure(width=980, height=600)
+
+        # setting up the back page button
+
+        back_button = Button(root, bg='#B31312', fg='white', text='<<Back')
+        back_button.place(relx=0.9, rely=0.1)
 
     def home(self):
         self.root.destroy()

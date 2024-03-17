@@ -25,13 +25,23 @@ one = Label(main_window,
                 bd=1,
                 pady=3)
 one.pack(fill=X, side=TOP)
-insertButt = Button(one, text="Login", bg="#B31312", fg='white', border=0, activebackground='#B67352')
-insertButt.pack(side=RIGHT, padx=3, pady=2)
-insertButt = Button(one, text="Sign Up", bg="#B31312", fg='white', border=0, activebackground='#B67352')
-insertButt.pack(side=RIGHT, padx=3, pady=2)
+name_label = Label(one,
+                   text='Insert Name',
+                   bg='#B31312',
+                   fg='white',
+                   bd=0)
+name_label.place(relx=0.85,rely=0.1) #name
+down_arrow = Menubutton(one, text='˅' ,bd=0, bg='#B31312', fg='white')
+down_arrow.pack()
+down_arrow.menu = Menu(down_arrow)
+down_arrow["menu"] = down_arrow.menu
+down_arrow.menu.add_checkbutton(label="Profile")
+down_arrow.menu.add_checkbutton(label="Agents")
+down_arrow.place(relx=0.92)#drop down arrow
+
 
     # app color
-main_window.configure(bg='mintcream')
+main_window.configure(bg='white')
 
 
 
@@ -78,7 +88,7 @@ phone_label.place(relx=0.35,rely=0.49)
 number_label = Label(whole_fm1, text='Insert No.', font=(15), bg='white')
 number_label.place(relx=0.58, rely=0.49)
 
-whole_fm1.place(relx=0.02, rely=0.1)
+whole_fm1.place(relx=0.02, rely=0.15)
 
 #2nd frame
 whole_fm2 = Frame(main_window, highlightthickness=2, width=450, height=200, bg='white', highlightbackground='black')
@@ -105,7 +115,7 @@ phone_label.place(relx=0.35,rely=0.49)
 number_label = Label(whole_fm2, text='Insert No.', font=(15), bg='white')
 number_label.place(relx=0.58, rely=0.49)
 
-whole_fm2.place(relx=0.5, rely=0.1)
+whole_fm2.place(relx=0.5, rely=0.15)
 
 #3rd frame
 whole_fm3 = Frame(main_window, highlightthickness=2, width=450, height=200, bg='white', highlightbackground='black')
@@ -132,7 +142,7 @@ phone_label.place(relx=0.35,rely=0.49)
 number_label = Label(whole_fm3, text='Insert No.', font=(15), bg='white')
 number_label.place(relx=0.58, rely=0.49)
 
-whole_fm3.place(relx=0.02, rely=0.5)
+whole_fm3.place(relx=0.02, rely=0.55)
 
 #4th frame
 whole_fm4 = Frame(main_window, highlightthickness=2, width=450, height=200, bg='white', highlightbackground='black')
@@ -159,7 +169,12 @@ phone_label.place(relx=0.35,rely=0.49)
 number_label = Label(whole_fm4, text='Insert No.', font=(15), bg='white')
 number_label.place(relx=0.58, rely=0.49)
 
-whole_fm4.place(relx=0.5, rely=0.5)
+whole_fm4.place(relx=0.5, rely=0.55)
+
+# setting up the back page button
+
+back_button = Button(main_window, bg='#B31312', fg='white', text='<<Back')
+back_button.place(relx=0.88, rely=0.08)
 
 
 

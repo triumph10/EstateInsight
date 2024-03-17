@@ -19,25 +19,24 @@ class MainInterface:
                     anchor=W,
                     relief=GROOVE,
                     bd=1,
-                    height=5)
+                    height=1)
         one.pack(fill=X, side=TOP)
-        insertButt = Button(one,
-                            text="Login",
-                            bg="#B31312",
-                            fg="white",
-                            border=0,
-                            activebackground='#B67352')
-        insertButt.pack(side=RIGHT, padx=3, pady=2)
-        insertButt = Button(one,
-                            text="Sign Up",
-                            bg="#B31312",
-                            fg="white",
-                            border=0,
-                            activebackground='#B67352')
-        insertButt.pack(side=RIGHT, padx=3, pady=2)
+        name_label = Label(one,
+                           text='Insert Name',
+                           bg='#B31312',
+                           fg='white',
+                           bd=0)
+        name_label.place(relx=0.85, rely=0.1)  # name
+        down_arrow = Menubutton(one, text='˅', bd=0, bg='#B31312', fg='white')
+        down_arrow.pack()
+        down_arrow.menu = Menu(down_arrow)
+        down_arrow["menu"] = down_arrow.menu
+        down_arrow.menu.add_checkbutton(label="Profile")
+        down_arrow.menu.add_checkbutton(label="Agents")
+        down_arrow.place(relx=0.92)  # drop down arrow
 
         # app color
-        self.root.configure(bg='mintcream')
+        self.root.configure(bg='white')
 
         # setting up geometry for app
         window_width = 1000
@@ -55,48 +54,8 @@ class MainInterface:
         self.icon = PhotoImage(file='Images/estate.png')
         self.root.iconphoto(True, self.icon)
 
-        # setting up the toolbar for the app
-        toolbar = Frame(root, bg="white", relief=GROOVE, bd=1, pady=2)
 
-        printButt = Button(toolbar,
-                           text="Home",
-                           bg="white",
-                           border=0,
-                           activebackground='#B67352', command=self.home)
-        printButt.pack(side=LEFT, padx=20, pady=2)
-        insertButt = Button(toolbar,
-                            text="Buy",
-                            bg="white",
-                            border=0,
-                            activebackground='#B67352',
-                            command=self.buy)
-        insertButt.pack(side=LEFT, padx=20, pady=2)
-        printButt = Button(toolbar,
-                           text="Sell",
-                           bg="white",
-                           border=0,
-                           activebackground='#B67352')
-        printButt.pack(side=LEFT, padx=20, pady=2)
-        printButt = Button(toolbar,
-                           text="Rent",
-                           bg="white",
-                           border=0,
-                           activebackground='#B67352', command=self.rent)
-        printButt.pack(side=LEFT, padx=20, pady=2)
-        printButt = Button(toolbar,
-                           text="Wishlist",
-                           bg="white",
-                           border=0,
-                           activebackground='#B67352')
-        printButt.pack(side=LEFT, padx=20, pady=2)
-        printButt = Button(toolbar,
-                           text="Help",
-                           bg="white",
-                           border=0,
-                           activebackground='#B67352')
-        printButt.pack(side=LEFT, padx=20, pady=2)
 
-        toolbar.pack(side=TOP, fill=X)
 
         # Call method to set up chat interface
         self.setup_chat_interface()
@@ -119,14 +78,19 @@ class MainInterface:
         chat_frame.grid_columnconfigure(0, weight=1)
         chat_frame.grid_rowconfigure(0, weight=1)
 
-        self.chat_text = Text(chat_frame, wrap=WORD)
+        self.chat_text = Text(chat_frame, wrap=WORD, highlightbackground='gray', highlightcolor='black')
         self.chat_text.grid(row=0, column=0, padx=10, pady=10, sticky="nsew")
 
-        self.message_entry = Entry(chat_frame)
+        self.message_entry = Entry(chat_frame, highlightbackground='gray', highlightcolor='black')
         self.message_entry.grid(row=1, column=0, padx=10, pady=10, sticky="ew")
 
-        send_button = Button(chat_frame, text="Send", command=self.send_message)
+        send_button = Button(chat_frame, text="Send", command=self.send_message, bd=1)
         send_button.grid(row=1, column=1, padx=10, pady=10, sticky="e")
+
+        # setting up the back page button
+
+        back_button = Button(chat_frame, bg='#B31312', fg='white', text='<<Back')
+        back_button.place(relx=0.94, rely=0.1)
 
     def send_message(self):
         message = self.message_entry.get()
