@@ -125,14 +125,14 @@ enter_name_ent.place(relx=0.01, rely=0.2)
 register_select = tk.Label(root, text='>Register as:',
                            font=('Bold', 15), bg='white')
 register_select.place(relx=0.01, rely=0.3)
-owner = tk.Radiobutton(root, text='Male',
+owner = tk.Radiobutton(root, text='Owner',
                       font=('Bold', 15), bg='white',
                       variable=registered_selection, value='owner')
 owner.place(relx=0.01, rely=0.35)
 builder = tk.Radiobutton(root, text='Builder',
                         font=('Bold', 15), bg='white',
                         variable=registered_selection, value='builder')
-builder.place(relx=0.1, rely=0.35)
+builder.place(relx=0.12, rely=0.35)
 registered_selection.set('owner')
 
 # adding transaction selection
