@@ -226,9 +226,4 @@ next_butt = tk.Button(root, text="Next",
                       fg='white', bd=1)
 next_butt.place(relx=0.6, rely=0.8)
 
-# setting up the back page button
-
-back_button = Button(root, bg='#B31312', fg='white', text='<<Back')
-back_button.place(relx=0.9, rely=0.1)
-
 root.mainloop()

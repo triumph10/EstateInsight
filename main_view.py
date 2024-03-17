@@ -166,6 +166,11 @@ class mainview:
                              font=('Microsoft', 12))
         that_button.place(relx=0.65, rely=0.85)
 
+        # setting up the back page button
+
+        back_button = Button(root, bg='#B31312', fg='white', text='<<Back')
+        back_button.place(relx=0.05, rely=0.15)
+
 
 
 

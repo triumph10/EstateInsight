@@ -83,10 +83,11 @@ class rentview:
         printButt.pack(side=LEFT, padx=20, pady=2)
         printButt = Button(toolbar,
                            text="Rent",
-                           bg="white",
-
-                           border=0, activebackground='#B67352', command=self.rent)
-
+                           bg="#B31312",
+                           relief=RAISED,
+                           border=1,
+                           fg='white',
+                           command=self.rent)
         printButt.pack(side=LEFT, padx=20, pady=2)
         printButt = Button(toolbar,
                            text="Wishlist",
@@ -187,6 +188,11 @@ class rentview:
                              font=('Microsoft', 12))
         that_button.place(relx=0.65, rely=0.86)
 
+        # setting up the back page button
+
+        back_button = Button(root, bg='#B31312', fg='white', text='<<Back')
+        back_button.place(relx=0.05, rely=0.15)
+
     def next(self):
         self.root.destroy()
         import maininterface2
@@ -205,6 +211,8 @@ class rentview:
     def buy(self):
         self.root.destroy()
         import buy1
+
+
 
 root = Tk()
 obj = rentview(root)

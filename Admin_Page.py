@@ -10,13 +10,13 @@ img_butt_add3 = PhotoImage(file='Images/price_graph.png')
 
 
  # setting up the app
-root.title("EstateInsight_hiiiiii")
+root.title("EstateInsight")
 root.resizable(False, False)
 
 font_info = ("Arial", 15, "bold")
 
 one = Label(root,
-                    text="EstateInsight_hiiiiii",
+                    text="EstateInsight",
                     bg="#B31312",
                     fg="white",
                     font=font_info,

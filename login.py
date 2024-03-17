@@ -12,8 +12,8 @@ class Login:
         self.root.configure(bg="white")
         self.root.resizable(False, False)
 
-        self.img = PhotoImage(file='Images/estate.png')
-        Label(root, image=self.img, bg="white").place(x=150, y=150)
+        self.img = PhotoImage(file='Images/estate_size.png')
+        Label(root, image=self.img, bg="white").place(x=140, y=120)
 
         self.frame = Frame(root, width=350, height=350, bg="white")
         self.frame.place(x=480, y=70)

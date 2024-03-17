@@ -58,6 +58,13 @@ class maininterface2:
         # setting up the toolbar for the app
         toolbar = Frame(root, bg="white", relief=GROOVE, bd=2, pady=2)
 
+        printButt = Button(toolbar,
+                           text="Home",
+                           bg="#B31312",
+                           border=1,
+                           relief=RAISED,
+                           fg='white')
+        printButt.pack(side=LEFT, padx=20, pady=2)
         insertButt = Button(toolbar,
                             text="Buy",
                             bg="white",

@@ -166,6 +166,11 @@ class profile:
         whole_page_frame.pack_propagate(False)
         whole_page_frame.configure(width=980, height=600)
 
+        # setting up the back page button
+
+        back_button = Button(root, bg='#B31312', fg='white', text='<<Back')
+        back_button.place(relx=0.9, rely=0.1)
+
     def home(self):
         self.root.destroy()
         import Homepage1

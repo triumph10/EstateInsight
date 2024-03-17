@@ -55,6 +55,8 @@ class MainInterface:
         self.root.iconphoto(True, self.icon)
 
 
+
+
         # Call method to set up chat interface
         self.setup_chat_interface()
 
@@ -84,6 +86,11 @@ class MainInterface:
 
         send_button = Button(chat_frame, text="Send", command=self.send_message, bd=1)
         send_button.grid(row=1, column=1, padx=10, pady=10, sticky="e")
+
+        # setting up the back page button
+
+        back_button = Button(chat_frame, bg='#B31312', fg='white', text='<<Back')
+        back_button.place(relx=0.94, rely=0.1)
 
     def send_message(self):
         message = self.message_entry.get()
