@@ -113,10 +113,10 @@ electric_ent = tk.Entry(root, font=('Bold', 17),
 electric_ent.place(relx=0.5, rely=0.66)
 
 # adding the submit button
-submit_butt = tk.Button(root, text="Submit",
+upload_butt = tk.Button(root, text="Upload",
                         font=('Bold', 15), bg='#B31312',
                         fg='white', bd=1)
-submit_butt.place(relx=0.5, rely=0.85, anchor=CENTER)
+upload_butt.place(relx=0.5, rely=0.85, anchor=CENTER)
 
 
 root.mainloop()
