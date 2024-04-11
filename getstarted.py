@@ -1,87 +1,114 @@
 from tkinter import *
 import tkinter as tk
 
+class getstarted:
+    def __init__(self, window):
+        # Setting Up the app
+        self.window = window
+        self.window.title("EstateInsight")
 
-# Setting Up the app
+        # Setting up the position of the app
+        self.window_width = 500
+        self.window_height = 500
+
+        screen_width = self.window.winfo_screenwidth()
+        screen_height = self.window.winfo_screenheight()
+
+        x_position = int((screen_width - self.window_width) / 2)
+        y_position = int((screen_height - self.window_height) / 2)
+
+        self.window.geometry(f"{self.window_width}x{self.window_height}+{x_position}+{y_position}")
+
+        # Setting up the appearance
+        self.window.configure(background="white")
+
+        # Setting up the icon for the window
+        self.icon = PhotoImage(file='Images/estate.png')
+        self.window.iconphoto(True, self.icon)
+
+        # Setting up the font
+        font_moodlift = ('Arial', 30, 'bold')
+        font_welcome = ("Arial", 15, "bold")
+        font_info = ("Arial", 15, "bold")
+        font_button = ("Arial", 10, "bold")
+
+        # Setting up the intro for the image label
+        self.photo = PhotoImage(file='Images/estate.png')
+        language_language_label = Label(window,
+                                        text="EstateInsight",
+                                        font=font_moodlift,
+                                        fg='black',
+                                        bg='white',
+                                        image=self.photo,  # replaces the text with image label
+                                        compound='top')
+        language_language_label.pack(padx=10, pady=20)
+
+        # Setting up the label for the welcome text
+        welcome_label = Label(window,
+                              text="Welcome To",
+                              font=font_welcome,
+                              fg='black',
+                              bg='white')
+        welcome_label.pack(padx=5, pady=5)
+
+        # Setting up the Label For information
+        infoLabel = tk.Label(window,
+                             text="The Real Estate Discovery Platform",
+                             fg='black',
+                             bg='white',
+                             font=font_info)
+        infoLabel.pack()
+
+        Entry = Label(window,
+                      text="LogIn As",
+                      foreground='white',
+                      background='#b31312',
+                      font=5,
+                      relief=GROOVE
+                      )
+        Entry.pack(padx=10, pady=20)
+
+        userButt = Button(window,
+                          text="User",
+                          bg="#b31312",
+                          fg='white',
+                          border=1,
+                          font=1,
+                          command=self.user)
+        userButt.place(relx=0.25, rely=0.7)
+
+        agentButt = Button(window,
+                           text="Agent",
+                           bg="#b31312",
+                           fg='white',
+                           border=1,
+                           font=1,
+                           command=self.agent)
+        agentButt.place(relx=0.45, rely=0.7)
+
+        adminButt = Button(window,
+                           text="Admin",
+                           bg="#b31312",
+                           fg='white',
+                           border=1,
+                           font=1,
+                           command=self.admin)
+        adminButt.place(relx=0.65, rely=0.7)
+
+    def admin(self):
+        self.window.destroy()
+        print("Admin button clicked")
+        import Admin_Page
+
+    def agent(self):
+        self.window.destroy()
+        import agentlogin
+
+    def user(self):
+        self.window.destroy()
+        import login
+
+
 window = Tk()
-window.title("EstateInsight")
-
-# Setting up the position of the app
-window_width = 500
-window_height = 500
-
-screen_width = window.winfo_screenwidth()
-screen_height = window.winfo_screenheight()
-
-x_position = int((screen_width - window_width) / 2)
-y_position = int((screen_height - window_height) / 2)
-
-window.geometry(f"{window_width}x{window_height}+{x_position}+{y_position}")
-
-# Setting up the appearance
-window.configure(background="#219ebc")
-
-# Setting up the icon for the window
-icon = PhotoImage(file='Images/estate.png')
-window.iconphoto(True, icon)
-
-# Setting up the font
-font_moodlift = ('Arial', 30, 'bold')
-font_welcome = ("Arial", 15, "bold")
-font_info = ("Arial", 15, "bold")
-font_button = ("Arial", 10, "bold")
-
-# Setting up the intro for the image label
-photo = PhotoImage(file='Images/estate.png')
-language_language_label = Label(window,
-                                text="EstateInsight",
-                                font=font_moodlift,
-                                fg='#FFFFFF',
-                                bg='#219ebc',
-                                image=photo,  # replaces the text with image label
-                                compound='top')
-language_language_label.pack(padx=10, pady=20)
-
-# Setting up the label for the welcome text
-welcome_label = Label(window,
-                      text="Welcome To",
-                      font=font_welcome,
-                      fg='#FFFFFF',
-                      bg='#219ebc')
-
-welcome_label.pack(padx=5, pady=5)
-
-# Setting up the Label For information
-infoLabel = tk.Label(window,
-                     text="The Real Estate Discovery Platform",
-                     fg='#FFFFFF',
-                     bg='#219ebc',
-                     font=font_info)
-infoLabel.pack()
-
-
-# Setting up the entry button
-
-def new_window():
-    window.withdraw()  # Hide the main window
-    main_window = create_main_window(window)
-    main_window.protocol("WM_DELETE_WINDOW", lambda: close_windows(window, main_window))
-
-
-def close_windows(main_window, popup_window):
-    popup_window.destroy()
-    main_window.destroy()
-
-
-Entry = Button(window,
-               text="Get Started",
-               foreground='#E4DEBE',
-               background='#86A7FC',
-               activeforeground='#D24545',
-               activebackground='#3468C0',
-               command=new_window,
-               font=font_button
-               )
-Entry.pack(padx=10, pady=20)
-
+obj = getstarted(window)
 window.mainloop()

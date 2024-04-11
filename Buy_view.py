@@ -174,16 +174,16 @@ class buyview:
 
         # setting up the back page button
 
-        back_button = Button(root, bg='#B31312', fg='white', text='<<Back')
+        back_button = Button(root, bg='#B31312', fg='white', text='<<Back',command=self.back)
         back_button.place(relx=0.05, rely=0.15)
 
     def next(self):
         self.root.destroy()
-        import maininterface2
+        import Homepage2
 
     def home(self):
         self.root.destroy()
-        import maininterface
+        import Homepage1
 
     def rent(self):
         self.root.destroy()
@@ -191,10 +191,14 @@ class buyview:
 
     def sell(self):
         self.root.destroy()
-        import sell
+        import Sell_1
     def buy(self):
         self.root.destroy()
         import buy1
+    def back(self):
+        self.root.destroy()
+        import buy1
+
 
 
 

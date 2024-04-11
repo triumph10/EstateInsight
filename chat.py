@@ -1,151 +1,117 @@
-from tkinter import *
-from tkinter import ttk
-from socket import *
-from threading import *
-
-class MainInterface:
-    def __init__(self, root):
-        self.root = root
-        self.root.title("EstateInsight")
-        self.root.resizable(False, False)
-
-        font_info = ("Arial", 15, "bold")
-
-        one = Label(root,
-                    text="EstateInsight",
-                    bg="#B31312",
-                    fg="white",
-                    font=font_info,
-                    anchor=W,
-                    relief=GROOVE,
-                    bd=1,
-                    height=1)
-        one.pack(fill=X, side=TOP)
-        name_label = Label(one,
-                           text='Insert Name',
-                           bg='#B31312',
-                           fg='white',
-                           bd=0)
-        name_label.place(relx=0.85, rely=0.1)  # name
-        down_arrow = Menubutton(one, text='˅', bd=0, bg='#B31312', fg='white')
-        down_arrow.pack()
-        down_arrow.menu = Menu(down_arrow)
-        down_arrow["menu"] = down_arrow.menu
-        down_arrow.menu.add_checkbutton(label="Profile")
-        down_arrow.menu.add_checkbutton(label="Agents")
-        down_arrow.place(relx=0.92)  # drop down arrow
-
-        # app color
-        self.root.configure(bg='white')
-
-        # setting up geometry for app
-        window_width = 1000
-        window_height = 660
-
-        screen_width = self.root.winfo_screenwidth()
-        screen_height = self.root.winfo_screenheight()
-
-        x_position = int((screen_width - window_width) / 2)
-        y_position = int((screen_height - window_height) / 2)
-
-        self.root.geometry(f"{window_width}x{window_height}+{x_position}+{y_position}")
-
-        # setting up icon for window title
-        self.icon = PhotoImage(file='Images/estate.png')
-        self.root.iconphoto(True, self.icon)
+from tkinter import Tk, Frame, Scrollbar, Label, Entry, Text, Button, messagebox  # Tkinter Python Module for GUI
+import socket  # Sockets for network connection
+import threading  # for multiple processes
 
 
+class GUI:
+    client_socket = None
+    last_received_message = None
 
+    def __init__(self, master):
+        self.root = master
+        self.initialize_socket()
+        self.initialize_gui()
+        self.listen_for_incoming_messages_in_a_thread()
 
-        # Call method to set up chat interface
-        self.setup_chat_interface()
+    def initialize_socket(self):
+        self.client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  # Initializing socket with TCP and IPv4
+        remote_ip = '127.0.0.1'  # IP address
+        remote_port = 10319  # TCP port
+        self.client_socket.connect((remote_ip, remote_port))  # Connect to the remote server
 
-    def buy(self):
-        self.root.destroy()
-        import buy1
+    def initialize_gui(self):  # GUI initializer
+        self.root.title("Socket Chat")
+        self.root.resizable(0, 0)
 
-    def home(self):
-        self.root.destroy()
-        import maininterface
+        # Chat box section
+        chat_box_frame = Frame(self.root)
+        chat_box_frame.pack(padx=10, pady=10, fill='both', expand=True)
 
-    def rent(self):
-        self.root.destroy()
-        import Rent1
+        Label(chat_box_frame, text='Chat Box:', font=("Serif", 12)).pack(side='top', anchor='w')
 
-    def setup_chat_interface(self):
-        chat_frame = Frame(self.root)
-        chat_frame.pack(fill=BOTH, expand=True)  # Fill the entire window
-        chat_frame.grid_columnconfigure(0, weight=1)
-        chat_frame.grid_rowconfigure(0, weight=1)
+        self.chat_transcript_area = Text(chat_box_frame, width=60, height=10, font=("Serif", 12))
+        self.chat_transcript_area.pack(side='left', padx=10, fill='both', expand=True)
 
-        self.chat_text = Text(chat_frame, wrap=WORD, highlightbackground='gray', highlightcolor='black')
-        self.chat_text.grid(row=0, column=0, padx=10, pady=10, sticky="nsew")
+        scrollbar = Scrollbar(chat_box_frame, command=self.chat_transcript_area.yview, orient='vertical')
+        scrollbar.pack(side='right', fill='y')
 
-        self.message_entry = Entry(chat_frame, highlightbackground='gray', highlightcolor='black')
-        self.message_entry.grid(row=1, column=0, padx=10, pady=10, sticky="ew")
+        self.chat_transcript_area.config(yscrollcommand=scrollbar.set)
+        self.chat_transcript_area.bind('<KeyPress>', lambda e: 'break')
 
-        send_button = Button(chat_frame, text="Send", command=self.send_message, bd=1)
-        send_button.grid(row=1, column=1, padx=10, pady=10, sticky="e")
+        # Name section
+        name_frame = Frame(self.root)
+        name_frame.pack(padx=10, pady=(0, 5), fill='x')
 
-        # setting up the back page button
+        Label(name_frame, text='Enter your name:', font=("Helvetica", 12)).pack(side='left')
 
-        back_button = Button(chat_frame, bg='#B31312', fg='white', text='<<Back')
-        back_button.place(relx=0.94, rely=0.1)
+        self.name_widget = Entry(name_frame, width=40, borderwidth=2)
+        self.name_widget.pack(side='left')
 
-    def send_message(self):
-        message = self.message_entry.get()
-        if message:
-            self.chat_text.insert(END, f"You: {message}\n")
-            self.message_entry.delete(0, END)
-            # Send the message to the server here
+        self.join_button = Button(name_frame, text="Join", width=10, command=self.on_join)
+        self.join_button.pack(side='left')
 
-    def start_server(self):
-        host_ip = "0.0.0.0"  # Change this to your desired host IP
-        port_number = 777
+        # Entry section
+        entry_frame = Frame(self.root)
+        entry_frame.pack(padx=10, pady=(5, 10), fill='x')
 
-        def client_thread():
-            client_socket = socket(AF_INET, SOCK_STREAM)
-            client_socket.connect((host_ip, port_number))
-            # Your client-side code here
+        Label(entry_frame, text='Enter message:', font=("Serif", 12)).pack(side='left')
 
-        def server_thread():
-            host_socket = socket(AF_INET, SOCK_STREAM)
-            host_socket.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
-            host_socket.bind((host_ip, port_number))
-            host_socket.listen()
+        self.enter_text_widget = Text(entry_frame, width=40, height=3, font=("Serif", 12))
+        self.enter_text_widget.pack(side='left')
 
-            clients = set()
+        self.enter_text_widget.bind('<Return>', self.on_enter_key_pressed)
 
-            while True:
-                client_socket, client_address = host_socket.accept()
-                clients.add(client_socket)
-                print("Connection established with:", client_address[0] + ":" + str(client_address[1]))
-                thread = Thread(target=self.client_handler, args=(client_socket, client_address, clients))
-                thread.start()
+    def listen_for_incoming_messages_in_a_thread(self):
+        thread = threading.Thread(target=self.receive_message_from_server, args=(self.client_socket,))
+        thread.start()
 
-        server = Thread(target=server_thread)
-        client = Thread(target=client_thread)
-
-        server.start()
-        client.start()
-
-    def client_handler(self, client_socket, client_address, clients):
+    def receive_message_from_server(self, so):
         while True:
-            message = client_socket.recv(1024).decode("utf-8")
-            print(client_address[0] + ":" + str(client_address[1]) + " says: " + message)
-            for client in clients:
-                if client is not client_socket:
-                    client.send(
-                        (client_address[0] + ":" + str(client_address[1]) + " says: " + message).encode("utf-8"))
-
-            if not message:
-                clients.remove(client_socket)
-                print(client_address[0] + ":" + str(client_address[1]) + " disconnected")
+            buffer = so.recv(256)
+            if not buffer:
                 break
+            message = buffer.decode('utf-8')
 
-        client_socket.close()
+            if "joined" in message:
+                user = message.split(":")[1]
+                message = user + " has joined"
+                self.chat_transcript_area.insert('end', message + '\n')
+                self.chat_transcript_area.yview('end')
+            else:
+                self.chat_transcript_area.insert('end', message + '\n')
+                self.chat_transcript_area.yview('end')
 
-if __name__ == "__main__":
-    root = Tk()
-    obj = MainInterface(root)
-    root.mainloop()
+        so.close()
+
+    def on_join(self):
+        if len(self.name_widget.get()) == 0:
+            messagebox.showerror("Enter your name", "Enter your name to send a message")
+            return
+        self.name_widget.config(state='disabled')
+        self.client_socket.send(("joined:" + self.name_widget.get()).encode('utf-8'))
+
+    def on_enter_key_pressed(self, event):
+        if len(self.name_widget.get()) == 0:
+            messagebox.showerror("Enter your name", "Enter your name to send a message")
+            return
+        self.send_chat()
+        self.clear_text()
+
+    def clear_text(self):
+        self.enter_text_widget.delete(1.0, 'end')
+
+    def send_chat(self):
+        senders_name = self.name_widget.get().strip() + ": "
+        data = self.enter_text_widget.get(1.0, 'end').strip()
+        message = (senders_name + data).encode('utf-8')
+        self.chat_transcript_area.insert('end', message.decode('utf-8') + '\n')
+        self.chat_transcript_area.yview('end')
+        self.client_socket.send(message)
+        self.enter_text_widget.delete(1.0, 'end')
+        return 'break'
+
+
+root = Tk()
+gui = GUI(root)
+root.mainloop()
+

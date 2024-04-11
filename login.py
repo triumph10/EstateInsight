@@ -1,8 +1,9 @@
 from tkinter import *
 from tkinter import messagebox
-from Homepage1 import Homepage1
 import mysql.connector
 from mysql.connector import Error
+from Homepage1 import Homepage1
+
 
 
 class Login:
@@ -48,7 +49,7 @@ class Login:
             if name == '':
                 self.password.insert(0, 'Password')
 
-        self.password = Entry(self.frame, width=25, fg='black', border=0, bg='white', font=('Microsoft Yahei UI Light', 11))
+        self.password = Entry(self.frame, width=25, fg='black', border=0, bg='white',show="*", font=('Microsoft Yahei UI Light', 11))
         self.password.place(x=30, y=150)
         self.password.insert(0, 'Password')
         self.password.bind('<FocusIn>', on_enter)
@@ -81,7 +82,7 @@ class Login:
                 host='localhost',
                 user='root',
                 password='ARYA#305#varun',
-                database='estateinsights'
+                database='estateinsight'
             )
             cursor = conn.cursor()
             cursor.execute('SELECT * FROM signin WHERE username = %s AND password = %s', (username, password))

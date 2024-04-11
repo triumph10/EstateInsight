@@ -1,17 +1,29 @@
 from tkinter import *
 from tkinter import ttk
 import tkinter as tk
-from PIL import Image,ImageTk
-import io
+import mysql.connector
+import mysql
+from PIL import Image, ImageTk
 import tkintermapview
+import sys
+bs = sys.argv[1]
 
 
 class mainview:
-    def __init__(self,root):
+    def __init__(self, root,propertyname):
+
         self.root = root
+        self.propertyname = propertyname
         # setting up the app
-        self.root.title("EstateInsight")
-        self.root.resizable(False, False)
+        self.root = root
+        # Connect to the MySQL database
+        self.connection = mysql.connector.connect(
+            host="localhost",
+            user="root",
+            password="ARYA#305#varun",
+            database="estateinsight"
+        )
+        self.cursor = self.connection.cursor()
 
         font_info = ("Arial", 15, "bold")
 
@@ -79,110 +91,233 @@ class mainview:
         printButt.pack(side=LEFT, padx=20, pady=2)
 
         toolbar.pack(side=TOP, fill=X)
+        self.setup_info()
+
+        # Fetch data from the database and populate entries
+        self.fetch_data()
 
         # Frame 1 where image is to be viewed
-        frame1 = Frame(root, width=400, height=900, bg="White", relief=GROOVE, bd=1)
-        frame1.pack(side=LEFT, padx=40, pady=50)
+        frame1 = Frame(root, width=300, height=300, bg="White", relief=GROOVE, bd=1)
+        frame1.pack(side=LEFT, padx=40, pady=70)
 
-        self.img = ImageTk.PhotoImage(Image.open('Images/maindoor.jpeg'))
-        Label2 = Label(frame1, image=self.img, width=300, height=300, padx='10', pady='10')
-        Label2.pack(side=TOP)
+        self.display_image_from_database(frame1)
 
-        def open_mumbaimap_window():
-            # # Create a new window for Mumbai map
-            # mumbai_window = tk.Toplevel(window)
-            # mumbai_window.title("Mumbai Map")
 
-            mapwidget = tkintermapview.TkinterMapView(tk.Toplevel(self.root), width=420, height=400, corner_radius=0)
-            mapwidget.pack()
 
-            # Create a map widget for Mumbai
-            marker_1 = mapwidget.set_address("kasarvadavli,thane,india", marker=True)
-            marker_1.set_text("kasarvadavli,thane,india")
 
-        def imagechange():
-            self.image1 = ImageTk.PhotoImage(Image.open('Images/Screenshot 2024-03-11 204626.png'),
-                                        Image.open('Images/Screenshot 2024-03-11 204626.png'))
-            Label2.configure(image=self.image1)
-            Label2.image = self.image1
 
-        top_label = Label(frame1, text="Heaven Homes", font=("Arial", 12, "bold"), bg='White')
-        top_label.place(relx=0.5, rely=0.00, anchor='n')
+    def open_mumbaimap_window(self):
+        mapwidget = tkintermapview.TkinterMapView(tk)
+        # Create a map widget for Mumbai
+        marker_1 = mapwidget.set_address("kasarvadavli,thane,india", marker=True)
+        marker_1.set_text("kasarvadavli,thane,india")
 
-        button = Button(frame1, text=">>", padx='10', pady='10', command=imagechange)
-        button.pack(side=TOP, pady='10')
+    def display_image_from_database(self, frame):
+        try:
+            cursor = self.connection.cursor()
+            # Fetch image data from the database
+            cursor.execute("SELECT photo1 FROM rent WHERE propertyname = %s", (self.propertyname,))
+            image_data = cursor.fetchone()
+            if image_data:
+                image_data = image_data[0]  # Extract image data from the tuple
 
-        # Frame 2 where information is to be displayed
-        frame2 = Frame(root, width=600, height=700, bg='White')
-        frame2.pack(side=RIGHT, padx=10, pady=10)
+                # Convert binary image data to Image object
+                image = Image.open(image_data)
 
-        text = "Carpet Area\n1166 sqft\n₹12,864/sqft"
-        label1 = Label(frame2, text=text, anchor=NW, justify=LEFT, bd=1, relief=GROOVE)
-        label1.place(x=10, y=10)
+                # Resize image
+                image.thumbnail((200, 200))
 
-        text2 = "Floor\n2 (Out of 13 Floors)"
-        label2 = Label(frame2, text=text2, anchor=NW, justify=LEFT, bd=1, relief=GROOVE)
-        label2.place(x=150, y=10)
+                # Convert Image object to PhotoImage object
+                photo_image = ImageTk.PhotoImage(image)
 
-        text3 = "Trasaction type\nResale"
-        label3 = Label(frame2, text=text3, anchor=NW, justify=LEFT, bd=1, relief=GROOVE)
-        label3.place(x=320, y=10)
+                # Display image in label
+                label = Label(frame, image=photo_image, bg="white")
+                label.image = photo_image  # Keep a reference to the image
+                label.pack(padx=45, pady=45)
+            else:
+                print("No image data found for property ID:", self.propertyname)
 
-        text4 = "Status\n Ready To Move"
-        label4 = Label(frame2, text=text4, anchor=NW, justify=LEFT, bd=1, relief=GROOVE)
-        label4.place(x=450, y=10)
+        except Exception as e:
+            print("Error displaying image:", e)
 
-        labels_to_bold = [label1, label2, label3, label4]
+        # setting up all the info
+    def setup_info(self):
+        carp_fra = Frame(root, relief=GROOVE, bd=1, width=100, height=70)
+        carp_fra.place(relx=0.4, rely=0.12)
+        carp_lab = Label(carp_fra, bd=0, text="Carpet Area")
+        carp_lab.place(relx=0.1, rely=0.1)
+        self.carp_ent = Entry(carp_fra, bd=1, state=DISABLED, width=15)
+        self.carp_ent.place(relx=0.01, rely=0.45)
 
-        for label in labels_to_bold:
-            label.config(font=("Arial", 8, "bold"), pady=10)
+        floor_fra = Frame(root, relief=GROOVE, bd=1, width=100, height=70)
+        floor_fra.place(relx=0.55, rely=0.12)
+        floor_lab = Label(floor_fra, bd=0, text="Floor")
+        floor_lab.place(relx=0.1, rely=0.1)
+        self.floor_ent = Entry(floor_fra, bd=1, state=DISABLED, width=15)
+        self.floor_ent.place(relx=0.01, rely=0.45)
 
-        vertical_spacing = 80
+        trans_fra = Frame(root, relief=GROOVE, bd=1, width=100, height=70)
+        trans_fra.place(relx=0.7, rely=0.12)
+        trans_lab = Label(trans_fra, bd=0, text="Transaction Type")
+        trans_lab.place(relx=0.03, rely=0.1)
+        self.trans_ent = Entry(trans_fra, bd=1, state=DISABLED, width=15)
+        self.trans_ent.place(relx=0.01, rely=0.45)
 
-        y_coordinate_label5 = label1.winfo_y() + label1.winfo_height() + vertical_spacing
+        stat_fra = Frame(root, relief=GROOVE, bd=1, width=100, height=70)
+        stat_fra.place(relx=0.85, rely=0.12)
+        stat_lab = Label(stat_fra, bd=0, text="Status")
+        stat_lab.place(relx=0.1, rely=0.1)
+        self.stat_ent = Entry(stat_fra, bd=1, state=DISABLED, width=15)
+        self.stat_ent.place(relx=0.01, rely=0.45)
 
-        text5 = ("More Details\n\nPrice Breakup : ₹1.5 Cr | ₹7,50,000 Approx. Registration Charges | ₹8,500 Monthly\n\n"
-                 "Booking Amount : ₹100000\n\n"
-                 "Address : Global city, Virar West, Virar West, Mumbai \nMaharashtra 400071,"
-                 " Chembur, Mumbai - Harbour Line, Maharashtra\n\nLandmarks : Smarath internation school,global city virar west.\n\nFurnishing : Unfurnished\n\n"
-                 "Flooring : Vitrified\n\nType of Ownership : Villa\n\n"
-                 "Overlooking : Garden/Park, Main Road\n\n"
-                 "Age of Construction : 5 to 10 years\n\n"
-                 "Water Availability : 24 Hours Available\n\n"
-                 "Status of Electricity : No/Rare Powercut")
-        label5 = Label(frame2, text=text5, font=("Arial", 10), anchor=NW, justify=LEFT, bd=1, relief=GROOVE)
-        label5.place(x=10, y=y_coordinate_label5)
+        # ***********************************************************************************
 
-        button = Button(frame2, text="Contact Owner", padx='10', pady='10', bg='#B31312', fg='White')
-        button.place(x=200, y=490)
+        info_fra = Frame(root, relief=GROOVE, bd=1, width=550, height=470)
+        info_fra.place(relx=0.4, rely=0.24)
 
-        that_button = Button(frame2,
+        more_lab = Label(info_fra, bd=0, text='More Details')
+        more_lab.place(relx=0.01, rely=0.01)
+
+        self.price_lab = Label(info_fra, bd=0, text='Price:')
+        self.price_lab.place(relx=0.01, rely=0.08)
+        self.price_ent = Entry(info_fra, bd=1, state=DISABLED, width=70)
+        self.price_ent.place(relx=0.08, rely=0.08)
+
+        self.book_lab = Label(info_fra, bd=0, text='Booking Price:')
+        self.book_lab.place(relx=0.01, rely=0.165)
+        self.book_ent = Entry(info_fra, bd=1, state=DISABLED, width=70)
+        self.book_ent.place(relx=0.16, rely=0.165)
+
+        self.add_lab = Label(info_fra, bd=0, text='Address:')
+        self.add_lab.place(relx=0.01, rely=0.25)
+        self.add_ent = Entry(info_fra, bd=1, state=DISABLED, width=70)
+        self.add_ent.place(relx=0.11, rely=0.25)
+
+        self.land_lab = Label(info_fra, bd=0, text='Landmarks:')
+        self.land_lab.place(relx=0.01, rely=0.37)
+        self.land_ent = Entry(info_fra, bd=1, state=DISABLED, width=70)
+        self.land_ent.place(relx=0.13, rely=0.37)
+
+        self.fur_lab = Label(info_fra, bd=0, text='Furnishing:')
+        self.fur_lab.place(relx=0.01, rely=0.44)
+        self.fur_ent = Entry(info_fra, bd=1, state=DISABLED, width=70)
+        self.fur_ent.place(relx=0.13, rely=0.44)
+
+        self.floor_lab = Label(info_fra, bd=0, text='Flooring:')
+        self.floor_lab.place(relx=0.01, rely=0.52)
+        self.flooring_ent = Entry(info_fra, bd=1, state=DISABLED, width=70)
+        self.flooring_ent.place(relx=0.11, rely=0.52)
+
+        self.type_lab = Label(info_fra, bd=0, text='Type of Ownership:')
+        self.type_lab.place(relx=0.01, rely=0.59)
+        self.type_ent = Entry(info_fra, bd=1, state=DISABLED, width=50)
+        self.type_ent.place(relx=0.21, rely=0.59)
+
+        self.over_lab = Label(info_fra, bd=0, text='Overlooking:')
+        self.over_lab.place(relx=0.01, rely=0.67)
+        self.over_ent = Entry(info_fra, bd=1, state=DISABLED, width=70)
+        self.over_ent.place(relx=0.15, rely=0.67)
+
+        self.age_lab = Label(info_fra, bd=0, text='Age of Construction:')
+        self.age_lab.place(relx=0.01, rely=0.75)
+        self.age_ent = Entry(info_fra, bd=1, state=DISABLED, width=50)
+        self.age_ent.place(relx=0.23, rely=0.75)
+
+        self.water_lab = Label(info_fra, bd=0, text='Water Availaibility:')
+        self.water_lab.place(relx=0.01, rely=0.83)
+        self.water_ent = Entry(info_fra, bd=1, state=DISABLED, width=70)
+        self.water_ent.place(relx=0.2, rely=0.83)
+
+        self.elec_lab = Label(info_fra, bd=0, text='Status of Electricity:')
+        self.elec_lab.place(relx=0.01, rely=0.9)
+        self.elec_ent = Entry(info_fra, bd=1, state=DISABLED, width=70)
+        self.elec_ent.place(relx=0.22, rely=0.9)
+
+        button = Button(root, text="Contact Owner", bg='#B31312', fg='White', pady=5)
+        button.place(relx=0.08, rely=0.87)
+
+        that_button = Button(root,
                              text="View Location",
                              foreground='#f7f7f7',
                              background='#B31312',
                              activeforeground='#E43A19',
                              activebackground='RED',
-                             command=open_mumbaimap_window,
+
                              font=('Microsoft', 12))
-        that_button.place(relx=0.65, rely=0.85)
+        that_button.place(relx=0.21, rely=0.87)
 
         # setting up the back page button
 
         back_button = Button(root, bg='#B31312', fg='white', text='<<Back')
         back_button.place(relx=0.05, rely=0.15)
 
+        pass
+
+    def fetch_data(self):
+        data = None  # Initialize data as None
+        try:
+            query = "SELECT * FROM rent WHERE propertyname = %s"
+            self.cursor.execute(query, (self.propertyname,))
+            data = self.cursor.fetchone()
+
+        except mysql.connector.Error as e:
+            print("Error fetching data from database:", e)
+
+        # Populate entries with fetched data
+        if data:
+            self.setup_info()  # Call setup_info method instead of populate_entries
+
+            # Populate entries with fetched data
+            self.carp_ent.config(state=NORMAL)
+            self.carp_ent.insert(0, data[1])
+            self.carp_ent.config(state=DISABLED)
+            self.floor_ent.config(state=NORMAL)
+            self.floor_ent.insert(0, data[2])
+            self.floor_ent.config(state=DISABLED)
+            self.trans_ent.config(state=NORMAL)
+            self.trans_ent.insert(0, data[3])
+            self.trans_ent.config(state=DISABLED)
+            self.stat_ent.config(state=NORMAL)
+            self.stat_ent.insert(0, data[4])
+            self.stat_ent.config(state=DISABLED)
+            self.price_ent.config(state=NORMAL)
+            self.price_ent.insert(0, data[5])
+            self.price_ent.config(state=DISABLED)
+            self.book_ent.config(state=NORMAL)
+            self.book_ent.insert(0, data[6])
+            self.book_ent.config(state=DISABLED)
+            self.add_ent.config(state=NORMAL)
+            self.add_ent.insert(0, data[7])
+            self.add_ent.config(state=DISABLED)
+            self.land_ent.config(state=NORMAL)
+            self.land_ent.insert(0, data[8])
+            self.land_ent.config(state=DISABLED)
+            self.fur_ent.config(state=NORMAL)
+            self.fur_ent.insert(0, data[9])
+            self.fur_ent.config(state=DISABLED)
+            self.flooring_ent.config(state=NORMAL)
+            self.flooring_ent.insert(0, data[10])
+            self.flooring_ent.config(state=DISABLED)
+            self.type_ent.config(state=NORMAL)
+            self.type_ent.insert(0, data[11])
+            self.type_ent.config(state=DISABLED)
+            self.over_ent.config(state=NORMAL)
+            self.over_ent.insert(0, data[12])
+            self.over_ent.config(state=DISABLED)
+            self.age_ent.config(state=NORMAL)
+            self.age_ent.insert(0, data[13])
+            self.age_ent.config(state=DISABLED)
+            self.water_ent.config(state=NORMAL)
+            self.water_ent.insert(0, data[14])
+            self.water_ent.config(state=DISABLED)
+            self.elec_ent.config(state=NORMAL)
+            self.elec_ent.insert(0, data[15])
+            self.elec_ent.config(state=DISABLED)
+        else:
+            print("No data fetched from the database.")
 
 
-
-
-
-
-
-
-
-
-
-
-root=Tk()
-obj = mainview(root)
+root = Tk()
+propertyname = sys.argv[1] if len(sys.argv) > 1 else "default_property_name"
+obj = mainview(root,propertyname)
 root.mainloop()
