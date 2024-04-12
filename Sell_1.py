@@ -66,7 +66,7 @@ class Sell_1:
             self.conn = mysql.connector.connect(
                 host='localhost',
                 user='root',
-                password='ARYA#305#varun',
+                password='#22107031#',
                 database='estateinsight'
             )
             print("Connected to MySQL")
@@ -279,15 +279,36 @@ class Sell_1:
         try:
             if self.conn.is_connected():
                 pst = self.conn.cursor()
-                sql_query = (
-                    "INSERT INTO sell (username, propertyname, registeras, transactionty,status,typeofos, photo1) VALUES (%s, %s, %s, %s, %s, %s, %s)")
 
-                pst.execute(sql_query, (
-                    username, propertyname, registeras, transactiontype, propstatus, typeofownership, image1_path))
-                self.conn.commit()
-                messagebox.showinfo("", "Successfully Saved")
+                # Check if the username already exists in the database
+                pst.execute("SELECT * FROM sell WHERE username = %s", (username,))
+                existing_user = pst.fetchone()
 
-                # No need to import Sell_2 here
+                if existing_user:
+                    # If the username exists, update the values in the corresponding row
+                    sql_query = (
+                        "UPDATE sell SET propertyname=%s, registeras=%s, transactionty=%s, status=%s, typeofos=%s, photo1=%s WHERE username=%s")
+
+                    pst.execute(sql_query, (
+                        propertyname, registeras, transactiontype, propstatus, typeofownership, image1_path, username))
+                    self.conn.commit()
+                    messagebox.showinfo("", "Successfully Saved")
+
+                    # No need to import Sell_2 here
+
+                    # Close the Sell_1 window
+                    self.root.destroy()
+
+                    # Import and display the Sell_2 window
+                    import Sell_2
+                    Sell_2.Sell_2.username = username
+                    root2 = Tk()
+                    sell2 = Sell_2.Sell_2(root2)
+                    root2.mainloop()
+                else:
+                    messagebox.showerror("", "Username not found in the database")
+
+            # No need to import Sell_2 here
 
                 # Close the Sell_1 window
                 self.root.destroy()

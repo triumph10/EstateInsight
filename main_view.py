@@ -20,7 +20,7 @@ class mainview:
         self.connection = mysql.connector.connect(
             host="localhost",
             user="root",
-            password="ARYA#305#varun",
+            password="#22107031#",
             database="estateinsight"
         )
         self.cursor = self.connection.cursor()

@@ -111,7 +111,7 @@ class buy1:
         self.conn = mysql.connector.connect(
             host='localhost',
             user='root',
-            password='ARYA#305#varun',
+            password='#22107031#',
             database='estateinsight'
         )
 

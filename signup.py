@@ -165,7 +165,7 @@ class Profile:
         db_connection = mysql.connector.connect(
             host="localhost",
             user="root",
-            password="ARYA#305#varun",
+            password="#22107031#",
             database="estateinsight"
         )
 
@@ -182,7 +182,7 @@ class Profile:
         cursor = db_connection.cursor()
 
         # Insert data into the database
-        sql = "INSERT INTO signin (username, name, gender, password, email, phoneno, profilepic) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+        sql = "INSERT INTO sell (username, name, gender, password, email, phoneno, profilepic) VALUES (%s, %s, %s, %s, %s, %s, %s)"
         val = (username, name, gender, password, email, phoneno, profilepic)
         cursor.execute(sql, val)
 

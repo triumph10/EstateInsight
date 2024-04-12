@@ -61,10 +61,10 @@ class getstarted:
 
         Entry = Label(window,
                       text="LogIn As",
-                      foreground='white',
-                      background='#b31312',
+                      foreground='Black',
+                      background='white',
                       font=5,
-                      relief=GROOVE
+                      #relief=GROOVE
                       )
         Entry.pack(padx=10, pady=20)
 
@@ -72,7 +72,7 @@ class getstarted:
                           text="User",
                           bg="#b31312",
                           fg='white',
-                          border=1,
+                          border=0,
                           font=1,
                           command=self.user)
         userButt.place(relx=0.25, rely=0.7)
@@ -81,7 +81,7 @@ class getstarted:
                            text="Agent",
                            bg="#b31312",
                            fg='white',
-                           border=1,
+                           border=0,
                            font=1,
                            command=self.agent)
         agentButt.place(relx=0.45, rely=0.7)
@@ -90,7 +90,7 @@ class getstarted:
                            text="Admin",
                            bg="#b31312",
                            fg='white',
-                           border=1,
+                           border=0,
                            font=1,
                            command=self.admin)
         adminButt.place(relx=0.65, rely=0.7)

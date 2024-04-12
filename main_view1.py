@@ -8,69 +8,142 @@ import tkintermapview
 import sys
 bs = sys.argv[1]
 
-class ContactOwnerWindow:
-    class ContactOwnerWindow:
-        def __init__(self, parent, propertyname):
-            self.parent = parent
-            self.contact_window = Toplevel(parent)
-            self.contact_window.title("Contact Owner")
+from tkinter import *
+import tkinter as tk
+import mysql.connector
 
-            # Fetch owner information from the database based on the property name
+class ContactOwnerWindow:
+    def __init__(self, parent, propertyname):
+        self.parent = parent
+        self.contact_window = Toplevel(parent)
+        self.contact_window.title("EstateInsight")
+        self.contact_window.resizable(False, False)
+
+        font_info = ("Arial", 15, "bold")
+
+        one = Label(self.contact_window,
+                    text="EstateInsight",
+                    bg="#B31312",
+                    fg="white",
+                    font=font_info,
+                    anchor=tk.W,
+                    relief=tk.SUNKEN,
+                    bd=1,
+                    pady=3)
+        one.pack(fill=tk.X, side=tk.TOP)
+        name_label = Label(one,
+                           text='Insert Name',
+                           bg='#B31312',
+                           fg='white',
+                           bd=0)
+        name_label.place(relx=0.85, rely=0.1)  # name
+        down_arrow = tk.Menubutton(one, text='˅', bd=0, bg='#B31312', fg='white')
+        down_arrow.pack()
+        down_arrow.menu = tk.Menu(down_arrow)
+        down_arrow["menu"] = down_arrow.menu
+        down_arrow.menu.add_checkbutton(label="Profile")
+        down_arrow.menu.add_checkbutton(label="Agents")
+        down_arrow.place(relx=0.92)  # drop down arrow
+        # app color
+        self.contact_window.configure(bg='white')
+
+        # setting up geometry for app
+        window_width = 1000
+        window_height = 660
+
+        screen_width = self.contact_window.winfo_screenwidth()
+        screen_height = self.contact_window.winfo_screenheight()
+
+        x_position = int((screen_width - window_width) / 2)
+        y_position = int((screen_height - window_height) / 2)
+
+        self.contact_window.geometry(f"{window_width}x{window_height}+{x_position}+{y_position}")
+
+        # setting up icon for window title
+        icon = PhotoImage(file='Images/estate.png')
+        self.contact_window.iconphoto(True, icon)
+
+        # setting up the toolbar for the app
+        toolbar = Frame(self.contact_window, bg="white", relief=tk.GROOVE, bd=2, pady=2)
+        printButt = Button(toolbar,
+                           text="Home",
+                           bg="white",
+                           border=0,
+                           activebackground='#B67352', command=self.home)
+        printButt.pack(side=tk.LEFT, padx=20, pady=2)
+        insertButt = Button(toolbar, text="Buy", bg="#B31312", border=1, relief=tk.RAISED, fg='white', command=self.buy)
+        insertButt.pack(side=tk.LEFT, padx=20, pady=2)
+        printButt = Button(toolbar, text="Sell", bg="WHITE", border=0, activebackground='#B67352', command=self.sell)
+        printButt.pack(side=tk.LEFT, padx=20, pady=2)
+        printButt = Button(toolbar, text="Rent", bg="WHITE", border=0, activebackground='#B67352', command=self.rent)
+        printButt.pack(side=tk.LEFT, padx=20, pady=2)
+        printButt = Button(toolbar, text="Wishlist", bg="WHITE", border=0, activebackground='#B67352')
+        printButt.pack(side=tk.LEFT, padx=20, pady=2)
+        printButt = Button(toolbar, text="Help", bg="WHITE", border=0, activebackground='#B67352')
+        printButt.pack(side=tk.LEFT, padx=20, pady=2)
+
+        toolbar.pack(side=tk.TOP, fill=tk.X)
+
+        # Connect to the MySQL database
+        try:
+            connection = mysql.connector.connect(
+                host="localhost",
+                user="root",
+                password="#22107031#",
+                database="estateinsight"
+            )
+            self.cursor = connection.cursor()
             owner_info = self.fetch_owner_info(propertyname)
 
             # Display owner information in labels
-            Label(self.contact_window, text="Owner Information", font=("Arial", 14, "bold")).pack(pady=10)
+            Label(self.contact_window, text="Owner Information", font=("Arial", 15, "bold"), bg='white').pack(pady=10)
 
-            Label(self.contact_window, text="Name:").pack()
-            Label(self.contact_window, text=owner_info['name']).pack()
+            Label(self.contact_window, text="Name:", font=("Arial", 14, "bold"), bg='white').pack()
+            Label(self.contact_window, text=owner_info['name'], font=("Microsoft Yahei UI Light", 14, "bold"), bg='white').pack(pady=10)
 
-            Label(self.contact_window, text="Email:").pack()
-            Label(self.contact_window, text=owner_info['email']).pack()
+            Label(self.contact_window, text="Email:", font=("Arial", 14, "bold"), bg='white').pack()
+            Label(self.contact_window, text=owner_info['email'], font=("Microsoft Yahei UI Light", 14, 'bold'), bg='white').pack(pady=10)
 
-            Label(self.contact_window, text="Phone:").pack()
-            Label(self.contact_window, text=owner_info['phone']).pack()
+            Label(self.contact_window, text="Phone:", font=("Arial", 14, "bold"), bg='white').pack()
+            Label(self.contact_window, text=owner_info['phone'], font=("Microsoft Yahei UI Light", 14, 'bold'), bg='white').pack(pady=10)
 
-        def fetch_owner_info(self, propertyname):
-            try:
-                # Connect to the MySQL database
-                connection = mysql.connector.connect(
-                    host="localhost",
-                    user="root",
-                    password="ARYA#305#varun",
-                    database="estateinsight"
-                )
-                cursor = connection.cursor()
+        except mysql.connector.Error as e:
+            print("Error connecting to MySQL database:", e)
 
-                # Fetch owner information from the database based on property name
-                query = """
-                SELECT o.name, o.email, o.phone 
-                FROM signin o
-                JOIN property_owner po ON o.id = po.ID
-                WHERE s.propertyname = %s
-                """
-                cursor.execute(query, (propertyname,))
-                owner_info = cursor.fetchone()
+    def fetch_owner_info(self, propertyname):
+        owner_info = {}  # Initialize an empty dictionary to store owner information
+        try:
+            # Execute SQL query to fetch owner information
+            query = "SELECT name, email, phoneno FROM sell WHERE propertyname = %s"
+            self.cursor.execute(query, (propertyname,))
+            owner_data = self.cursor.fetchone()  # Fetch the first row from the result set
 
-                if owner_info:
-                    return {
-                        'name': owner_info[0],
-                        'email': owner_info[1],
-                        'phone': owner_info[2]
-                    }
-                else:
-                    return {
-                        'name': "Owner's Name Not Found",
-                        'email': "Owner's Email Not Found",
-                        'phone': "Owner's Phone Not Found"
-                    }
+            # Check if data is fetched
+            if owner_data:
+                owner_info['name'] = owner_data[0]  # Name
+                owner_info['email'] = owner_data[1]  # Email
+                owner_info['phone'] = owner_data[2]  # Phone number
 
-            except mysql.connector.Error as e:
-                print("Error fetching owner information:", e)
-                return {
-                    'name': "Error",
-                    'email': "Error",
-                    'phone': "Error"
-                }
+        except mysql.connector.Error as e:
+            print("Error fetching owner information:", e)
+
+        return owner_info
+
+    def home(self):
+        self.contact_window.destroy()
+        import Homepage1
+
+    def buy(self):
+        self.contact_window.destroy()
+        import buy1
+
+    def sell(self):
+        self.contact_window.destroy()
+        import Sell_1
+
+    def rent(self):
+        self.contact_window.destroy()
+        import Rent1
 
 
 class mainview:
@@ -84,7 +157,7 @@ class mainview:
         self.connection = mysql.connector.connect(
             host="localhost",
             user="root",
-            password="ARYA#305#varun",
+            password="#22107031#",
             database="estateinsight"
         )
         self.cursor = self.connection.cursor()

@@ -70,7 +70,7 @@ class Sell_3:
             self.conn = mysql.connector.connect(
                 host='localhost',
                 user='root',
-                password='ARYA#305#varun',
+                password='#22107031#',
                 database='estateinsight'
             )
             print("Connected to MySQL")
@@ -79,18 +79,8 @@ class Sell_3:
             messagebox.showerror("Database Error", "Failed to connect to database")
             return
 
-        self.pic_path = tk.StringVar()
-        self.pic_path.set('')
 
-        def open_pic():
-            path = askopenfilename()
 
-            if path:
-                self.img = ImageTk.PhotoImage(Image.open(path).resize((100, 100)))
-                self.pic_path.set(path)  # Store path in pic_path
-
-                add_pic_butt.config(image=self.img)
-                add_pic_butt.image = self.img
 
 
         # ***************************setting the main part******************************
@@ -157,7 +147,7 @@ class Sell_3:
         submit_butt = tk.Button(root, text="Submit",
                                 font=('Bold', 15), bg='#B31312',
                                 fg='white', bd=1,command= self.next)
-        submit_butt.place(relx=0.5, rely=0.85, anchor=CENTER,command=self.homepage)
+        submit_butt.place(relx=0.5, rely=0.85, anchor=CENTER)#, command=self.homepage)
 
         self.furnishing_ent = furnishing_ent
         self.flooring_ent = flooring_ent

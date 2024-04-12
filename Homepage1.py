@@ -25,7 +25,7 @@ class Homepage1:
         self.conn = mysql.connector.connect(
             host='localhost',
             user='root',
-            password='ARYA#305#varun',
+            password='#22107031#',
             database='estateinsight'
         )
 
@@ -66,51 +66,37 @@ class Homepage1:
 
         # app color
         self.root.configure(bg='white')
-        # Create a frame for the search bar
-        search_frame = Frame(root, bg="white", bd=2, relief=tk.GROOVE)
-        search_frame.place(relx=0.02, rely=0.12, relwidth=0.96)
 
-        # Add a label for the search bar
-        search_label = Label(search_frame, text="Search:", bg="white")
-        search_label.pack(side=tk.LEFT, padx=(10, 5), pady=5)
 
-        # Add an entry widget for the search query
-        self.search_entry = Entry(search_frame, bg="white", bd=1, relief=tk.SOLID)
-        self.search_entry.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=(0, 5), pady=5)
-
-        # Add a button for the search action
-        search_button = Button(search_frame, text="Search", bg="#B31312", fg="white")#, command=self.perform_search)
-        search_button.pack(side=tk.LEFT, padx=(5, 10), pady=5)
-
-        left_frame = Frame(root, width=80, height=600, bg="white", bd=1, relief=GROOVE)
-        left_frame.place(relx=0, rely=0.25)
+        left_frame = Frame(root, width=1000, height=90, bg="white", bd=2, relief=GROOVE)
+        left_frame.place(relx=0, rely=0.1)
         mumbai = Button(left_frame, text='Mumbai', bg="#B31312", fg="white", font=("Arial", 12), relief="raised",
                              command=self.display_graph)
-        mumbai.place(relx=0.01, rely=0.1)
+        mumbai.place(relx=0.15, rely=0.29)
 
         delhi = Button(left_frame, text='  Delhi  ', bg="#B31312", fg="white", font=("Arial", 12), relief="raised",
                         command=self.display_graph)
-        delhi.place(relx=0.01, rely=0.2)
+        delhi.place(relx=0.3, rely=0.29)
 
         bengaluru = Button(left_frame, text='Bengaluru', bg="#B31312", fg="white", font=("Arial", 12), relief="raised",
                         command=self.display_graph)
-        bengaluru.place(relx=0.01, rely=0.3)
+        bengaluru.place(relx=0.45, rely=0.29)
 
         Chennai = Button(left_frame, text=' Chennai ', bg="#B31312", fg="white", font=("Arial", 12), relief="raised",
                         command=self.display_graph)
-        Chennai.place(relx=0.01, rely=0.4)
+        Chennai.place(relx=0.6, rely=0.29)
 
         Kolkata = Button(left_frame, text=' Kolkata ', bg="#B31312", fg="white", font=("Arial", 12), relief="raised",
                          command=self.display_graph)
-        Kolkata.place(relx=0.01, rely=0.5)
+        Kolkata.place(relx=0.75, rely=0.29)
 
         Pune = Button(left_frame, text='   Pune   ', bg="#B31312", fg="white", font=("Arial", 12), relief="raised",
                          command=self.display_graph)
-        Pune.place(relx=0.01, rely=0.6)
+        Pune.place(relx=0.9, rely=0.29)
 
-        land = Label(left_frame, text='Land\nValue', bg="#B31312", fg="white", font=("Arial", 12), relief="raised",
+        land = Label(left_frame, text='Land Value\nAnalysis', bg="white", fg="Black", font=("Arial", 15), relief="raised",
                       )
-        land.place(relx=0.01, rely=0.03)
+        land.place(relx=0.01, rely=0.29)
 
         # setting up geometry for app
         window_width = 1000
