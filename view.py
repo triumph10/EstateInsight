@@ -111,9 +111,6 @@ class view:
         submit_button = Button(root, text="Submit", command=self.submit_input, bg="RED", fg="White", bd=2,
                                font=("Arial", 12))
         submit_button.place(x=200, y=200)
-        # ----------------------------------------------------------------------------------------------------------------------------
-        # frame2 = Frame(root, width=100, height=10, bg="white", bd=1, relief=GROOVE)
-        # frame2.place(relx=3, rely=0.25)
 
         # Create a frame for date and price entry fields
         entry_frame1 = Frame(root, bg="red")
@@ -132,6 +129,7 @@ class view:
                                      foreground='white', borderwidth=2)
         self.date_entry1.pack()
 
+        # price Label
         price_label1 = Label(entry_frame1, text="Price:", font=("Arial", 12), bg="mintcream")
         price_label1.grid(row=1, column=0, padx=5, pady=5, sticky=W)
         self.price_entry1 = Entry(entry_frame1, font=("Arial", 12), bd=2)
@@ -196,7 +194,7 @@ class view:
         submit_button4.place(x=600, y=400)
 #------------------------------------------------------------------------------------------------------------------
 
-#------------------------------------------------------------------------------------------------------------------
+#------MUMBAI------------------------------------------------------------------------------------------------------
     def submit_input(self):
         # Get the input values
         selected_date = self.date_entry.get()
@@ -220,7 +218,9 @@ class view:
             # Roll back the transaction in case of an error
             self.conn.rollback()
             print("Error saving input values to database:", e)
-#-------------------------------------------------------------------------------------------------------------------------
+
+#-----DELHI--------------------------------------------------------------------------------------------------------------------
+
     def submit_input2(self):
         # Get the input values
         selected_date2 = self.date_entry.get()
@@ -248,7 +248,9 @@ class view:
             # Roll back the transaction in case of an error
             self.conn.rollback()
             print("Error saving input values to database:", e)
-#-------------------------------------------------------------------------------------------------------
+
+#----BENGALURU---------------------------------------------------------------------------------------------------
+
     def submit_input3(self):
         # Get the input values
         selected_date3 = self.date_entry2.get()
