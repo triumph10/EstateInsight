@@ -14,7 +14,7 @@ class buyview:
         self.root.title("EstateInsight")
         self.root.resizable(False, False)
 
-        font_info = ("Arial", 15, "bold")
+        font_info = ("Arial", 19, "bold")
 
         one = Label(root,
                     text="EstateInsight",
@@ -63,24 +63,62 @@ class buyview:
         self.icon = PhotoImage(file='Images/estate.png')
         self.root.iconphoto(True, self.icon)
 
-
+        toolbar_font = ("Arial", 11)
         # setting up the toolbar for the app
-        toolbar = Frame(root, bg="white", relief=GROOVE , bd=2, pady=2)
+        toolbar = Frame(root, bg="white", relief=GROOVE, bd=2, pady=4)
+
         printButt = Button(toolbar,
                            text="Home",
+                           bg="#B31312",
+                           border=1,
+                           font=toolbar_font,
+                           relief=RAISED,
+                           fg="white",
+                           command=self.home)
+        printButt.pack(side=LEFT, padx=20, pady=2)
+        insertButt = Button(toolbar,
+                            text="Buy",
+                            bg="white",
+                            font=toolbar_font,
+                            border=0,
+                            command=self.buy)
+        insertButt.pack(side=LEFT, padx=20, pady=2)
+        printButt = Button(toolbar,
+                           text="Sell",
+                           bg="white",
+                           font=toolbar_font,
+                           border=0,
+                           activebackground='#B67352', command=self.sell)
+
+        printButt.pack(side=LEFT, padx=20, pady=2)
+        printButt = Button(toolbar,
+                           text="Rent",
+                           bg="white",
+                           font=toolbar_font,
+                           border=0, activebackground='#B67352', command=self.rent)
+
+        printButt.pack(side=LEFT, padx=20, pady=2)
+        printButt = Button(toolbar,
+                           text="Rent Upload",
+                           bg="white",
+                           font=toolbar_font,
+                           border=0)#, command=self.rentup)
+        printButt.pack(side=LEFT, padx=20, pady=2)
+        printButt = Button(toolbar,
+                           text="Land/Value Graph",
+                           bg="white",
+                           font=toolbar_font,
+                           border=0)
+        printButt.pack(side=LEFT, padx=20, pady=2)
+
+        toolbar.pack(side=TOP, fill=X)
+
+        printButt = Button(toolbar,
+                           text="Calculate EMI",
                            bg="white",
                            border=0,
-                           activebackground='#B67352', command=self.home)
-        printButt.pack(side=LEFT, padx=20, pady=2)
-        insertButt = Button(toolbar, text="Buy", bg="#B31312", border=1, relief=RAISED, fg='white', command=self.buy)
-        insertButt.pack(side=LEFT, padx=20, pady=2)
-        printButt = Button(toolbar, text="Sell", bg="WHITE", border=0, activebackground='#B67352', command=self.sell)
-        printButt.pack(side=LEFT, padx=20, pady=2)
-        printButt = Button(toolbar, text="Rent", bg="WHITE", border=0, activebackground='#B67352', command=self.rent)
-        printButt.pack(side=LEFT, padx=20, pady=2)
-        printButt = Button(toolbar, text="Wishlist", bg="WHITE", border=0, activebackground='#B67352')
-        printButt.pack(side=LEFT, padx=20, pady=2)
-        printButt = Button(toolbar, text="Help", bg="WHITE", border=0, activebackground='#B67352')
+                           font=toolbar_font,)
+                           #command=self.emi)
         printButt.pack(side=LEFT, padx=20, pady=2)
 
         toolbar.pack(side=TOP, fill=X)

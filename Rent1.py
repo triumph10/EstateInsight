@@ -8,12 +8,15 @@ from io import BytesIO
 
 class buy1:
     def __init__(self, root):
+        global search_entry
         self.root = root
         # setting up the app
         self.root.title("EstateInsight")
         self.root.resizable(False, False)
 
-        font_info = ("Arial", 15, "bold")
+        #font_info = ("Arial", 15, "bold")
+        font_info = ("Arial", 19, "bold")
+        toolbar_font = ("Arial", 11)
 
         one = Label(root,
                     text="EstateInsight",
@@ -25,18 +28,14 @@ class buy1:
                     bd=1,
                     pady=3)
         one.pack(fill=tk.X, side=tk.TOP)
-        name_label = Label(one,
-                           text='Insert Name',
-                           bg='#B31312',
-                           fg='white',
-                           bd=0)
-        name_label.place(relx=0.85, rely=0.1)  # name
+
         down_arrow = tk.Menubutton(one, text='˅', bd=0, bg='#B31312', fg='white')
         down_arrow.pack()
         down_arrow.menu = tk.Menu(down_arrow)
         down_arrow["menu"] = down_arrow.menu
         down_arrow.menu.add_checkbutton(label="Profile")
         down_arrow.menu.add_checkbutton(label="Agents")
+        down_arrow.menu.add_checkbutton(label="Logout")
         down_arrow.place(relx=0.92)  # drop down arrow
         # app color
         self.root.configure(bg='white')
@@ -63,27 +62,31 @@ class buy1:
                            text="Home",
                            bg="white",
                            border=0,
+                           font=toolbar_font,
                            activebackground='#B67352', command=self.home)
         printButt.pack(side=tk.LEFT, padx=20, pady=2)
-        insertButt = Button(toolbar, text="Buy", bg="WHITE", border=0,  command=self.buy)
+        insertButt = Button(toolbar, text="Buy", font= toolbar_font,bg="white", border=0, fg='black', command=self.buy)
         insertButt.pack(side=tk.LEFT, padx=20, pady=2)
-        printButt = Button(toolbar, text="Sell", bg="WHITE", border=0, activebackground='#B67352', command=self.sell)
+        printButt = Button(toolbar, text="Sell", bg="WHITE",font= toolbar_font, border=0, activebackground='#B67352', command=self.sell)
         printButt.pack(side=tk.LEFT, padx=20, pady=2)
-        printButt = Button(toolbar, text="Rent", bg="#B31312", border=1, relief=tk.RAISED, fg='white',command=self.rent)
+        printButt = Button(toolbar, fg='white',text="Rent",font= toolbar_font,relief=tk.RAISED, border=1,bg="#B31312", activebackground='#B67352', command=self.rent)
         printButt.pack(side=tk.LEFT, padx=20, pady=2)
-        printButt = Button(toolbar, text="Wishlist", bg="WHITE", border=0, activebackground='#B67352')
+        printButt = Button(toolbar, text="Rentup", bg="WHITE",font= toolbar_font, border=0, activebackground='#B67352',command=self.rentup)
         printButt.pack(side=tk.LEFT, padx=20, pady=2)
-        printButt = Button(toolbar, text="Help", bg="WHITE", border=0, activebackground='#B67352')
+        printButt = Button(toolbar, text="Land/Value Graph", bg="WHITE",font= toolbar_font, border=0, activebackground='#B67352',command=self.land)
+        printButt.pack(side=tk.LEFT, padx=20, pady=2)
+        printButt = Button(toolbar, text="EMI Calculator", bg="WHITE", font=toolbar_font, border=0,
+                           activebackground='#B67352',command=self.emi)
         printButt.pack(side=tk.LEFT, padx=20, pady=2)
 
         toolbar.pack(side=tk.TOP, fill=tk.X)
 
         # Create a frame for the search bar
-        search_frame = Frame(root, bg="white", bd=2, relief=tk.GROOVE)
+        search_frame = Frame(root, bg="white", bd=0, relief=tk.GROOVE)
         search_frame.pack(side=tk.TOP, fill=tk.X, padx=10, pady=10)
 
         # Add a label for the search bar
-        search_label = Label(search_frame, text="Search:", bg="white")
+        search_label = Label(search_frame, text="Search:",font= toolbar_font, bg="white")
         search_label.pack(side=tk.LEFT, padx=(10, 5), pady=5)
 
         # Add an entry widget for the search query
@@ -91,7 +94,7 @@ class buy1:
         self.search_entry.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=(0, 5), pady=5)
 
         # Add a button for the search action
-        search_button = Button(search_frame, text="Search", bg="#B31312", fg="white", command=self.perform_search)
+        search_button = Button(search_frame, text="Search",font= toolbar_font, bg="#B31312", fg="white", command=self.search_button_click)
         search_button.pack(side=tk.LEFT, padx=(5, 10), pady=5)
 
         self.canvas = Canvas(root, bg="white")
@@ -122,7 +125,7 @@ class buy1:
         self.data_frame.bind("<Configure>", self.on_frame_configure)
     def main_view1(self,propertyname):
         bs = propertyname
-        subprocess.call(["python", "main_view.py", bs])
+        subprocess.call(["python", "main_view1.py", bs])
     def fetch_data(self):
         global property_name_text
         try:
@@ -144,14 +147,14 @@ class buy1:
 
                     propertyname, username, price, address, photo1 = row
 
-                    property_name_text = f"Name: {propertyname}"
+                    property_name_text = f" {propertyname}"
                     label1 = Label(frame, text=property_name_text, font=("Arial", 15), bg="white")
-                    label1.grid(row=0, column=1, sticky=tk.W)
+                    label1.grid(row=1, column=0)
 
                     label = Label(frame, text=f"Owner name: {username}", font=("Arial", 12), bg="white")
-                    label.grid(row=1, column=1, sticky=tk.W)
+                    label.grid(row=1, column=1)
 
-                    label = Label(frame, text=f"Price: {price}", font=("Arial", 15), bg="white")
+                    label = Label(frame, text=f"Price: {price}", font=("Arial", 15), bg="white",fg="green")
                     label.grid(row=2, column=0, sticky=tk.W)
 
                     label = Label(frame, text=f"Address: {address}", font=("Arial", 12), bg="white")
@@ -161,8 +164,8 @@ class buy1:
                     self.display_image(frame, photo1)
 
                     # Add "View" button
-                    view_button = Button(frame, text="View", bg="#B31312", fg="white", command=lambda prop=propertyname: self.main_view1(prop))
-                    view_button.grid(row=4, column=0, pady=5, sticky=tk.W)
+                    view_button = Button(frame, text="View", bg="#B31312", fg="white",font=("Arial", 10), command=lambda prop=propertyname: self.main_view1(prop))
+                    view_button.grid(row=4, column=0, pady=8,padx=8, sticky=tk.W)
 
         except mysql.connector.Error as e:
             print("Error while connecting to MySQL", e)
@@ -200,22 +203,47 @@ class buy1:
         # For demonstration, let's print the search query
         print("Search Query:", search_query)
 
-    def home(self):
-        self.root.destroy()
-        subprocess.run(['python','Homepage1.py'])
-        import Homepage1
+    def search_button_click(self):
+        bs = self.search_entry.get()
+        subprocess.call(["python", "main_view1.py", bs])
 
     def buy(self):
         self.root.destroy()
         import buy1
 
-    def sell(self):
+    def agent(self):
         self.root.destroy()
-        import Sell_1
+        import Agent1
+
+    def profile(self):
+        self.root.destroy()
+        import Profile
+
+    def home(self):
+        self.root.destroy()
+        import Homepage1
 
     def rent(self):
         self.root.destroy()
         import Rent1
+
+    def sell(self):
+        self.root.destroy()
+        import Sell_1
+
+    def rentup(self):
+        self.root.destroy()
+        import Rent2
+    def login(self):
+        self.root.destroy()
+        import login
+
+    def emi(self):
+        import emi
+
+    def land(self):
+        self.root.destroy()
+        import maininterface2
 
     def view_property(self):
         # Define the functionality for viewing a property

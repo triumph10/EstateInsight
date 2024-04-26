@@ -17,7 +17,7 @@ class Rent2:
         self.root.title("EstateInsight")
         self.root.resizable(False, False)
 
-        font_info = ("Arial", 15, "bold")
+        font_info = ("Arial", 19, "bold")
 
         one = Label(root,
                     text="EstateInsight",
@@ -29,18 +29,14 @@ class Rent2:
                     bd=1,
                     height=1)
         one.pack(fill=X, side=TOP)
-        name_label = Label(one,
-                           text='Insert Name',
-                           bg='#B31312',
-                           fg='white',
-                           bd=0)
-        name_label.place(relx=0.85, rely=0.1)  # name
+
         down_arrow = Menubutton(one, text='˅', bd=0, bg='#B31312', fg='white')
         down_arrow.pack()
         down_arrow.menu = Menu(down_arrow)
         down_arrow["menu"] = down_arrow.menu
         down_arrow.menu.add_checkbutton(label="Profile")
         down_arrow.menu.add_checkbutton(label="Agents")
+        down_arrow.menu.add_checkbutton(label="LogOut")
         down_arrow.place(relx=0.92)  # drop down arrow
 
         # app color
@@ -296,7 +292,7 @@ class Rent2:
                 import Rent3
                 Rent3.Rent3.username = username
                 root2 = Tk()
-                sell2 = Rent3.Sell_2(root2)
+                Rent3 = Rent3.Rent3(root2)
                 root2.mainloop()
 
 

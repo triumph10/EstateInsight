@@ -1,7 +1,15 @@
 from tkinter import *
 from tkinter import ttk
 import tkinter as tk
+import mysql.connector
+from PIL import Image, ImageTk
+import tkinter.font as tkFont
+from io import BytesIO
+import matplotlib.pyplot as plt  # Importing matplotlib's pyplot module
+import pandas as pd
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from tkinter import messagebox
+from matplotlib.backends.backend_tkagg import NavigationToolbar2Tk
 
 
 class maininterface2:
@@ -11,8 +19,15 @@ class maininterface2:
         self.root.title("EstateInsight")
         self.root.resizable(False, False)
 
-        font_info = ("Arial", 15, "bold")
-
+        font_info = ("Arial", 19, "bold")
+        self.conn = mysql.connector.connect(
+            host='localhost',
+            user='root',
+            password='#22107031#',
+            database='estateinsight'
+        )
+        # Create a cursor to execute SQL queries
+        self.cursor = self.conn.cursor()
         one = Label(root,
                     text="EstateInsight",
                     bg="#B31312",
@@ -54,206 +69,436 @@ class maininterface2:
         self.root.geometry(f"{window_width}x{window_height}+{x_position}+{y_position}")
 
         # setting up icon for window title
-        icon = PhotoImage(file='Images/estate.png')
-        self.root.iconphoto(True, icon)
+        self.icon = PhotoImage(file='Images/estate.png')
+        self.root.iconphoto(True, self.icon)
 
+        toolbar_font = ("Arial", 11)
         # setting up the toolbar for the app
-        toolbar = Frame(root, bg="white", relief=GROOVE, bd=2, pady=2)
+        toolbar = Frame(root, bg="white", relief=GROOVE, bd=2, pady=4)
 
         printButt = Button(toolbar,
                            text="Home",
-                           bg="white",
-                           border=0,
-                           activebackground='#B67352', command=self.home)
+                           bg="#B31312",
+                           border=1,
+                           font=toolbar_font,
+                           relief=RAISED,
+                           fg="white",
+                           command=self.home)
         printButt.pack(side=LEFT, padx=20, pady=2)
         insertButt = Button(toolbar,
                             text="Buy",
                             bg="white",
+                            font=toolbar_font,
                             border=0,
-                            activebackground='#B67352',command = self.buy)
+                            command=self.buy)
         insertButt.pack(side=LEFT, padx=20, pady=2)
         printButt = Button(toolbar,
                            text="Sell",
                            bg="white",
+                           font=toolbar_font,
                            border=0,
-                           activebackground='#B67352')
+                           activebackground='#B67352', command=self.sell)
+
         printButt.pack(side=LEFT, padx=20, pady=2)
         printButt = Button(toolbar,
                            text="Rent",
                            bg="white",
-                           border=0,
-                           activebackground='#B67352',command = self.rent)
+                           font=toolbar_font,
+                           border=0, activebackground='#B67352', command=self.rent)
+
         printButt.pack(side=LEFT, padx=20, pady=2)
         printButt = Button(toolbar,
-                           text="Wishlist",
+                           text="Rent Upload",
                            bg="white",
-                           border=0,
-                           activebackground='#B67352')
+                           font=toolbar_font,
+                           border=0, command=self.rentup)
         printButt.pack(side=LEFT, padx=20, pady=2)
         printButt = Button(toolbar,
-                           text="Help",
+                           text="Land/Value Graph",
                            bg="white",
-                           border=0,
-                           activebackground='#B67352')
+                           font=toolbar_font,
+                           border=0,command=self.land)
         printButt.pack(side=LEFT, padx=20, pady=2)
 
         toolbar.pack(side=TOP, fill=X)
 
-        def on_enter(e):
-            user.delete(0, 'end')
+        printButt = Button(toolbar,
+                           text="Calculate EMI",
+                           bg="white",
+                           border=0,
+                           font=toolbar_font,
+                           command=self.emi)
+        printButt.pack(side=LEFT, padx=20, pady=2)
 
-        def on_leave(e):
-            name = user.get()
-            if name == '':
-                user.insert(0, 'Search')
+        toolbar.pack(side=TOP, fill=X)
 
-        user = Entry(self.root,
-                     width=25,
-                     fg='black',
-                     bg="white",
-                     relief=GROOVE,
-                     font=('Microsoft YaHei UI Light', 11))
-        user.place(x=400, y=100)
-        user.insert(0, "Search")
-        user.bind('<FocusIn>', on_enter)
-        user.bind('<FocusOut>', on_leave)
+       # left_frame = Frame(root, width=900, height=90, bg="white", bd=2, relief=GROOVE)
+       # left_frame.place(relx=0.1, rely=0.1)
+        mumbai = Button(root, text='Mumbai', bg="#B31312", fg="white", font=("Arial", 12), relief="raised",
+                        command=self.display_graph)
+        mumbai.place(relx=0.10, rely=0.29)
 
-        Frame(root, width=203, height=2, bg='black').place(x=400, y=125)
+        delhi = Button(root, text='  Delhi  ', bg="#B31312", fg="white", font=("Arial", 12), relief="raised",
+                       command=self.display_graph2)
+        delhi.place(relx=0.25, rely=0.29)
 
-        # setting up view points of app
-        frame1 = Frame(root,
-                       width=200,
-                       height=200,
-                       bg="white",
-                       relief=GROOVE,
-                       bd=1
-                       )
-        frame1.place(relx=0.1, rely=0.25)
+        bengaluru = Button(root, text='Bengaluru', bg="#B31312", fg="white", font=("Arial", 12), relief="raised",
+                          command=self.display_graph3)
+        bengaluru.place(relx=0.4, rely=0.29)
 
-        self.left_image = PhotoImage(file='Images/estate.png')
-        self.left_image_label = Label(frame1,
-                                 image=self.left_image,
-                                 bg="white")
-        self.left_image_label.image = self.left_image  # Keep a reference to the image
-        self.left_image_label.pack(padx=45, pady=45)
+        Chennai = Button(root, text=' Chennai ', bg="#B31312", fg="white", font=("Arial", 12), relief="raised",
+                        command=self.display_graph4)
+        Chennai.place(relx=0.55, rely=0.29)
 
-        view_butt = Button(root, bg='white', bd=1, text='View')
-        view_butt.place(relx=0.175, rely=0.55)
+        Kolkata = Button(root, text=' Kolkata ', bg="#B31312", fg="white", font=("Arial", 12), relief="raised",
+                         command=self.display_graph5)
+        Kolkata.place(relx=0.7, rely=0.29)
 
-        frame2 = Frame(root,
-                       width=200,
-                       height=200,
-                       bg="white",
-                       bd=1,
-                       relief=GROOVE)
-        frame2.place(relx=0.4, rely=0.25)
+        Pune = Button(root, text='   Pune   ', bg="#B31312", fg="white", font=("Arial", 12), relief="raised",
+                      command=self.display_graph6)
+        Pune.place(relx=0.85, rely=0.29)
 
-        self.center_image = PhotoImage(file='Images/estate.png')
-        self.center_image_label = Label(frame2,
-                                   image=self.center_image,
-                                   bg="white")
-        self.center_image_label.image = self.center_image
-        self.center_image_label.pack(padx=45, pady=45)
+        land = Label(root, text='Land Value Analysis', bg="white", fg="Black", font=("Arial", 19))#, relief="raised",
 
-        view_butt = Button(root, bg='white', bd=1, text='View')
-        view_butt.place(relx=0.475, rely=0.55)
+        land.place(relx=0.39, rely=0.15)
 
-        frame3 = Frame(root,
-                       width=200,
-                       height=200,
-                       bg="white",
-                       bd=1,
-                       relief=GROOVE)
-        frame3.place(relx=0.7, rely=0.25)
 
-        # Adding image to the frame
-        self.right_image = PhotoImage(file='Images/estate.png')
-        self.right_image_label = Label(frame3,
-                                  image=self.right_image,
-                                  bg="white")
-        self.right_image_label.image = self.right_image  # Keep a reference to the image
-        self.right_image_label.pack(padx=45, pady=45)
+    def fetch_data_from_database(self):
+        try:
+            # Execute SELECT query to fetch dates and prices from the database
+            self.cursor.execute("SELECT date, price FROM mumbai_pd")
 
-        view_butt = Button(root, bg='white', bd=1, text='View')
-        view_butt.place(relx=0.775, rely=0.55)
+            # Fetch all rows
+            rows = self.cursor.fetchall()
 
-        frame4 = Frame(root,
-                       width=200,
-                       height=200,
-                       bg="white",
-                       bd=1,
-                       relief=GROOVE
-                       )
-        frame4.place(relx=0.1, rely=0.63)
+            # Extract dates and prices from the fetched rows
+            self.dates = [row[0] for row in rows]
+            self.prices = [row[1] for row in rows]
 
-        self.left_image = PhotoImage(file='Images/estate.png')
-        left_image_label = Label(frame4,
-                                 image=self.left_image,
-                                 bg="white")
-        left_image_label.image = self.left_image  # Keep a reference to the image
-        left_image_label.pack(padx=45, pady=45)
+        except mysql.connector.Error as e:
+            print("Error fetching data from MySQL:", e)
 
-        view_butt = Button(root, bg='white', bd=1, text='View')
-        view_butt.place(relx=0.175, rely=0.93)
+    def display_graph(self):
+        try:
+            # Fetch data from the database
+            self.fetch_data_from_database()
 
-        frame5 = Frame(root,
-                       width=200,
-                       height=200,
-                       bg="white",
-                       bd=1,
-                       relief=GROOVE)
-        frame5.place(relx=0.4, rely=0.63)
+            # Plot the graph using matplotlib
+            fig, ax = plt.subplots(figsize=(8, 5))
+            ax.plot(self.dates, self.prices, marker='o', linestyle='-')
+            ax.set_title('Price Trends Over Time')
+            ax.set_xlabel('Date')
+            ax.set_ylabel('Price ($)')
+            ax.grid(True)
+            plt.xticks(rotation=45)
+            plt.tight_layout()
 
-        self.center_image = PhotoImage(file='Images/estate.png')
-        center_image_label = Label(frame5,
-                                   image=self.center_image,
-                                   bg="white")
-        center_image_label.image = self.center_image
-        center_image_label.pack(padx=45, pady=45)
+            # Create a new window to display the graph
+            graph_window = Toplevel(self.root)
+            graph_window.title("Price Trends Graph")
+            graph_window.geometry("800x550")
 
-        view_butt = Button(root, bg='white', bd=1, text='View')
-        view_butt.place(relx=0.475, rely=0.93)
+            # Convert plot to a Tkinter-compatible photo image
+            graph_photo = FigureCanvasTkAgg(fig, master=graph_window)
+            graph_photo.draw()
+            graph_photo.get_tk_widget().pack()
 
-        frame6 = Frame(root,
-                       width=200,
-                       height=200,
-                       bg="white",
-                       bd=1,
-                       relief=GROOVE)
-        frame6.place(relx=0.7, rely=0.63)
+            # Add toolbar
+            toolbar = NavigationToolbar2Tk(graph_photo, graph_window)
+            toolbar.update()
+            toolbar.pack(side=tk.BOTTOM, fill=tk.BOTH, expand=True)
 
-        self.right_image = PhotoImage(file='Images/estate.png')
-        right_image_label = Label(frame6,
-                                  image=self.right_image,
-                                  bg="white")
-        right_image_label.image = self.right_image  # Keep a reference to the image
-        right_image_label.pack(padx=45, pady=45)
+        except Exception as e:
+            print("Error displaying graph:", e)
 
-        view_butt = Button(root, bg='white', bd=1, text='View')
-        view_butt.place(relx=0.775, rely=0.93)
+    #----------------------------------------------------------------------------------------#
+    def fetch_data_from_delhi(self):
+        try:
+            # Execute SELECT query to fetch dates and prices from the database
+            self.cursor.execute("SELECT date, price FROM delhi_pd")
 
-        # setting up the next page button
+            # Fetch all rows
+            rows = self.cursor.fetchall()
 
-        prev_button = Button(root, bg='white', text='<<Prev',command = self.back)
-        prev_button.place(relx=0.02, rely=0.5)
+            # Extract dates and prices from the fetched rows
+            self.dates = [row[0] for row in rows]
+            self.prices = [row[1] for row in rows]
+
+        except mysql.connector.Error as e:
+            print("Error fetching data from MySQL:", e)
+
+    def display_graph2(self):
+        try:
+            # Fetch data from the database
+            self.fetch_data_from_delhi()
+
+            # Plot the graph using matplotlib
+            fig, ax = plt.subplots(figsize=(8, 5))
+            ax.plot(self.dates, self.prices, marker='o', linestyle='-')
+            ax.set_title('Price Trends Over Time')
+            ax.set_xlabel('Date')
+            ax.set_ylabel('Price ($)')
+            ax.grid(True)
+            plt.xticks(rotation=45)
+            plt.tight_layout()
+
+            # Create a new window to display the graph
+            graph_window = Toplevel(self.root)
+            graph_window.title("Price Trends Graph")
+            graph_window.geometry("800x550")
+
+            # Convert plot to a Tkinter-compatible photo image
+            graph_photo = FigureCanvasTkAgg(fig, master=graph_window)
+            graph_photo.draw()
+            graph_photo.get_tk_widget().pack()
+
+            # Add toolbar
+            toolbar = NavigationToolbar2Tk(graph_photo, graph_window)
+            toolbar.update()
+            toolbar.pack(side=tk.BOTTOM, fill=tk.BOTH, expand=True)
+
+        except Exception as e:
+            print("Error displaying graph:", e)
+
+    #--------------------------------------------------------------------------------------
+    def fetch_data_from_bengaluru(self):
+        try:
+            # Execute SELECT query to fetch dates and prices from the database
+            self.cursor.execute("SELECT date, pice FROM bengaluru_pd")
+
+            # Fetch all rows
+            rows = self.cursor.fetchall()
+
+            # Extract dates and prices from the fetched rows
+            self.dates = [row[0] for row in rows]
+            self.prices = [row[1] for row in rows]
+
+        except mysql.connector.Error as e:
+            print("Error fetching data from MySQL:", e)
+
+    def display_graph3(self):
+        try:
+            # Fetch data from the database
+            self.fetch_data_from_bengaluru()
+
+            # Plot the graph using matplotlib
+            fig, ax = plt.subplots(figsize=(8, 5))
+            ax.plot(self.dates, self.prices, marker='o', linestyle='-')
+            ax.set_title('Price Trends Over Time')
+            ax.set_xlabel('Date')
+            ax.set_ylabel('Price ($)')
+            ax.grid(True)
+            plt.xticks(rotation=45)
+            plt.tight_layout()
+
+            # Create a new window to display the graph
+            graph_window = Toplevel(self.root)
+            graph_window.title("Price Trends Graph")
+            graph_window.geometry("800x550")
+
+            # Convert plot to a Tkinter-compatible photo image
+            graph_photo = FigureCanvasTkAgg(fig, master=graph_window)
+            graph_photo.draw()
+            graph_photo.get_tk_widget().pack()
+
+            # Add toolbar
+            toolbar = NavigationToolbar2Tk(graph_photo, graph_window)
+            toolbar.update()
+            toolbar.pack(side=tk.BOTTOM, fill=tk.BOTH, expand=True)
+
+        except Exception as e:
+            print("Error displaying graph:", e)
+
+    #-----------------------------------------------------------------------------------------------------
+    def fetch_data_from_chennai(self):
+        try:
+            # Execute SELECT query to fetch dates and prices from the database
+            self.cursor.execute("SELECT date, pice FROM chennai_pd")
+
+            # Fetch all rows
+            rows = self.cursor.fetchall()
+
+            # Extract dates and prices from the fetched rows
+            self.dates = [row[0] for row in rows]
+            self.prices = [row[1] for row in rows]
+
+        except mysql.connector.Error as e:
+            print("Error fetching data from MySQL:", e)
+
+    def display_graph4(self):
+            try:
+                # Fetch data from the database
+                self.fetch_data_from_chennai()
+
+                # Plot the graph using matplotlib
+                fig, ax = plt.subplots(figsize=(8, 5))
+                ax.plot(self.dates, self.prices, marker='o', linestyle='-')
+                ax.set_title('Price Trends Over Time')
+                ax.set_xlabel('Date')
+                ax.set_ylabel('Price ($)')
+                ax.grid(True)
+                plt.xticks(rotation=45)
+                plt.tight_layout()
+
+                # Create a new window to display the graph
+                graph_window = Toplevel(self.root)
+                graph_window.title("Price Trends Graph")
+                graph_window.geometry("800x550")
+
+                # Convert plot to a Tkinter-compatible photo image
+                graph_photo = FigureCanvasTkAgg(fig, master=graph_window)
+                graph_photo.draw()
+                graph_photo.get_tk_widget().pack()
+
+                # Add toolbar
+                toolbar = NavigationToolbar2Tk(graph_photo, graph_window)
+                toolbar.update()
+                toolbar.pack(side=tk.BOTTOM, fill=tk.BOTH, expand=True)
+
+            except Exception as e:
+                print("Error displaying graph:", e)
+
+
+#--------------------------------------------------------------------------------------------------------
+    def fetch_data_from_kolkata(self):
+        try:
+            # Execute SELECT query to fetch dates and prices from the database
+            self.cursor.execute("SELECT date, pice FROM kolkata_pd")
+
+            # Fetch all rows
+            rows = self.cursor.fetchall()
+
+            # Extract dates and prices from the fetched rows
+            self.dates = [row[0] for row in rows]
+            self.prices = [row[1] for row in rows]
+
+        except mysql.connector.Error as e:
+            print("Error fetching data from MySQL:", e)
+
+
+    def display_graph5(self):
+        try:
+            # Fetch data from the database
+            self.fetch_data_from_kolkata()
+
+            # Plot the graph using matplotlib
+            fig, ax = plt.subplots(figsize=(8, 5))
+            ax.plot(self.dates, self.prices, marker='o', linestyle='-')
+            ax.set_title('Price Trends Over Time')
+            ax.set_xlabel('Date')
+            ax.set_ylabel('Price ($)')
+            ax.grid(True)
+            plt.xticks(rotation=45)
+            plt.tight_layout()
+
+            # Create a new window to display the graph
+            graph_window = Toplevel(self.root)
+            graph_window.title("Price Trends Graph")
+            graph_window.geometry("800x550")
+
+            # Convert plot to a Tkinter-compatible photo image
+            graph_photo = FigureCanvasTkAgg(fig, master=graph_window)
+            graph_photo.draw()
+            graph_photo.get_tk_widget().pack()
+
+            # Add toolbar
+            toolbar = NavigationToolbar2Tk(graph_photo, graph_window)
+            toolbar.update()
+            toolbar.pack(side=tk.BOTTOM, fill=tk.BOTH, expand=True)
+
+        except Exception as e:
+            print("Error displaying graph:", e)
+
+    #------------------------------------------------------------------------------------------------
+    def fetch_data_from_pune(self):
+        try:
+            # Execute SELECT query to fetch dates and prices from the database
+            self.cursor.execute("SELECT date, price FROM pune_pd")
+
+            # Fetch all rows
+            rows = self.cursor.fetchall()
+
+            # Extract dates and prices from the fetched rows
+            self.dates = [row[0] for row in rows]
+            self.prices = [row[1] for row in rows]
+
+        except mysql.connector.Error as e:
+            print("Error fetching data from MySQL:", e)
+
+
+    def display_graph6(self):
+        try:
+            # Fetch data from the database
+            self.fetch_data_from_pune()
+
+            # Plot the graph using matplotlib
+            fig, ax = plt.subplots(figsize=(8, 5))
+            ax.plot(self.dates, self.prices, marker='o', linestyle='-')
+            ax.set_title('Price Trends Over Time')
+            ax.set_xlabel('Date')
+            ax.set_ylabel('Price ($)')
+            ax.grid(True)
+            plt.xticks(rotation=45)
+            plt.tight_layout()
+
+            # Create a new window to display the graph
+            graph_window = Toplevel(self.root)
+            graph_window.title("Price Trends Graph")
+            graph_window.geometry("800x550")
+
+            # Convert plot to a Tkinter-compatible photo image
+            graph_photo = FigureCanvasTkAgg(fig, master=graph_window)
+            graph_photo.draw()
+            graph_photo.get_tk_widget().pack()
+
+            # Add toolbar
+            toolbar = NavigationToolbar2Tk(graph_photo, graph_window)
+            toolbar.update()
+            toolbar.pack(side=tk.BOTTOM, fill=tk.BOTH, expand=True)
+
+        except Exception as e:
+            print("Error displaying graph:", e)
 
     def buy(self):
         self.root.destroy()
         import buy1
-    def back(self):
+
+    def agent(self):
         self.root.destroy()
-        import maininterface
+        import Agent1
+
+    def profile(self):
+        self.root.destroy()
+        import Profile
+
     def home(self):
         self.root.destroy()
-        import maininterface
+        import Homepage1
+
     def rent(self):
         self.root.destroy()
         import Rent1
 
+    def sell(self):
+        self.root.destroy()
+        import Sell_1
+
+    def rentup(self):
+        self.root.destroy()
+        import Rent2
+    def login(self):
+        self.root.destroy()
+        import login
+
+    def emi(self):
+        import emi
+
+    def land(self):
+        self.root.destroy()
+        import maininterface2
 
 
 
 root=Tk()
 obj = maininterface2(root)
 root.mainloop()
-

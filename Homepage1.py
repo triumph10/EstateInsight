@@ -1,12 +1,15 @@
+import subprocess
 from tkinter import *
 from tkinter import ttk
 import tkinter as tk
 import mysql.connector
 from PIL import Image, ImageTk
+import tkinter.font as tkFont
 from io import BytesIO
 import matplotlib.pyplot as plt  # Importing matplotlib's pyplot module
 import pandas as pd
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+
 
 
 
@@ -20,7 +23,7 @@ class Homepage1:
         self.username = username  # this is used to store the username
         self.icon = PhotoImage(file='Images/estate.png')
         self.root.iconphoto(True, self.icon)
-        font_info = ("Arial", 15, "bold")
+        font_info = ("Arial", 19, "bold")
 
         self.conn = mysql.connector.connect(
             host='localhost',
@@ -31,7 +34,7 @@ class Homepage1:
 
         # Create a cursor to execute SQL queries
         self.cursor = self.conn.cursor()
-        self.fetch_data_from_database()
+        #self.fetch_data_from_database()
         # Execute SELECT query to fetch name from the database table
         self.cursor.execute('SELECT username FROM signin WHERE username = %s', (self.username,))
         row = self.cursor.fetchone()
@@ -62,42 +65,16 @@ class Homepage1:
         down_arrow["menu"] = down_arrow.menu
         down_arrow.menu.add_checkbutton(label="Profile", command=self.profile)
         down_arrow.menu.add_checkbutton(label="Agents", command=self.agent)
+        down_arrow.menu.add_checkbutton(label="LogOut", command=self.login)
+
         down_arrow.place(relx=0.92)  # drop down arrow
 
         # app color
         self.root.configure(bg='white')
 
-
-        left_frame = Frame(root, width=1000, height=90, bg="white", bd=2, relief=GROOVE)
-        left_frame.place(relx=0, rely=0.1)
-        mumbai = Button(left_frame, text='Mumbai', bg="#B31312", fg="white", font=("Arial", 12), relief="raised",
-                             command=self.display_graph)
-        mumbai.place(relx=0.15, rely=0.29)
-
-        delhi = Button(left_frame, text='  Delhi  ', bg="#B31312", fg="white", font=("Arial", 12), relief="raised",
-                        command=self.display_graph)
-        delhi.place(relx=0.3, rely=0.29)
-
-        bengaluru = Button(left_frame, text='Bengaluru', bg="#B31312", fg="white", font=("Arial", 12), relief="raised",
-                        command=self.display_graph)
-        bengaluru.place(relx=0.45, rely=0.29)
-
-        Chennai = Button(left_frame, text=' Chennai ', bg="#B31312", fg="white", font=("Arial", 12), relief="raised",
-                        command=self.display_graph)
-        Chennai.place(relx=0.6, rely=0.29)
-
-        Kolkata = Button(left_frame, text=' Kolkata ', bg="#B31312", fg="white", font=("Arial", 12), relief="raised",
-                         command=self.display_graph)
-        Kolkata.place(relx=0.75, rely=0.29)
-
-        Pune = Button(left_frame, text='   Pune   ', bg="#B31312", fg="white", font=("Arial", 12), relief="raised",
-                         command=self.display_graph)
-        Pune.place(relx=0.9, rely=0.29)
-
-        land = Label(left_frame, text='Land Value\nAnalysis', bg="white", fg="Black", font=("Arial", 15), relief="raised",
-                      )
-        land.place(relx=0.01, rely=0.29)
-
+        # Fetch and display notifications from the database
+        #self.check_notifications()
+        #self.fetch_notifications()
         # setting up geometry for app
         window_width = 1000
         window_height = 680
@@ -113,14 +90,15 @@ class Homepage1:
         # setting up icon for window title
         self.icon = PhotoImage(file='Images/estate.png')
         self.root.iconphoto(True, self.icon)
-
+        toolbar_font = ("Arial", 11)
         # setting up the toolbar for the app
-        toolbar = Frame(root, bg="white", relief=GROOVE, bd=2, pady=2)
+        toolbar = Frame(root, bg="white", relief=GROOVE, bd=2, pady=4)
 
         printButt = Button(toolbar,
                            text="Home",
                            bg="#B31312",
                            border=1,
+                           font=toolbar_font,
                            relief=RAISED,
                            fg="white",
                            command=self.home)
@@ -128,13 +106,14 @@ class Homepage1:
         insertButt = Button(toolbar,
                             text="Buy",
                             bg="white",
+                            font=toolbar_font,
                             border=0,
                             command=self.buy)
         insertButt.pack(side=LEFT, padx=20, pady=2)
         printButt = Button(toolbar,
                            text="Sell",
                            bg="white",
-
+                           font=toolbar_font,
                            border=0,
                            activebackground='#B67352', command=self.sell)
 
@@ -142,34 +121,40 @@ class Homepage1:
         printButt = Button(toolbar,
                            text="Rent",
                            bg="white",
-
+                           font=toolbar_font,
                            border=0, activebackground='#B67352', command=self.rent)
 
         printButt.pack(side=LEFT, padx=20, pady=2)
         printButt = Button(toolbar,
                            text="Rent Upload",
                            bg="white",
+                           font=toolbar_font,
                            border=0,command=self.rentup)
         printButt.pack(side=LEFT, padx=20, pady=2)
         printButt = Button(toolbar,
-                           text="Help",
+                           text="Land/Value Graph",
                            bg="white",
-                           border=0)
+                           font=toolbar_font,
+                           border=0,command=self.land)
         printButt.pack(side=LEFT, padx=20, pady=2)
-
-        toolbar.pack(side=TOP, fill=X)
 
         printButt = Button(toolbar,
                            text="Calculate EMI",
                            bg="white",
                            border=0,
+                           font=toolbar_font,
                            command=self.emi)
         printButt.pack(side=LEFT, padx=20, pady=2)
 
         toolbar.pack(side=TOP, fill=X)
 
         # setting up the search bar
-
+        custom_font = tkFont.Font(family="Bold", size=15, underline=True)
+        top_text = tk.Label(root, text='Popular Properties',
+                            bg='white',
+                            fg='black',
+                            font=custom_font)
+        top_text.place(relx=0.03, rely=0.18)
 
 
 
@@ -181,13 +166,16 @@ class Homepage1:
                        bd=1
                        )
 
-        frame1.place(relx=0.1, rely=0.25)
+        frame1.place(relx=0.03, rely=0.25)
 
+        property_name = self.fetch_property_name_from_database(1)  # Assuming property ID 1
+        image_label = Label(frame1, text=property_name, bg="white", font=("Arial", 12, "bold"))
+        image_label.pack(pady=5)
         # Fetch image from database and display
         self.display_image_from_database(frame1, 1)  # Assuming image ID 1
 
-        view_butt = Button(root, bg='white', bd=1, text='View')
-        view_butt.place(relx=0.2, rely=0.55)
+        view_butt = Button(root, bg='white', bd=1, text='View',  command=lambda prop=property_name: self.main_view1(prop))
+        view_butt.place(relx=0.15, rely=0.58)
 
         frame2 = Frame(root,
                        width=200,
@@ -195,13 +183,16 @@ class Homepage1:
                        bg="white",
                        bd=1,
                        relief=GROOVE)
-        frame2.place(relx=0.4, rely=0.25)
+        frame2.place(relx=0.35, rely=0.25)
 
+        property_name = self.fetch_property_name_from_database(2)  # Assuming property ID 1
+        image_label = Label(frame2, text=property_name, bg="white", font=("Arial", 12, "bold"))
+        image_label.pack(pady=5)
         # Fetch image from database and display
         self.display_image_from_database(frame2, 2)  # Assuming image ID 2
 
-        view_butt = Button(root, bg='white', bd=1, text='View')
-        view_butt.place(relx=0.5, rely=0.55)
+        view_butt = Button(root, bg='white', bd=1, text='View', command=lambda prop=property_name: self.main_view1(prop))
+        view_butt.place(relx=0.48, rely=0.58)
 
         frame3 = Frame(root,
                        width=200,
@@ -209,13 +200,16 @@ class Homepage1:
                        bg="white",
                        bd=1,
                        relief=GROOVE)
-        frame3.place(relx=0.7, rely=0.25)
+        frame3.place(relx=0.67, rely=0.25)
 
+        property_name = self.fetch_property_name_from_database(3)  # Assuming property ID 1
+        image_label = Label(frame3, text=property_name, bg="white", font=("Arial", 12, "bold"))
+        image_label.pack(pady=5)
         # Fetch image from database and display
         self.display_image_from_database(frame3, 3)  # Assuming image ID 3
 
-        view_butt = Button(root, bg='white', bd=1, text='View')
-        view_butt.place(relx=0.8, rely=0.55)
+        view_butt = Button(root, bg='white', bd=1, text='View', command=lambda prop=property_name: self.main_view1(prop))
+        view_butt.place(relx=0.8, rely=0.58)
 
         frame4 = Frame(root,
                        width=200,
@@ -224,12 +218,15 @@ class Homepage1:
                        bd=1,
                        relief=GROOVE
                        )
-        frame4.place(relx=0.1, rely=0.63)
+        frame4.place(relx=0.03, rely=0.63)
 
+        property_name = self.fetch_property_name_from_database(4)  # Assuming property ID 1
+        image_label = Label(frame4, text=property_name, bg="white", font=("Arial", 12, "bold"))
+        image_label.pack(pady=5)
         # Fetch image from database and display
         self.display_image_from_database(frame4, 4)  # Assuming image ID 4
 
-        view_butt = Button(root, bg='white', bd=1, text='View')
+        view_butt = Button(root, bg='white', bd=1, text='View', command=lambda prop=property_name: self.main_view1(prop))
         view_butt.place(relx=0.2, rely=0.93)
 
         frame5 = Frame(root,
@@ -238,12 +235,15 @@ class Homepage1:
                        bg="white",
                        bd=1,
                        relief=GROOVE)
-        frame5.place(relx=0.4, rely=0.63)
+        frame5.place(relx=0.35, rely=0.63)
 
+        property_name = self.fetch_property_name_from_database(5)  # Assuming property ID 1
+        image_label = Label(frame5, text=property_name, bg="white", font=("Arial", 12, "bold"))
+        image_label.pack(pady=5)
         # Fetch image from database and display
         self.display_image_from_database(frame5, 5)  # Assuming image ID 5
 
-        view_butt = Button(root, bg='white', bd=1, text='View')
+        view_butt = Button(root, bg='white', bd=1, text='View', command=lambda prop=property_name: self.main_view1(prop))
         view_butt.place(relx=0.5, rely=0.93)
 
         frame6 = Frame(root,
@@ -252,53 +252,20 @@ class Homepage1:
                        bg="white",
                        bd=1,
                        relief=GROOVE)
-        frame6.place(relx=0.7, rely=0.63)
+        frame6.place(relx=0.67, rely=0.63)
+
+        property_name = self.fetch_property_name_from_database(6)  # Assuming property ID 1
+        image_label = Label(frame6, text=property_name, bg="white", font=("Arial", 12, "bold"))
+        image_label.pack(pady=5)
 
         # Fetch image from database and display
         self.display_image_from_database(frame6, 6)  # Assuming image ID 6
 
-        view_butt = Button(root, bg='white', bd=1, text='View')
+        view_butt = Button(root, bg='white', bd=1, text='View', command=lambda prop=property_name: self.main_view1(prop))
         view_butt.place(relx=0.8, rely=0.93)
+        # Method to fetch notifications from the database
 
-    def fetch_data_from_database(self):
-        try:
-            # Execute SELECT query to fetch dates and prices from the database
-            self.cursor.execute("SELECT date, price FROM mumbai_pd")
 
-            # Fetch all rows
-            rows = self.cursor.fetchall()
-
-            # Extract dates and prices from the fetched rows
-            self.dates = [row[0] for row in rows]
-            self.prices = [row[1] for row in rows]
-
-        except mysql.connector.Error as e:
-            print("Error fetching data from MySQL:", e)
-
-    def display_graph(self):
-        try:
-            # Plot the graph using matplotlib
-            fig, ax = plt.subplots(figsize=(8, 6))
-            ax.plot(self.dates, self.prices, marker='o', linestyle='-')
-            ax.set_title('Price Trends Over Time')
-            ax.set_xlabel('Date')
-            ax.set_ylabel('Price ($)')
-            ax.grid(True)
-            plt.xticks(rotation=45)
-            plt.tight_layout()
-
-            # Create a new window to display the graph
-            graph_window = Toplevel(self.root)
-            graph_window.title("Price Trends Graph")
-            graph_window.geometry("800x600")
-
-            # Convert plot to a Tkinter-compatible photo image
-            graph_photo = FigureCanvasTkAgg(fig, master=graph_window)
-            graph_photo.draw()
-            graph_photo.get_tk_widget().pack()
-
-        except Exception as e:
-            print("Error displaying graph:", e)
     def buy(self):
         self.root.destroy()
         import buy1
@@ -311,13 +278,9 @@ class Homepage1:
         self.root.destroy()
         import Profile
 
-    def next(self):
-        self.root.destroy()
-        import Homepage2
-
     def home(self):
         self.root.destroy()
-        import Homepage2
+        import Homepage1
 
     def rent(self):
         self.root.destroy()
@@ -330,7 +293,16 @@ class Homepage1:
     def rentup(self):
         self.root.destroy()
         import Rent2
+    def login(self):
+        self.root.destroy()
+        import login
 
+    def emi(self):
+        import emi
+
+    def land(self):
+        self.root.destroy()
+        import maininterface2
     def display_image_from_database(self, frame, image_id):
         try:
             cursor = self.conn.cursor()
@@ -359,8 +331,22 @@ class Homepage1:
         except Exception as e:
             print("Error displaying image:", e)
 
-    def emi(self):
-        import emi
+    def fetch_property_name_from_database(self, property_id):
+        try:
+            # Assuming you have a table named 'properties' with columns 'property_id' and 'property_name'
+            sql = "SELECT propertyname FROM sell WHERE id = %s"
+            self.cursor.execute(sql, (property_id,))
+            result = self.cursor.fetchone()
+            if result:
+                return result[0]  # Assuming property_name is the first column in the result
+            else:
+                return "Property not found"
+        except mysql.connector.Error as e:
+            print("Error fetching property name from database:", e)
+            return "Error fetching property name"
+    def main_view1(self, propertyname):
+        bs = propertyname
+        subprocess.call(["python", "main_view1.py", bs])
 
 root = Tk()
 obj = Homepage1(root, "")

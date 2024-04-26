@@ -85,7 +85,7 @@ class Login:
                 database='estateinsight'
             )
             cursor = conn.cursor()
-            cursor.execute('SELECT * FROM signin WHERE username = %s AND password = %s', (username, password))
+            cursor.execute('SELECT * FROM sell WHERE username = %s AND password = %s', (username, password))
             row = cursor.fetchone()
             if row:
                 messagebox.showinfo("Success", "Login Successful")

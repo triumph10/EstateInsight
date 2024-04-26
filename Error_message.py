@@ -6,7 +6,6 @@ import tkinter as tk
 class Error_message:
     def __init__(self, root):
         self.root=root
-
 # setting up the app
         root.title("Ouestion")
         root.resizable(False, False)

@@ -8,10 +8,6 @@ import tkintermapview
 import sys
 bs = sys.argv[1]
 
-from tkinter import *
-import tkinter as tk
-import mysql.connector
-
 class ContactOwnerWindow:
     def __init__(self, parent, propertyname):
         self.parent = parent
@@ -107,6 +103,8 @@ class ContactOwnerWindow:
             Label(self.contact_window, text="Phone:", font=("Arial", 14, "bold"), bg='white').pack()
             Label(self.contact_window, text=owner_info['phone'], font=("Microsoft Yahei UI Light", 14, 'bold'), bg='white').pack(pady=10)
 
+
+
         except mysql.connector.Error as e:
             print("Error connecting to MySQL database:", e)
 
@@ -128,24 +126,47 @@ class ContactOwnerWindow:
             print("Error fetching owner information:", e)
 
         return owner_info
-
-    def home(self):
+    def chat(self):
         self.contact_window.destroy()
-        import Homepage1
+        import chat
 
     def buy(self):
         self.contact_window.destroy()
         import buy1
 
-    def sell(self):
+    def agent(self):
         self.contact_window.destroy()
-        import Sell_1
+        import Agent1
+
+    def profile(self):
+        self.contact_window.destroy()
+        import Profile
+
+    def home(self):
+        self.contact_window.destroy()
+        import Homepage1
 
     def rent(self):
         self.contact_window.destroy()
         import Rent1
 
+    def sell(self):
+        self.contact_window.destroy()
+        import Sell_1
 
+    def rentup(self):
+        self.contact_window.destroy()
+        import Rent2
+    def login(self):
+        self.contact_window.destroy()
+        import login
+
+    def emi(self):
+        import emi
+
+    def land(self):
+        self.contact_window.destroy()
+        import maininterface2
 class mainview:
     def __init__(self, root,propertyname):
 
@@ -240,15 +261,6 @@ class mainview:
         self.display_image_from_database(frame1)
 
 
-
-
-
-    def open_mumbaimap_window(self):
-        mapwidget = tkintermapview.TkinterMapView(tk)
-        # Create a map widget for Mumbai
-        marker_1 = mapwidget.set_address("kasarvadavli,thane,india", marker=True)
-        marker_1.set_text("kasarvadavli,thane,india")
-
     def display_image_from_database(self, frame):
         try:
             cursor = self.connection.cursor()
@@ -307,7 +319,7 @@ class mainview:
         self.stat_ent = Entry(stat_fra, bd=1, state=DISABLED, width=15)
         self.stat_ent.place(relx=0.01, rely=0.45)
 
-        # ***********************************************************************************
+        # *****************************
 
         info_fra = Frame(root, relief=GROOVE, bd=1, width=550, height=470)
         info_fra.place(relx=0.4, rely=0.24)

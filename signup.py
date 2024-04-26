@@ -4,6 +4,8 @@ from tkinter import ttk
 from tkinter.filedialog import askopenfilename
 from PIL import Image, ImageTk
 import mysql.connector
+import re
+from tkinter import messagebox
 
 class Profile:
     def __init__(self, root):
@@ -160,6 +162,7 @@ class Profile:
         self.enter_email_ent = enter_email_ent
         self.enter_mobile_ent = enter_mobile_ent
         self.enter_register_ent = enter_register_ent
+
     def save_to_database(self):
         # Connect to MySQL database
         db_connection = mysql.connector.connect(
@@ -178,13 +181,45 @@ class Profile:
         phoneno = self.enter_mobile_ent.get()
         profilepic = self.pic_path.get()
 
+        # Password validation
+        if len(password) < 8:
+            messagebox.showerror("Error", "Password should be at least 8 characters long.")
+            return
+
+        if not re.search("[A-Z]", password):
+            messagebox.showerror("Error", "Password should contain at least one uppercase letter.")
+            return
+
+        if not re.search("[a-z]", password):
+            messagebox.showerror("Error", "Password should contain at least one lowercase letter.")
+            return
+
+        if not re.search("[0-9]", password):
+            messagebox.showerror("Error", "Password should contain at least one digit.")
+            return
+
+        if not re.search("[!@#$%^&*()-_=+{};:,<.>/?]", password):
+            messagebox.showerror("Error", "Password should contain at least one special character.")
+            return
+
         # Create cursor
         cursor = db_connection.cursor()
 
-        # Insert data into the database
-        sql = "INSERT INTO sell (username, name, gender, password, email, phoneno, profilepic) VALUES (%s, %s, %s, %s, %s, %s, %s)"
-        val = (username, name, gender, password, email, phoneno, profilepic)
-        cursor.execute(sql, val)
+        # Insert data into the sell table
+        sell_sql = """
+                   INSERT INTO sell (username, name, gender, password, email, phoneno, profilepic) 
+                   VALUES (%s, %s, %s, %s, %s, %s, %s)
+                   """
+        sell_val = (username, name, gender, password, email, phoneno, profilepic)
+        cursor.execute(sell_sql, sell_val)
+
+        # Insert data into the rent table
+        rent_sql = """
+                   INSERT INTO rent (username, name, gender, password, email, phoneno, profilepic) 
+                   VALUES (%s, %s, %s, %s, %s, %s, %s)
+                   """
+        rent_val = (username, name, gender, password, email, phoneno, profilepic)
+        cursor.execute(rent_sql, rent_val)
 
         # Commit changes
         db_connection.commit()
@@ -192,10 +227,12 @@ class Profile:
         # Close cursor and connection
         cursor.close()
         db_connection.close()
-
+        self.close()
+    def close(self):
         # Destroy current window and return to homepage
         self.root.destroy()
-        import Homepage1
+        import login
+
 
 root = Tk()
 obj = Profile(root)

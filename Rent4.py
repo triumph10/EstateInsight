@@ -11,7 +11,7 @@ from tkinter import Tk,Label
 
 
 
-class Sell_3:
+class Rent4:
     username = None
 
     def __init__(self, root):
@@ -33,7 +33,7 @@ class Sell_3:
                     height=1)
         one.pack(fill=X, side=TOP)
         name_label = Label(one,
-                           text=f"{Sell_3.username}",
+                           text=f"{Rent4.username}",
                            bg='#B31312',
                            fg='white',
                            bd=0)
@@ -79,18 +79,8 @@ class Sell_3:
             messagebox.showerror("Database Error", "Failed to connect to database")
             return
 
-        self.pic_path = tk.StringVar()
-        self.pic_path.set('')
 
-        def open_pic():
-            path = askopenfilename()
 
-            if path:
-                self.img = ImageTk.PhotoImage(Image.open(path).resize((100, 100)))
-                self.pic_path.set(path)  # Store path in pic_path
-
-                add_pic_butt.config(image=self.img)
-                add_pic_butt.image = self.img
 
 
         # ***************************setting the main part******************************
@@ -157,7 +147,7 @@ class Sell_3:
         submit_butt = tk.Button(root, text="Submit",
                                 font=('Bold', 15), bg='#B31312',
                                 fg='white', bd=1,command= self.next)
-        submit_butt.place(relx=0.5, rely=0.85, anchor=CENTER,command=self.homepage)
+        submit_butt.place(relx=0.5, rely=0.85, anchor=CENTER)#, command=self.homepage)
 
         self.furnishing_ent = furnishing_ent
         self.flooring_ent = flooring_ent
@@ -187,9 +177,10 @@ class Sell_3:
                     "UPDATE rent SET furnishing = %s, flooring = %s, overlook = %s, age = %s, wateravail = %s, elecstatus = %s WHERE username = %s")
 
                 pst.execute(sql_update, (
-                    furnishing_ent,flooring_ent,overlooking_ent,construction_ent,water_ent,electric_ent, Sell_3.username))
+                    furnishing_ent,flooring_ent,overlooking_ent,construction_ent,water_ent,electric_ent, Rent4.username))
                 self.conn.commit()
                 messagebox.showinfo("", "Successfully Saved")
+                self.homepage()
         except Error as e:
             print(f"Error: {e}")
             messagebox.showerror("", "Failed to register")
@@ -200,5 +191,5 @@ class Sell_3:
 
 
 root=Tk()
-obj = Sell_3(root)
+obj = Rent4(root)
 root.mainloop()

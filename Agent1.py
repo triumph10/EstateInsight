@@ -12,7 +12,7 @@ class agent1:
         self.main_window.resizable(False, False)
         self.main_window.configure(bg='white')
 
-        font_info = ("Arial", 15, "bold")
+        font_info = ("Arial", 19, "bold")
 
         # setting up the app header
         header = Label(main_window,
@@ -67,7 +67,7 @@ class agent1:
 
         # setting up the back page button
         back_button = Button(main_window, bg='#B31312', fg='white', text='<<Back',command=self.back)
-        back_button.place(relx=0.88, rely=0.08)
+        back_button.place(relx=0.93, rely=0.08)
 
     def create_frames(self):
         try:

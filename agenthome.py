@@ -1,12 +1,15 @@
+import subprocess
 from tkinter import *
 from tkinter import ttk
 import tkinter as tk
 import mysql.connector
 from PIL import Image, ImageTk
+import tkinter.font as tkFont
 from io import BytesIO
 import matplotlib.pyplot as plt  # Importing matplotlib's pyplot module
 import pandas as pd
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+
 
 
 
@@ -20,18 +23,18 @@ class agenthome:
         self.username = username  # this is used to store the username
         self.icon = PhotoImage(file='Images/estate.png')
         self.root.iconphoto(True, self.icon)
-        font_info = ("Arial", 15, "bold")
+        font_info = ("Arial", 19, "bold")
 
         self.conn = mysql.connector.connect(
             host='localhost',
             user='root',
-            password='ARYA#305#varun',
+            password='#22107031#',
             database='estateinsight'
         )
 
         # Create a cursor to execute SQL queries
         self.cursor = self.conn.cursor()
-        self.fetch_data_from_database()
+        #self.fetch_data_from_database()
         # Execute SELECT query to fetch name from the database table
         self.cursor.execute('SELECT username FROM signin WHERE username = %s', (self.username,))
         row = self.cursor.fetchone()
@@ -61,13 +64,24 @@ class agenthome:
         down_arrow.menu = Menu(down_arrow)
         down_arrow["menu"] = down_arrow.menu
         down_arrow.menu.add_checkbutton(label="Profile", command=self.profile)
-        down_arrow.menu.add_checkbutton(label="Agents", command=self.agent)
+       # down_arrow.menu.add_checkbutton(label="Agents", command=self.agent)
+        down_arrow.menu.add_checkbutton(label="LogOut", command=self.login)
+
         down_arrow.place(relx=0.92)  # drop down arrow
-        view_button = Button(root, text='View', bg="#B31312", fg="white", font=("Arial", 12), relief="raised",command=self.display_graph)
-        view_button.place(relx=0.01, rely=0.55)
+
         # app color
         self.root.configure(bg='white')
 
+        # Add a button to open chat if there's a notification
+        self.chat_button = Button(root, text="Chat", command=self.accept_chat_request)
+        self.chat_button.place(relx=0.75, rely=0.2)
+        # Add a Text widget to display notifications
+        self.notification_text = Text(root, width=20, height=2, wrap=WORD, font=("Arial", 12))
+        self.notification_text.place(relx=0.75, rely=0.15)
+
+        # Fetch and display notifications from the database
+        #self.check_notifications()
+        self.fetch_notifications()
         # setting up geometry for app
         window_width = 1000
         window_height = 680
@@ -83,30 +97,15 @@ class agenthome:
         # setting up icon for window title
         self.icon = PhotoImage(file='Images/estate.png')
         self.root.iconphoto(True, self.icon)
-
-        self.notification = self.fetch_notification()
-
-        # Add label and button below the toolbar
-        corner_frame = Frame(root, bg="red")
-        corner_frame.place(x=700,y=100)
-
-        # Add label
-        # Add label to display notification
-        corner_label = Label(corner_frame, text=self.notification, bg="red", fg='black')
-        corner_label.pack(side=LEFT, padx=5)
-
-        # Add button
-        corner_button = Button(corner_frame, text="Accept Chat request", bg="#B31312",
-                               fg="white",command=self.accept_chat_request)  # , command=self.corner_action)
-        corner_button.pack(side=RIGHT, padx=4)
-
+        toolbar_font = ("Arial", 11)
         # setting up the toolbar for the app
-        toolbar = Frame(root, bg="white", relief=GROOVE, bd=2, pady=2)
+        toolbar = Frame(root, bg="white", relief=GROOVE, bd=2, pady=4)
 
         printButt = Button(toolbar,
                            text="Home",
                            bg="#B31312",
                            border=1,
+                           font=toolbar_font,
                            relief=RAISED,
                            fg="white",
                            command=self.home)
@@ -114,13 +113,14 @@ class agenthome:
         insertButt = Button(toolbar,
                             text="Buy",
                             bg="white",
+                            font=toolbar_font,
                             border=0,
                             command=self.buy)
         insertButt.pack(side=LEFT, padx=20, pady=2)
         printButt = Button(toolbar,
                            text="Sell",
                            bg="white",
-
+                           font=toolbar_font,
                            border=0,
                            activebackground='#B67352', command=self.sell)
 
@@ -128,44 +128,44 @@ class agenthome:
         printButt = Button(toolbar,
                            text="Rent",
                            bg="white",
-
+                           font=toolbar_font,
                            border=0, activebackground='#B67352', command=self.rent)
 
         printButt.pack(side=LEFT, padx=20, pady=2)
         printButt = Button(toolbar,
-                           text="Wishlist",
+                           text="Rent Upload",
                            bg="white",
-                           border=0)
+                           font=toolbar_font,
+                           border=0,command=self.rentup)
         printButt.pack(side=LEFT, padx=20, pady=2)
         printButt = Button(toolbar,
-                           text="Help",
+                           text="Land/Value Graph",
                            bg="white",
+                           font=toolbar_font,
                            border=0)
         printButt.pack(side=LEFT, padx=20, pady=2)
 
         toolbar.pack(side=TOP, fill=X)
 
+        printButt = Button(toolbar,
+                           text="Calculate EMI",
+                           bg="white",
+                           border=0,
+                           font=toolbar_font,
+                           command=self.emi)
+        printButt.pack(side=LEFT, padx=20, pady=2)
+
+        toolbar.pack(side=TOP, fill=X)
+
         # setting up the search bar
-        def on_enter(e):
-            user.delete(0, 'end')
+        custom_font = tkFont.Font(family="Bold", size=15, underline=True)
+        top_text = tk.Label(root, text='Popular Properties',
+                            bg='white',
+                            fg='black',
+                            font=custom_font)
+        top_text.place(relx=0.03, rely=0.18)
 
-        def on_leave(e):
-            name = user.get()
-            if name == '':
-                user.insert(0, 'Search')
 
-        user = Entry(root,
-                     width=25,
-                     fg='black',
-                     bg="white",
-                     relief=GROOVE,
-                     font=('Microsoft YaHei UI Light', 11))
-        user.place(x=400, y=100)
-        user.insert(0, "Search")
-        user.bind('<FocusIn>', on_enter)
-        user.bind('<FocusOut>', on_leave)
-
-        Frame(root, width=203, height=2, bg='black').place(x=400, y=125)
 
         frame1 = Frame(root,
                        width=200,
@@ -174,14 +174,17 @@ class agenthome:
                        relief=GROOVE,
                        bd=1
                        )
-        frame1 = Frame(root, width=200, height=200, bg="white")
-        frame1.place(relx=0.1, rely=0.25)
 
+        frame1.place(relx=0.03, rely=0.25)
+
+        property_name = self.fetch_property_name_from_database(1)  # Assuming property ID 1
+        image_label = Label(frame1, text=property_name, bg="white", font=("Arial", 12, "bold"))
+        image_label.pack(pady=5)
         # Fetch image from database and display
         self.display_image_from_database(frame1, 1)  # Assuming image ID 1
 
-        view_butt = Button(root, bg='white', bd=1, text='View')
-        view_butt.place(relx=0.2, rely=0.55)
+        view_butt = Button(root, bg='white', bd=1, text='View',  command=lambda prop=property_name: self.main_view1(prop))
+        view_butt.place(relx=0.15, rely=0.58)
 
         frame2 = Frame(root,
                        width=200,
@@ -189,13 +192,16 @@ class agenthome:
                        bg="white",
                        bd=1,
                        relief=GROOVE)
-        frame2.place(relx=0.4, rely=0.25)
+        frame2.place(relx=0.35, rely=0.25)
 
+        property_name = self.fetch_property_name_from_database(2)  # Assuming property ID 1
+        image_label = Label(frame2, text=property_name, bg="white", font=("Arial", 12, "bold"))
+        image_label.pack(pady=5)
         # Fetch image from database and display
         self.display_image_from_database(frame2, 2)  # Assuming image ID 2
 
-        view_butt = Button(root, bg='white', bd=1, text='View')
-        view_butt.place(relx=0.5, rely=0.55)
+        view_butt = Button(root, bg='white', bd=1, text='View', command=lambda prop=property_name: self.main_view1(prop))
+        view_butt.place(relx=0.48, rely=0.58)
 
         frame3 = Frame(root,
                        width=200,
@@ -203,13 +209,16 @@ class agenthome:
                        bg="white",
                        bd=1,
                        relief=GROOVE)
-        frame3.place(relx=0.7, rely=0.25)
+        frame3.place(relx=0.67, rely=0.25)
 
+        property_name = self.fetch_property_name_from_database(3)  # Assuming property ID 1
+        image_label = Label(frame3, text=property_name, bg="white", font=("Arial", 12, "bold"))
+        image_label.pack(pady=5)
         # Fetch image from database and display
         self.display_image_from_database(frame3, 3)  # Assuming image ID 3
 
-        view_butt = Button(root, bg='white', bd=1, text='View')
-        view_butt.place(relx=0.8, rely=0.55)
+        view_butt = Button(root, bg='white', bd=1, text='View', command=lambda prop=property_name: self.main_view1(prop))
+        view_butt.place(relx=0.8, rely=0.58)
 
         frame4 = Frame(root,
                        width=200,
@@ -218,12 +227,15 @@ class agenthome:
                        bd=1,
                        relief=GROOVE
                        )
-        frame4.place(relx=0.1, rely=0.63)
+        frame4.place(relx=0.03, rely=0.63)
 
+        property_name = self.fetch_property_name_from_database(4)  # Assuming property ID 1
+        image_label = Label(frame4, text=property_name, bg="white", font=("Arial", 12, "bold"))
+        image_label.pack(pady=5)
         # Fetch image from database and display
         self.display_image_from_database(frame4, 4)  # Assuming image ID 4
 
-        view_butt = Button(root, bg='white', bd=1, text='View')
+        view_butt = Button(root, bg='white', bd=1, text='View', command=lambda prop=property_name: self.main_view1(prop))
         view_butt.place(relx=0.2, rely=0.93)
 
         frame5 = Frame(root,
@@ -232,12 +244,15 @@ class agenthome:
                        bg="white",
                        bd=1,
                        relief=GROOVE)
-        frame5.place(relx=0.4, rely=0.63)
+        frame5.place(relx=0.35, rely=0.63)
 
+        property_name = self.fetch_property_name_from_database(5)  # Assuming property ID 1
+        image_label = Label(frame5, text=property_name, bg="white", font=("Arial", 12, "bold"))
+        image_label.pack(pady=5)
         # Fetch image from database and display
         self.display_image_from_database(frame5, 5)  # Assuming image ID 5
 
-        view_butt = Button(root, bg='white', bd=1, text='View')
+        view_butt = Button(root, bg='white', bd=1, text='View', command=lambda prop=property_name: self.main_view1(prop))
         view_butt.place(relx=0.5, rely=0.93)
 
         frame6 = Frame(root,
@@ -246,106 +261,38 @@ class agenthome:
                        bg="white",
                        bd=1,
                        relief=GROOVE)
-        frame6.place(relx=0.7, rely=0.63)
+        frame6.place(relx=0.67, rely=0.63)
+
+        property_name = self.fetch_property_name_from_database(6)  # Assuming property ID 1
+        image_label = Label(frame6, text=property_name, bg="white", font=("Arial", 12, "bold"))
+        image_label.pack(pady=5)
 
         # Fetch image from database and display
         self.display_image_from_database(frame6, 6)  # Assuming image ID 6
 
-        view_butt = Button(root, bg='white', bd=1, text='View')
+        view_butt = Button(root, bg='white', bd=1, text='View', command=lambda prop=property_name: self.main_view1(prop))
         view_butt.place(relx=0.8, rely=0.93)
+        # Method to fetch notifications from the database
 
-    def fetch_data_from_database(self):
+    def fetch_notifications(self):
         try:
-            # Execute SELECT query to fetch dates and prices from the database
-            self.cursor.execute("SELECT date, price FROM mumbai_pd")
+            # Execute SELECT query to fetch notifications from the database
+            self.cursor.execute('SELECT notification FROM agent WHERE username = %s', (self.username,))
+            notifications = self.cursor.fetchall()
 
-            # Fetch all rows
-            rows = self.cursor.fetchall()
+            # Clear existing notifications in the Text widget
+            self.notification_text.delete('1.0', END)
 
-            # Extract dates and prices from the fetched rows
-            self.dates = [row[0] for row in rows]
-            self.prices = [row[1] for row in rows]
+            # Display notifications in the Text widget
+            for notification in notifications:
+                self.notification_text.insert(END, f"{notification[0]}\n")
 
-        except mysql.connector.Error as e:
-            print("Error fetching data from MySQL:", e)
-
-    def display_graph(self):
-        try:
-            # Plot the graph using matplotlib
-            fig, ax = plt.subplots(figsize=(8, 6))
-            ax.plot(self.dates, self.prices, marker='o', linestyle='-')
-            ax.set_title('Price Trends Over Time')
-            ax.set_xlabel('Date')
-            ax.set_ylabel('Price ($)')
-            ax.grid(True)
-            plt.xticks(rotation=45)
-            plt.tight_layout()
-
-            # Create a new window to display the graph
-            graph_window = Toplevel(self.root)
-            graph_window.title("Price Trends Graph")
-            graph_window.geometry("800x600")
-
-            # Convert plot to a Tkinter-compatible photo image
-            graph_photo = FigureCanvasTkAgg(fig, master=graph_window)
-            graph_photo.draw()
-            graph_photo.get_tk_widget().pack()
+            self.notification_text.config(state='disabled')
 
         except Exception as e:
-            print("Error displaying graph:", e)
-    def buy(self):
-        self.root.destroy()
-        import buy1
+            print("Error fetching notifications:", e)
 
-    def agent(self):
-        self.root.destroy()
-        import Agent1
-
-    def profile(self):
-        self.root.destroy()
-        import Profile
-
-    def next(self):
-        self.root.destroy()
-        import Homepage2
-
-    def home(self):
-        self.root.destroy()
-        import Homepage2
-
-    def rent(self):
-        self.root.destroy()
-        import Rent1
-
-    def sell(self):
-        self.root.destroy()
-        import Sell_1
-
-    def fetch_notification(self):
-        try:
-            # Connect to the database
-            conn = mysql.connector.connect(
-                host='localhost',
-                user='root',
-                password='ARYA#305#varun',
-                database='estateinsight'
-            )
-
-            # Create a cursor to execute SQL queries
-            cursor = conn.cursor()
-
-            # Execute SELECT query to fetch notification from the agent table
-            cursor.execute("SELECT notification FROM agent WHERE username = %s", (self.username,))
-            row = cursor.fetchone()
-
-            if row:
-                return row[0]
-            else:
-                return "No notification available"  # Provide a default message if no notification found
-
-        except mysql.connector.Error as e:
-            print("Error fetching notification:", e)
-
+        # Method to open chat
     def accept_chat_request(self):
         import chat
         try:
@@ -368,13 +315,44 @@ class agenthome:
 
         except mysql.connector.Error as e:
             print("Error deleting notification:", e)
+    def buy(self):
+        self.root.destroy()
+        import buy1
 
+    def agent(self):
+        self.root.destroy()
+        import Agent1
 
+    def profile(self):
+        self.root.destroy()
+        import Profile
+
+    def home(self):
+        self.root.destroy()
+        import Homepage1
+
+    def rent(self):
+        self.root.destroy()
+        import Rent1
+
+    def sell(self):
+        self.root.destroy()
+        import Sell_1
+
+    def rentup(self):
+        self.root.destroy()
+        import Rent2
+    def login(self):
+        self.root.destroy()
+        import login
+
+    def emi(self):
+        import emi
     def display_image_from_database(self, frame, image_id):
         try:
             cursor = self.conn.cursor()
             # Fetch image data from the database
-            cursor.execute("SELECT photo1 FROM estate_data WHERE ID = %s", (image_id,))
+            cursor.execute("SELECT photo1 FROM sell WHERE ID = %s", (image_id,))
             image_data = cursor.fetchone()
             if image_data:
                 image_data = image_data[0]  # Extract image data from the tuple
@@ -398,6 +376,22 @@ class agenthome:
         except Exception as e:
             print("Error displaying image:", e)
 
+    def fetch_property_name_from_database(self, property_id):
+        try:
+            # Assuming you have a table named 'properties' with columns 'property_id' and 'property_name'
+            sql = "SELECT propertyname FROM sell WHERE id = %s"
+            self.cursor.execute(sql, (property_id,))
+            result = self.cursor.fetchone()
+            if result:
+                return result[0]  # Assuming property_name is the first column in the result
+            else:
+                return "Property not found"
+        except mysql.connector.Error as e:
+            print("Error fetching property name from database:", e)
+            return "Error fetching property name"
+    def main_view1(self, propertyname):
+        bs = propertyname
+        subprocess.call(["python", "main_view1.py", bs])
 
 root = Tk()
 obj = agenthome(root, "")

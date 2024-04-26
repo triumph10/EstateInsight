@@ -29,7 +29,7 @@ class getstarted:
         # Setting up the font
         font_moodlift = ('Arial', 30, 'bold')
         font_welcome = ("Arial", 15, "bold")
-        font_info = ("Arial", 15, "bold")
+        font_info = ("Brush Script MT", 23)
         font_button = ("Arial", 10, "bold")
 
         # Setting up the intro for the image label
@@ -43,13 +43,6 @@ class getstarted:
                                         compound='top')
         language_language_label.pack(padx=10, pady=20)
 
-        # Setting up the label for the welcome text
-        welcome_label = Label(window,
-                              text="Welcome To",
-                              font=font_welcome,
-                              fg='black',
-                              bg='white')
-        welcome_label.pack(padx=5, pady=5)
 
         # Setting up the Label For information
         infoLabel = tk.Label(window,
@@ -69,13 +62,13 @@ class getstarted:
         Entry.pack(padx=10, pady=20)
 
         userButt = Button(window,
-                          text="User",
+                          text=" User ",
                           bg="#b31312",
                           fg='white',
                           border=0,
                           font=1,
                           command=self.user)
-        userButt.place(relx=0.25, rely=0.7)
+        userButt.place(relx=0.26, rely=0.65)
 
         agentButt = Button(window,
                            text="Agent",
@@ -84,7 +77,7 @@ class getstarted:
                            border=0,
                            font=1,
                            command=self.agent)
-        agentButt.place(relx=0.45, rely=0.7)
+        agentButt.place(relx=0.45, rely=0.65)
 
         adminButt = Button(window,
                            text="Admin",
@@ -93,7 +86,7 @@ class getstarted:
                            border=0,
                            font=1,
                            command=self.admin)
-        adminButt.place(relx=0.65, rely=0.7)
+        adminButt.place(relx=0.64, rely=0.65)
 
     def admin(self):
         self.window.destroy()

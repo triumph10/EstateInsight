@@ -6,7 +6,7 @@ import mysql.connector
 from tkinter import Tk,Label
 
 
-class Sell_2:
+class Rent3:
     username= None
     def __init__(self, root):
         self.root = root
@@ -15,7 +15,7 @@ class Sell_2:
         self.root.title("EstateInsight")
         self.root.resizable(False, False)
 
-        font_info = ("Arial", 15, "bold")
+        font_info = ("Arial", 19, "bold")
 
         one = Label(root,
                     text="EstateInsight",
@@ -27,7 +27,7 @@ class Sell_2:
                     bd=1,
                     height=1)
         one.pack(fill=X, side=TOP)
-        Sell_2.username
+        Rent3.username
         name_label = Label(one,
                           # text=f"Welcome, {Sell_2.username}!",
                            bg='#B31312',
@@ -215,10 +215,10 @@ class Sell_2:
 
                 # Import and display the Sell_2 window
                 import Rent4
-                Rent4.Rent4.username = Sell_2.username  # Set the username attribute
+                Rent4.Rent4.username = Rent3.username  # Set the username attribute
                 #if self.root.winfo_exists():
                       # Close the Login window
-                Sell_3 = Rent4.Sell_3(Tk())  # Open the Homepage1 window
+                Rent4 = Rent4.Rent4(Tk())  # Open the Homepage1 window
             else:
                 print("Login window has been closed")
 
@@ -230,5 +230,5 @@ class Sell_2:
 
 # Create the root window and instantiate the Sell_2 class
 root = Tk()
-obj = Sell_2(root)
+obj = Rent3(root)
 root.mainloop()

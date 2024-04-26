@@ -20,10 +20,9 @@ class maininterface:
         self.conn = mysql.connector.connect(
             host='localhost',
             user='root',
-            password='ARYA#305#varun',
+            password='#22107031#',
             database='estateinsight'
         )
-
         self.cursor = self.conn.cursor()
         self.fetch_data_from_database()
         # Execute SELECT query to fetch name from the database table

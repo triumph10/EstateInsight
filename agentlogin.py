@@ -2,12 +2,12 @@ from tkinter import *
 from tkinter import messagebox
 import mysql.connector
 from mysql.connector import Error
-from agenthome import agenthome
+from Homepage1 import Homepage1
 
 
 
 class Login:
-    def  __init__(self, root):
+    def __init__(self, root):
         self.root = root
         self.root.title('Login')
         self.root.geometry('925x500+300+200')
@@ -49,7 +49,7 @@ class Login:
             if name == '':
                 self.password.insert(0, 'Password')
 
-        self.password = Entry(self.frame, width=25, fg='black', border=0, bg='white', font=('Microsoft Yahei UI Light', 11))
+        self.password = Entry(self.frame, width=25, fg='black', border=0, bg='white',show="*", font=('Microsoft Yahei UI Light', 11))
         self.password.place(x=30, y=150)
         self.password.insert(0, 'Password')
         self.password.bind('<FocusIn>', on_enter)
@@ -99,7 +99,7 @@ class Login:
     def home(self, username):
         self.root.destroy()
         root = Tk()
-        obj = agenthome(root, username)
+        obj = Homepage1(root, username)
         root.mainloop()
 
 

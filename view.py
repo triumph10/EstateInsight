@@ -67,18 +67,12 @@ class view:
         self.root.iconphoto(True, self.icon)
 
         # setting up the toolbar for the app
-        toolbar = Frame(root, bg="WHite", relief=SUNKEN, bd=1, pady=2)
+        toolbar = Frame(root, bg="White", relief=SUNKEN, bd=1, pady=2)
 
-        insertButt = Button(toolbar, text="Buy", bg="White", border=0, activebackground='#B67352')
-        insertButt.pack(side=LEFT, padx=20, pady=2)
-        printButt = Button(toolbar, text="Sell", bg="White", border=0, activebackground='#B67352')
-        printButt.pack(side=LEFT, padx=20, pady=2)
-        printButt = Button(toolbar, text="Rent", bg="White", border=0, activebackground='#B67352')
-        printButt.pack(side=LEFT, padx=20, pady=2)
-        printButt = Button(toolbar, text="Wishlist", bg="White", border=0, activebackground='#B67352')
-        printButt.pack(side=LEFT, padx=20, pady=2)
-        printButt = Button(toolbar, text="Help", bg="White", border=0, activebackground='#B67352')
-        printButt.pack(side=LEFT, padx=20, pady=2)
+        buttons = ["Buy", "Sell", "Rent", "Wishlist", "Help"]
+        for button_text in buttons:
+            button = Button(toolbar, text=button_text, bg="White", border=0, activebackground='#B67352')
+            button.pack(side=LEFT, padx=20, pady=2)
 
         toolbar.pack(side=TOP, fill=X)
         # ------------------------------------------------------------------------------------------------------------------
@@ -140,11 +134,11 @@ class view:
                                 font=("Arial", 12))
         submit_button2.place(x=600, y=200)
 
-    # ---------------------------------------------------------------------------------------------------------------------------
+        # Create a frame for date and price entry fields
         entry_frame2 = Frame(root, bg="red")
         entry_frame2.place(x=50, y=320)
         # Create a label for the city
-        city_label2= Label(root, text="Bengaluru", font=("Arial", 18, "bold"), bg="mintcream")
+        city_label2 = Label(root, text="Bengaluru", font=("Arial", 18, "bold"), bg="mintcream")
         city_label2.place(x=50, y=280)
         # Entry fields for date and price
         date_label2 = Label(entry_frame2, text="Date:", font=("Arial", 12), bg="mintcream")
@@ -163,10 +157,11 @@ class view:
         self.price_entry2.grid(row=1, column=1, padx=5, pady=5, sticky=W)
 
         # Button to submit the input
-        submit_button3 = Button(root, text="Submit", command=self.submit_input, bg="RED", fg="White", bd=2,
+        submit_button3 = Button(root, text="Submit", command=self.submit_input3, bg="RED", fg="White", bd=2,
                                 font=("Arial", 12))
         submit_button3.place(x=50, y=400)
-#--------------------------------------------------------------------------------------------------------------------
+
+        # Create a frame for date and price entry fields
         entry_frame3 = Frame(root, bg="red")
         entry_frame3.place(x=600, y=320)
         # Create a label for the city
@@ -189,12 +184,65 @@ class view:
         self.price_entry3.grid(row=1, column=1, padx=5, pady=5, sticky=W)
 
         # Button to submit the input
-        submit_button4 = Button(root, text="Submit", command=self.submit_input, bg="RED", fg="White", bd=2,
+        submit_button4 = Button(root, text="Submit", command=self.submit_input4, bg="RED", fg="White", bd=2,
                                 font=("Arial", 12))
         submit_button4.place(x=600, y=400)
-#------------------------------------------------------------------------------------------------------------------
 
-#------MUMBAI------------------------------------------------------------------------------------------------------
+        # Create a frame for date and price entry fields
+        entry_frame4 = Frame(root, bg="red")
+        entry_frame4.place(x=50, y=520)
+        # Create a label for the city
+        city_label4 = Label(root, text="Kolkata", font=("Arial", 18, "bold"), bg="mintcream")
+        city_label4.place(x=50, y=480)
+        # Entry fields for date and price
+        date_label4 = Label(entry_frame4, text="Date:", font=("Arial", 12), bg="mintcream")
+        date_label4.grid(row=0, column=0, padx=5, pady=5, sticky=W)
+
+        # Add a DateEntry widget for selecting dates
+        self.calendar_frame4 = Frame(entry_frame4, bg="mintcream")
+        self.calendar_frame4.grid(row=0, column=1, padx=5, pady=5, sticky=W)
+        self.date_entry4 = DateEntry(self.calendar_frame4, width=12, background='darkblue',
+                                     foreground='white', borderwidth=2)
+        self.date_entry4.pack()
+
+        price_label4 = Label(entry_frame4, text="Price:", font=("Arial", 12), bg="mintcream")
+        price_label4.grid(row=1, column=0, padx=5, pady=5, sticky=W)
+        self.price_entry4 = Entry(entry_frame4, font=("Arial", 12), bd=2)
+        self.price_entry4.grid(row=1, column=1, padx=5, pady=5, sticky=W)
+
+        # Button to submit the input
+        submit_button5 = Button(root, text="Submit", command=self.submit_input5, bg="RED", fg="White", bd=2,
+                                font=("Arial", 12))
+        submit_button5.place(x=50, y=600)
+
+        # Create a frame for date and price entry fields
+        entry_frame5 = Frame(root, bg="red")
+        entry_frame5.place(x=600, y=520)
+        # Create a label for the city
+        city_label5 = Label(root, text="Pune", font=("Arial", 18, "bold"), bg="mintcream")
+        city_label5.place(x=600, y=480)
+        # Entry fields for date and price
+        date_label5 = Label(entry_frame5, text="Date:", font=("Arial", 12), bg="mintcream")
+        date_label5.grid(row=0, column=0, padx=5, pady=5, sticky=W)
+
+        # Add a DateEntry widget for selecting dates
+        self.calendar_frame5 = Frame(entry_frame5, bg="mintcream")
+        self.calendar_frame5.grid(row=0, column=1, padx=5, pady=5, sticky=W)
+        self.date_entry5 = DateEntry(self.calendar_frame5, width=12, background='darkblue',
+                                     foreground='white', borderwidth=2)
+        self.date_entry5.pack()
+
+        price_label5 = Label(entry_frame5, text="Price:", font=("Arial", 12), bg="mintcream")
+        price_label5.grid(row=1, column=0, padx=5, pady=5, sticky=W)
+        self.price_entry5 = Entry(entry_frame5, font=("Arial", 12), bd=2)
+        self.price_entry5.grid(row=1, column=1, padx=5, pady=5, sticky=W)
+
+        # Button to submit the input
+        submit_button6 = Button(root, text="Submit", command=self.submit_input6, bg="RED", fg="White", bd=2,
+                                font=("Arial", 12))
+        submit_button6.place(x=600, y=600)
+
+    # ---------------------------------------------------------------------------------------------------------------------------
     def submit_input(self):
         # Get the input values
         selected_date = self.date_entry.get()
@@ -219,11 +267,10 @@ class view:
             self.conn.rollback()
             print("Error saving input values to database:", e)
 
-#-----DELHI--------------------------------------------------------------------------------------------------------------------
-
+    # ---------------------------------------------------------------------------------------------------------------------------
     def submit_input2(self):
         # Get the input values
-        selected_date2 = self.date_entry.get()
+        selected_date2 = self.date_entry1.get()
         price2 = self.price_entry1.get()
 
         if not price2:
@@ -249,8 +296,7 @@ class view:
             self.conn.rollback()
             print("Error saving input values to database:", e)
 
-#----BENGALURU---------------------------------------------------------------------------------------------------
-
+    # ---------------------------------------------------------------------------------------------------------------------------
     def submit_input3(self):
         # Get the input values
         selected_date3 = self.date_entry2.get()
@@ -264,6 +310,81 @@ class view:
             sql3 = "INSERT INTO bengaluru_pd (date, pice) VALUES (%s, %s)"
             values3 = (formatted_date3, price3)
             self.cursor.execute(sql3, values3)
+
+            # Commit the transaction
+            self.conn.commit()
+
+            print("Input values saved to database successfully.")
+
+        except mysql.connector.Error as e:
+            # Roll back the transaction in case of an error
+            self.conn.rollback()
+            print("Error saving input values to database:", e)
+
+    # ---------------------------------------------------------------------------------------------------------------------------
+    def submit_input4(self):
+        # Get the input values
+        selected_date4 = self.date_entry3.get()
+        price4 = self.price_entry3.get()
+
+        try:
+            # Convert the selected date to the correct format
+            formatted_date4 = datetime.strptime(selected_date4, "%m/%d/%y").strftime("%Y-%m-%d")
+
+            # Execute an INSERT query to save the input values to the database
+            sql4 = "INSERT INTO chennai_pd (date, pice) VALUES (%s, %s)"
+            values4 = (formatted_date4, price4)
+            self.cursor.execute(sql4, values4)
+
+            # Commit the transaction
+            self.conn.commit()
+
+            print("Input values saved to database successfully.")
+
+        except mysql.connector.Error as e:
+            # Roll back the transaction in case of an error
+            self.conn.rollback()
+            print("Error saving input values to database:", e)
+
+    # ---------------------------------------------------------------------------------------------------------------------------
+    def submit_input5(self):
+        # Get the input values
+        selected_date5 = self.date_entry4.get()
+        price5 = self.price_entry4.get()
+
+        try:
+            # Convert the selected date to the correct format
+            formatted_date5 = datetime.strptime(selected_date5, "%m/%d/%y").strftime("%Y-%m-%d")
+
+            # Execute an INSERT query to save the input values to the database
+            sql5 = "INSERT INTO kolkata_pd (date, pice) VALUES (%s, %s)"
+            values5 = (formatted_date5, price5)
+            self.cursor.execute(sql5, values5)
+
+            # Commit the transaction
+            self.conn.commit()
+
+            print("Input values saved to database successfully.")
+
+        except mysql.connector.Error as e:
+            # Roll back the transaction in case of an error
+            self.conn.rollback()
+            print("Error saving input values to database:", e)
+
+    # ---------------------------------------------------------------------------------------------------------------------------
+    def submit_input6(self):
+        # Get the input values
+        selected_date6 = self.date_entry5.get()
+        price6 = self.price_entry5.get()
+
+        try:
+            # Convert the selected date to the correct format
+            formatted_date6 = datetime.strptime(selected_date6, "%m/%d/%y").strftime("%Y-%m-%d")
+
+            # Execute an INSERT query to save the input values to the database
+            sql6 = "INSERT INTO pune_pd (date, pice) VALUES (%s, %s)"
+            values6 = (formatted_date6, price6)
+            self.cursor.execute(sql6, values6)
 
             # Commit the transaction
             self.conn.commit()
