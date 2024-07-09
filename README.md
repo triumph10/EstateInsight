@@ -99,7 +99,7 @@ EstateInsight proposes the following solutions:
 ### Backend:
 - **MySQL Workbench 8.0**: Backend database management system for storing property data and user interactions.
 
-##Some Screenshots
+## Some Screenshots
 
 ### Homepage
 ![Screenshot 2024-07-09 143450](https://github.com/triumph10/EstateInsight/assets/140323181/8e50e030-ef46-439c-aa8e-a91e629c3d05)
