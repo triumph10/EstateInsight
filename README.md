@@ -70,7 +70,7 @@ EstateInsight proposes the following solutions:
 ![Screenshot 2024-07-09 143708](https://github.com/triumph10/EstateInsight/assets/140323181/971ac063-b5a9-433e-9b94-07dd37024595)
 
 ### Land Value Analysis
-![Screenshot 2024-07-09 143708](https://github.com/triumph10/EstateInsight/assets/140323181/62d391b1-b9b9-488d-a125-c66c83a0640b)
+![Screenshot 2024-07-09 143806](https://github.com/triumph10/EstateInsight/assets/140323181/88a8916e-3d8f-408c-98ec-fad16685d362)
 
 ### Calculate EMI
 ![Screenshot 2024-07-09 143906](https://github.com/triumph10/EstateInsight/assets/140323181/aa188f26-2821-4de7-ae29-25c10d2878a7)
